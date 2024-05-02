@@ -1,6 +1,6 @@
-# Awell SDK
+# Awell SDK (JavaScript)
 
-An SDK built with https://genql.dev/. The SDK is auto-generated and should make calling Awell's API easier if if you are on a JavaScript stack.
+An JavaScript SDK built with https://genql.dev/. The SDK is auto-generated and should make calling Awell's API easier if if you are on a JavaScript stack.
 
 The SDK can translates JavaScript code into GraphQL queries, enabling **auto completion** and **validation** for the GraphQL queries. Additional benefits:
 

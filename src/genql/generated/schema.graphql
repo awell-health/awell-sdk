@@ -1,0 +1,1888 @@
+type Query {
+  scheduledTracksForPathway(pathway_id: String!): ScheduledTracksPayload!
+  patientPathways(patient_id: String!, filters: FilterPatientPathways): PatientPathwaysPayload!
+  baselineInfo(pathway_id: String!): BaselineInfoPayload!
+  myPendingActivities: ActivitiesPayload!
+  myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
+  pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
+  apiCall(id: String!): ApiCallPayload!
+  apiCalls(pathway_id: String!): ApiCallsPayload!
+  calculationAction(id: String!): ActionPayload!
+  calculationResults(pathway_id: String!, activity_id: String!): CalculationResultsPayload!
+  checklist(id: String!): ChecklistPayload!
+  clinicalNote(id: String!): ClinicalNotePayload!
+  pathwayElements(pathway_id: String!): ElementsPayload!
+  emrReport(id: String!): EmrReportPayload!
+  extensionActivityRecord(id: String!): ExtensionActivityRecordPayload!
+  form(id: String!): FormPayload!
+  forms(pathway_definition_id: String!, release_id: String): FormsPayload!
+  formResponse(pathway_id: String!, activity_id: String!): FormResponsePayload!
+  hostedSessionActivities(only_stakeholder_activities: Boolean): HostedSessionActivitiesPayload!
+  hostedSession: HostedSessionPayload!
+  message(id: String!): MessagePayload!
+  pathwayFacts(pagination: PaginationParams, sorting: SortingParams, filters: PathwayFactsFilters!): OrchestrationFactsPayload!
+  pathwayDataPointDefinitions(pathway_definition_id: String, release_id: String!, filters: FilterPathwayDataPointDefinitionsParams): PathwayDataPointDefinitionsPayload!
+  pathway(id: String!): PathwayPayload!
+  myPathways: PathwaysPayload!
+  pathways(pagination: PaginationParams, sorting: SortingParams, filters: FilterPathways): PathwaysPayload!
+  patientDemographicsQueryConfiguration: PatientDemographicsQueryConfigurationPayload!
+  patient(id: String!): PatientPayload!
+  patients(pagination: PaginationParams, sorting: SortingParams, filters: FilterPatients): PatientsPayload!
+  patientByIdentifier(system: String!, value: String!): PatientPayload!
+  publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
+  publishedPathwayDefinitionsDashboard(pagination: PaginationParams, sorting: SortingParams, filters: FilterPathwayDefinitionsParams): PublishedPathwayDefinitionsPayload!
+  getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
+  scheduledSteps(pathway_id: String!): ScheduledStepsPayload!
+  searchPatientsByPatientCode(patient_code: String!): SearchPatientsPayload!
+  searchPatientsByNationalRegistryNumber(national_registry_number: String!): SearchPatientsPayload!
+  filterStakeholders(pathway_definition_ids: [String!], release_ids: [String!], stakeholder_definition_ids: [String!]): StakeholdersPayload!
+  stakeholdersByPathwayDefinitionIds(pathway_definition_ids: [String!]!): StakeholdersPayload!
+  stakeholdersByReleaseIds(release_ids: [String!]!): StakeholdersPayload!
+  stakeholdersByDefinitionIds(stakeholder_definition_ids: [String!]!): StakeholdersPayload!
+  adHocTracksByPathway(pathway_id: String!): TracksPayload!
+  adHocTracksByRelease(release_id: String!): TracksPayload!
+  whoami: CurrentUserPayload!
+  webhookCall(webhook_call_id: String!): WebhookCallPayload!
+  webhookCalls(pathway_id: String!): WebhookCallsPayload!
+  webhookCallsForTenant: WebhookCallsPayload!
+  webhookCallsForPathwayDefinition(pathway_definition_id: String!): WebhookCallsPayload!
+  getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
+  hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
+}
+
+type ScheduledTracksPayload implements Payload {
+  code: String!
+  success: Boolean!
+  scheduled_tracks: [ScheduledTrack!]!
+}
+
+interface Payload {
+  code: String!
+  success: Boolean!
+}
+
+type ScheduledTrack {
+  id: ID!
+  pathway_id: String!
+  track_definition_id: String!
+  release_id: String!
+  tenant_id: String!
+  created_by_user_id: String!
+  created_date: String!
+  modified_date: String
+  scheduled_date: String!
+  status: String!
+  title: String!
+}
+
+type PatientPathwaysPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patientPathways: [PatientPathway!]!
+}
+
+type PatientPathway {
+  id: ID!
+  title: String!
+  status: PathwayStatus!
+  status_explanation: String
+  pathway_definition_id: String!
+  complete_date: String
+  stop_date: String
+  release_id: String!
+  version: Float
+  total_activities: Float
+  active_activities: Float
+  failed_activities: Float
+  latest_activity_date: String
+  latest_activity_title: String
+  latest_activity_type: String
+  baseline_info: [BaselineDataPoint!]
+}
+
+enum PathwayStatus {
+  starting
+  active
+  stopped
+  completed
+  missing_baseline_info
+}
+
+type BaselineDataPoint {
+  definition: DataPointDefinition!
+  value: String
+}
+
+type DataPointDefinition {
+  id: ID!
+  key: String!
+  title: String!
+  category: DataPointSourceType!
+  valueType: DataPointValueType!
+  source_definition_id: String!
+  possibleValues: [DataPointPossibleValue!]
+  range: Range
+  unit: String
+  optional: Boolean
+
+  """Personally identifiable information"""
+  pii: Boolean
+
+  """Additional context on data point"""
+  metadata: [DataPointMetaDataItem!]
+}
+
+enum DataPointSourceType {
+  PATHWAY
+  STEP
+  TRACK
+  FORM
+  CALCULATION
+  PATIENT_PROFILE
+  PATIENT_IDENTIFIER
+  API_CALL
+  API_CALL_STATUS
+  EXTENSION_WEBHOOK
+  EXTENSION_ACTION
+}
+
+enum DataPointValueType {
+  BOOLEAN
+  DATE
+  NUMBER
+  STRING
+  NUMBERS_ARRAY
+  STRINGS_ARRAY
+  TELEPHONE
+}
+
+type DataPointPossibleValue {
+  value: String!
+  label: String
+}
+
+type Range {
+  min: Float
+  max: Float
+}
+
+type DataPointMetaDataItem {
+  value: String!
+  key: String!
+}
+
+input FilterPatientPathways {
+  status: StringArrayFilter!
+}
+
+input StringArrayFilter {
+  in: [String!]
+}
+
+type BaselineInfoPayload implements Payload {
+  code: String!
+  success: Boolean!
+  baselineDataPoints: [BaselineDataPoint!]!
+}
+
+type ActivitiesPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  activities: [Activity!]!
+  metadata: ActivityMetadata
+}
+
+interface PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+}
+
+type PaginationOutput {
+  offset: Int
+  count: Int
+  total_count: Int
+}
+
+type SortingOutput {
+  field: String!
+  direction: String!
+}
+
+type Activity {
+  id: ID!
+  stream_id: String!
+  date: String!
+  subject: ActivitySubject!
+  action: ActivityAction!
+  object: ActivityObject!
+  indirect_object: ActivityObject
+  status: ActivityStatus!
+  resolution: ActivityResolution
+  reference_id: String!
+  container_name: String
+  track: ActivityTrack
+  label: ActivityLabel
+  sub_activities: [SubActivity!]!
+  isUserActivity: Boolean!
+  public: Boolean
+  context: PathwayContext
+  session_id: String
+  stakeholders: [ActivityObject!]
+
+  """Url for icon, only used by extensions custom actions"""
+  icon_url: String
+
+  """
+  Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now.
+  """
+  form_display_mode: FormDisplayMode
+  form: Form
+}
+
+type ActivitySubject {
+  id: String
+  type: ActivitySubjectType!
+  name: String!
+}
+
+enum ActivitySubjectType {
+  AWELL
+  STAKEHOLDER
+  USER
+  PLUGIN
+  API_CALL
+}
+
+enum ActivityAction {
+  ADDED
+  ACTIVATE
+  COMPLETE
+  DISCARDED
+  SEND
+  REMIND
+  DELIVER
+  COMPUTED
+  FAILED
+  FAILED_TO_SEND
+  SUBMITTED
+  ASSIGNED
+  READ
+  STOPPED
+  PROCESSED
+  SCHEDULED
+  IS_WAITING_ON
+  POSTPONED
+  DELEGATED
+  GENERATED
+  SKIPPED
+  REPORTED
+  EXPIRED
+}
+
+type ActivityObject {
+  type: ActivityObjectType!
+  id: String!
+  name: String!
+  email: String
+  preferred_language: String
+}
+
+enum ActivityObjectType {
+  ACTION
+  API_CALL
+  CALCULATION
+  CHECKLIST
+  CLINICAL_NOTE
+  EVALUATED_RULE
+  EMR_REPORT
+  FORM
+  MESSAGE
+  PATHWAY
+  PATIENT
+  REMINDER
+  STAKEHOLDER
+  STEP
+  USER
+  EMR_REQUEST
+  TRACK
+  PLUGIN
+  PLUGIN_ACTION
+}
+
+enum ActivityStatus {
+  ACTIVE
+  DONE
+  FAILED
+  CANCELED
+  EXPIRED
+}
+
+enum ActivityResolution {
+  FAILURE
+  SUCCESS
+  EXPIRED
+}
+
+type ActivityTrack {
+  id: String
+  title: String!
+}
+
+type ActivityLabel {
+  id: String
+  color: String!
+  text: String!
+}
+
+type SubActivity {
+  id: String!
+  date: String!
+  subject: ActivitySubject!
+  action: ActivityAction!
+  error: String
+  error_category: String
+  object: ActivityObject
+  text: TranslatedText
+}
+
+type TranslatedText {
+  en: String
+}
+
+type PathwayContext {
+  instance_id: String!
+  pathway_id: String!
+  track_id: String
+  step_id: String
+  action_id: String
+}
+
+enum FormDisplayMode {
+  CONVERSATIONAL
+  REGULAR
+}
+
+type Form {
+  release_id: String!
+  key: String!
+  definition_id: String!
+  id: ID!
+  title: String!
+  trademark: String
+  metadata: String
+  questions: [Question!]!
+  previous_answers(pathway_id: String!): [PreviousAnswers!]
+}
+
+type Question {
+  key: String!
+  id: ID!
+  definition_id: String!
+  title: String!
+  dataPointValueType: DataPointValueType
+  options: [Option!]
+  questionType: QuestionType
+  userQuestionType: UserQuestionType
+  questionConfig: QuestionConfig
+  rule: Rule
+  metadata: String
+}
+
+type Option {
+  id: ID!
+  value: Float!
+  value_string: String!
+  label: String!
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  INPUT
+  NO_INPUT
+}
+
+enum UserQuestionType {
+  MULTIPLE_SELECT
+  MULTIPLE_CHOICE
+  NUMBER
+  YES_NO
+  DATE
+  SHORT_TEXT
+  LONG_TEXT
+  SLIDER
+  DESCRIPTION
+  MULTIPLE_CHOICE_GRID
+  SIGNATURE
+  TELEPHONE
+}
+
+type QuestionConfig {
+  recode_enabled: Boolean
+  mandatory: Boolean!
+  use_select: Boolean
+  slider: SliderConfig
+  phone: PhoneConfig
+  number: NumberConfig
+  multiple_select: MultipleSelectConfig
+  date: DateConfig
+}
+
+type SliderConfig {
+  min: Float!
+  max: Float!
+  step_value: Float!
+  min_label: String!
+  max_label: String!
+  is_value_tooltip_on: Boolean!
+  display_marks: Boolean!
+  show_min_max_values: Boolean!
+}
+
+type PhoneConfig {
+  default_country: String
+  available_countries: [String!]
+}
+
+type NumberConfig {
+  range: RangeConfig
+}
+
+type RangeConfig {
+  min: Float
+  max: Float
+  enabled: Boolean
+}
+
+type MultipleSelectConfig {
+  range: ChoiceRangeConfig
+  exclusive_option: ExclusiveOptionConfig
+}
+
+type ChoiceRangeConfig {
+  enabled: Boolean
+  min: Float
+  max: Float
+}
+
+type ExclusiveOptionConfig {
+  enabled: Boolean
+  option_id: String
+}
+
+type DateConfig {
+  allowed_dates: AllowedDatesOptions
+  include_date_of_response: Boolean
+}
+
+enum AllowedDatesOptions {
+  PAST
+  FUTURE
+  ALL
+}
+
+type Rule {
+  id: ID!
+  definition_id: String
+  boolean_operator: BooleanOperator!
+  conditions: [Condition!]!
+}
+
+enum BooleanOperator {
+  AND
+  OR
+}
+
+type Condition {
+  id: ID!
+  reference: String
+  reference_key: String
+  operator: ConditionOperator
+  operand: Operand
+}
+
+enum ConditionOperator {
+  IS_EQUAL_TO
+  IS_NOT_EQUAL_TO
+  IS_GREATER_THAN
+  IS_LESS_THAN
+  IS_GREATER_THAN_OR_EQUAL_TO
+  IS_LESS_THAN_OR_EQUAL_TO
+  CONTAINS
+  DOES_NOT_CONTAIN
+  IS_TRUE
+  IS_NOT_TRUE
+  IS_IN_RANGE
+  IS_ANY_OF
+  IS_NONE_OF
+  IS_EMPTY
+  IS_NOT_EMPTY
+  IS_TODAY
+}
+
+type Operand {
+  type: ConditionOperandType!
+  value: String!
+}
+
+enum ConditionOperandType {
+  DATA_SOURCE
+  STRING
+  NUMBER
+  BOOLEAN
+  NUMBERS_ARRAY
+  STRINGS_ARRAY
+  DATA_POINT
+}
+
+type PreviousAnswers {
+  activity_id: ID!
+  date: String!
+  answers: [Answer!]!
+}
+
+type Answer {
+  question_id: String!
+  value: String!
+  label: String
+  value_type: DataPointValueType!
+}
+
+type ActivityMetadata {
+  stakeholders: [ActivityObject!]
+}
+
+input PaginationParams {
+  offset: Int!
+  count: Int!
+}
+
+input SortingParams {
+  field: String!
+  direction: String!
+}
+
+input FilterActivitiesParams {
+  action: StringArrayFilter
+  activity_status: StringArrayFilter
+  pathway_definition_id: StringArrayFilter
+  patient_id: TextFilterEquals
+  activity_type: StringArrayFilter
+  stakeholders: StringArrayFilter
+  pathway_status: StringArrayFilter
+}
+
+input TextFilterEquals {
+  eq: String
+}
+
+type ApiCallPayload implements Payload {
+  code: String!
+  success: Boolean!
+  api_call: ApiCall!
+}
+
+type ApiCall {
+  id: ID!
+  request: ApiCallRequest!
+  responses: [ApiCallResponse!]!
+  created_at: String!
+  status: ApiCallStatus!
+  title: String!
+}
+
+type ApiCallRequest {
+  method: ApiCallRequestMethod!
+  endpoint: String!
+  headers: [ApiCallHeader!]!
+  body: String
+}
+
+enum ApiCallRequestMethod {
+  GET
+  POST
+}
+
+type ApiCallHeader {
+  key: String!
+  value: String!
+}
+
+type ApiCallResponse {
+  status: Float!
+  body: String!
+  date: String!
+}
+
+enum ApiCallStatus {
+  InProgress
+  Failed
+  PermanentlyFailed
+  Success
+  Skipped
+  Pending
+}
+
+type ApiCallsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  api_calls: [ApiCall!]!
+}
+
+type ActionPayload implements Payload {
+  code: String!
+  success: Boolean!
+  calculationId: String!
+}
+
+type CalculationResultsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  result: [SingleCalculationResult!]!
+}
+
+type SingleCalculationResult {
+  subresult_id: String!
+  value: String!
+  value_type: DataPointValueType
+  unit: String
+  status: String
+}
+
+type ChecklistPayload implements Payload {
+  code: String!
+  success: Boolean!
+  checklist: Checklist
+}
+
+type Checklist {
+  title: String!
+  items: [String!]!
+}
+
+type ClinicalNotePayload implements Payload {
+  code: String!
+  success: Boolean!
+  clinical_note: GeneratedClinicalNote!
+}
+
+type GeneratedClinicalNote {
+  id: ID!
+  narratives: [GeneratedClinicalNoteNarrative!]!
+  context: [GeneratedClinicalNoteContextField!]!
+}
+
+type GeneratedClinicalNoteNarrative {
+  id: ID!
+  key: String!
+  title: String!
+  body: String!
+}
+
+type GeneratedClinicalNoteContextField {
+  key: String!
+  value: String!
+}
+
+type ElementsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  elements: [Element!]!
+}
+
+type Element {
+  id: ID!
+  parent_id: ID
+  name: String!
+  type: ElementType!
+  start_date: String!
+  end_date: String
+  label: ActivityLabel
+  activity_type: ActionType
+  status: ElementStatus!
+  context: PathwayContext!
+  stakeholders: [ElementStakeholder!]!
+}
+
+enum ElementType {
+  PATHWAY
+  TRACK
+  STEP
+  ACTION
+  TRIGGER
+}
+
+enum ActionType {
+  API_CALL
+  API_CALL_GRAPHQL
+  CALCULATION
+  CHECKLIST
+  CLINICAL_NOTE
+  FORM
+  MESSAGE
+  PUSH_TO_EMR
+  PLUGIN
+}
+
+enum ElementStatus {
+  ACTIVE
+  DONE
+  SCHEDULED
+  STOPPED
+  DISCARDED
+  POSTPONED
+}
+
+type ElementStakeholder {
+  id: ID!
+  name: String
+}
+
+type EmrReportPayload implements Payload {
+  code: String!
+  success: Boolean!
+  report: EmrReport
+}
+
+type EmrReport {
+  id: ID!
+  message_html: String!
+  metadata: [EmrReportMetadataField!]
+}
+
+type EmrReportMetadataField {
+  id: ID!
+  label: String!
+  value: String
+}
+
+type ExtensionActivityRecordPayload implements Payload {
+  code: String!
+  success: Boolean!
+  record: ExtensionActivityRecord!
+}
+
+type ExtensionActivityRecord {
+  id: ID!
+  activity_id: String!
+  pathway_id: String!
+  plugin_key: String!
+  plugin_action_key: String!
+  fields: [ExtensionActionField!]!
+  date: String!
+  settings: [PluginActionSettingsProperty!]
+  data_points: [ExtensionDataPoint!]!
+}
+
+type ExtensionActionField {
+  id: ID!
+  type: ExtensionActionFieldType!
+  label: String!
+  value: String!
+}
+
+enum ExtensionActionFieldType {
+  HTML
+  JSON
+  STRING
+  TEXT
+  NUMERIC
+  BOOLEAN
+  DATE
+  NUMERIC_ARRAY
+  STRING_ARRAY
+}
+
+type PluginActionSettingsProperty {
+  key: String!
+  label: String!
+  value: String!
+}
+
+type ExtensionDataPoint {
+  label: String!
+  value: String!
+}
+
+type FormPayload implements Payload {
+  code: String!
+  success: Boolean!
+  form: Form
+}
+
+type FormsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  forms: [Form!]
+}
+
+type FormResponsePayload implements Payload {
+  code: String!
+  success: Boolean!
+  response: FormResponse!
+}
+
+type FormResponse {
+  answers: [Answer!]!
+}
+
+type HostedSessionActivitiesPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activities: [Activity!]!
+}
+
+type HostedSessionPayload implements Payload {
+  code: String!
+  success: Boolean!
+  session: HostedSession!
+  branding: BrandingSettings
+}
+
+type HostedSession {
+  id: ID!
+  pathway_id: String!
+  success_url: String
+  cancel_url: String
+  status: HostedSessionStatus!
+  stakeholder: HostedSessionStakeholder!
+}
+
+enum HostedSessionStatus {
+  ACTIVE
+  EXPIRED
+  COMPLETED
+}
+
+type HostedSessionStakeholder {
+  id: ID!
+  type: HostedSessionStakeholderType!
+  name: String!
+}
+
+enum HostedSessionStakeholderType {
+  PATIENT
+  STAKEHOLDER
+}
+
+type BrandingSettings {
+  accent_color: String
+  logo_url: String
+  hosted_page_title: String
+
+  """
+  Auto progress to the next question when using the conversational display mode in Hosted Pages.
+  """
+  hosted_page_auto_progress: Boolean
+
+  """Automatically save question answers locally in Hosted Pages"""
+  hosted_page_autosave: Boolean
+  custom_theme: String
+}
+
+type MessagePayload implements Payload {
+  code: String!
+  success: Boolean!
+  message: Message
+}
+
+type Message {
+  id: ID!
+  subject: String
+  body: String!
+  format: MessageFormat!
+  attachments: [MessageAttachment!]
+}
+
+enum MessageFormat {
+  SLATE
+  HTML
+}
+
+type MessageAttachment {
+  id: ID!
+  name: String!
+  url: String!
+  type: MessageAttachmentType!
+}
+
+enum MessageAttachmentType {
+  FILE
+  VIDEO
+  LINK
+}
+
+type OrchestrationFactsPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  facts: [OrchestrationFact!]!
+}
+
+type OrchestrationFact {
+  date: String!
+  level: String!
+  pathway_id: String!
+  content: [String!]!
+}
+
+input PathwayFactsFilters {
+  pathway_id: String!
+  date: DateFilter
+  keyword: String
+}
+
+input DateFilter {
+  gte: String
+  lte: String
+}
+
+type PathwayDataPointDefinitionsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  data_point_definitions: [DataPointDefinition!]!
+}
+
+input FilterPathwayDataPointDefinitionsParams {
+  category: StringArrayFilter
+  value_type: StringArrayFilter
+}
+
+type PathwayPayload implements Payload {
+  code: String!
+  success: Boolean!
+  pathway: Pathway
+}
+
+type Pathway {
+  pathway_definition_id: String!
+  release_id: String!
+  id: ID!
+  patient_id: String!
+  version: Float
+  title: String!
+  start_date: SafeDate
+  stop_date: SafeDate
+  complete_date: SafeDate
+
+  """Deprecated. Please use latestActivities."""
+  activities: [Activity!] @deprecated(reason: "use latestActivities instead. Limited to most recent 1000 activities")
+
+  """
+  Activities, sorted by date in descending order. For larger care flows, only the most recent 1000 activities are included. To see a complete list of activities, please use the `activity` query and appropriate filters.
+  """
+  latestActivities: [Activity!]!
+  swimlanes: Swimlanes!
+  status: PathwayStatus!
+  status_explanation: String
+  tracks: [Track!]!
+  dashboards: PathwayDashboard
+  patient: User!
+}
+
+"""Safe date scalar that can serialize string or date"""
+scalar SafeDate
+
+type Swimlanes {
+  lanes: [Swimlane!]!
+  items: [SwimlaneItem!]!
+  links: [SwimlaneLink!]!
+}
+
+type Swimlane {
+  id: ID!
+  title: String!
+}
+
+type SwimlaneItem {
+  id: ID!
+  lane_id: ID!
+  row_index: Float!
+  column_index: Float!
+  title: String!
+  info: String
+  date: SafeDate
+  category: SwimlaneItemCategory!
+  type: SwimlaneItemType!
+  documentation: FormattedText
+  track_id: ID
+}
+
+enum SwimlaneItemCategory {
+  ACTION
+  STEP
+  TRACK
+  TRACK_START
+  TRACK_END
+  PATHWAY_START
+  PATHWAY_END
+}
+
+enum SwimlaneItemType {
+  active
+  completed
+  pending
+  possible
+}
+
+type FormattedText {
+  content: TranslatedText!
+  format: String!
+}
+
+type SwimlaneLink {
+  id: ID!
+  origin_id: ID!
+  destination_id: ID!
+}
+
+type Track {
+  """The definition ID of the Track, can be used for adding or scheduling"""
+  id: ID!
+  title: String!
+  release_id: String
+
+  """
+  Whether the track can be triggered manually (i.e. via addTrack or scheduleTrack mutations)
+  """
+  can_trigger_manually: Boolean
+}
+
+type PathwayDashboard {
+  dashboard_ids: [String!]!
+  cumulio_auth_id: String!
+  cumulio_auth_token: String!
+}
+
+type User {
+  id: ID!
+  tenant_id: String!
+  profile: UserProfile
+}
+
+type UserProfile {
+  email: String
+  first_name: String
+  last_name: String
+  name: String
+  birth_date: String
+  preferred_language: String
+
+  """
+  Sex code as defined by ISO standard IEC_5218, 0 - NOT_KNOWN, 1 - MALE, 2 - FEMALE
+  """
+  sex: Sex
+  national_registry_number: String
+  patient_code: String
+  phone: String
+  mobile_phone: String
+  address: Address
+  identifier: [Identifier!]
+}
+
+enum Sex {
+  NOT_KNOWN
+  MALE
+  FEMALE
+}
+
+type Address {
+  street: String
+  city: String
+  zip: String
+  state: String
+  country: String
+}
+
+type Identifier {
+  system: String!
+  value: String!
+}
+
+type PathwaysPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  pathways: [PathwaySummary!]!
+}
+
+type PathwaySummary {
+  pathway_definition_id: String
+  id: ID!
+  title: String!
+  status: PathwayStatus!
+  status_explanation: String
+  patient_id: String
+  start_date: SafeDate
+  stop_date: SafeDate
+  complete_date: SafeDate
+  version: Float
+}
+
+input FilterPathways {
+  pathway_definition_id: IdFilter
+  status: StringArrayFilter
+  patient_id: StringArrayFilter
+  version: NumberArrayFilter
+  release_id: StringArrayFilter
+  start_date: DateFilter
+}
+
+input IdFilter {
+  eq: String
+}
+
+input NumberArrayFilter {
+  in: [Float!]
+}
+
+type PatientDemographicsQueryConfigurationPayload {
+  is_enabled: Boolean!
+  input_box_text: String
+}
+
+type PatientPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patient: User
+}
+
+type PatientsPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  patients: [User!]!
+}
+
+input FilterPatients {
+  profile_id: StringArrayFilter
+  patient_code: TextFilterEquals
+  national_registry_number: TextFilterEquals
+  name: TextFilter
+  search: TextFilterContains
+}
+
+input TextFilter {
+  eq: String
+  contains: String
+}
+
+input TextFilterContains {
+  contains: String
+}
+
+type PublishedPathwayDefinitionsPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  publishedPathwayDefinitions: [PublishedPathwayDefinition!]!
+}
+
+type PublishedPathwayDefinition {
+  id: ID!
+  title: String!
+  version: Float
+  release_id: String
+  release_date: String
+  created: AuditTrail
+  last_updated: AuditTrail
+
+  """Details about all pathway definitions"""
+  latest: PathwayDefinitionDetails
+
+  """Details about the latest pathway definition"""
+  all: PathwayDefinitionDetails
+  total_activities: Float
+  active_activities: Float
+  failed_activities: Float
+  cancelled_activities: Float
+  total_stakeholders: Float
+  stakeholders_with_pending_activities_list: [String!]
+  total_patients: Float
+  patients_with_pending_activities: Float
+
+  """Starting/baseline data point definitions for the pathway"""
+  dataPointDefinitions: [DataPointDefinition!]! @deprecated(reason: "Use data_point_definitions instead")
+
+  """Starting/baseline data point definitions for the pathway"""
+  data_point_definitions: [DataPointDefinition!]
+
+  """Tracks for the pathway"""
+  track_definitions: [Track!]
+}
+
+type AuditTrail {
+  user_id: String!
+  user_email: String
+  date: SafeDate!
+}
+
+type PathwayDefinitionDetails {
+  total_careflows: Float
+  active_careflows: Float
+  stopped_careflows: Float
+  completed_careflows: Float
+  total_patients: Float
+}
+
+input FilterPathwayDefinitionsParams {
+  search: TextFilterContains
+}
+
+type ScheduledStepsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  steps: [Element!]!
+}
+
+type SearchPatientsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patients: [User!]!
+}
+
+type StakeholdersPayload implements Payload {
+  code: String!
+  success: Boolean!
+  stakeholders: [Stakeholder!]!
+}
+
+type Stakeholder {
+  id: ID!
+  definition_id: String!
+  label: StakeholderLabel!
+  clinical_app_role: StakeholderClinicalAppRole!
+  release_id: String!
+  version: Float!
+}
+
+type StakeholderLabel {
+  en: String!
+}
+
+enum StakeholderClinicalAppRole {
+  PATIENT
+  PHYSICIAN
+  CAREGIVER
+}
+
+type TracksPayload implements Payload {
+  code: String!
+  success: Boolean!
+  tracks: [Track!]!
+}
+
+type CurrentUserPayload implements Payload {
+  code: String!
+  success: Boolean!
+  user: CurrentUser!
+}
+
+type CurrentUser {
+  id: ID!
+  tenant_id: String!
+  profile: UserProfile
+  tenant: Tenant!
+}
+
+type Tenant {
+  name: String!
+  logo_path: String!
+  accent_color: String!
+  hosted_page_title: String!
+  is_default: Boolean!
+  identifier_systems: [IdentifierSystem!]
+}
+
+type IdentifierSystem {
+  name: String!
+  display_name: String!
+  system: String!
+}
+
+type WebhookCallPayload implements Payload {
+  code: String!
+  success: Boolean!
+  webhook_call: WebhookCall!
+}
+
+type WebhookCall {
+  id: ID!
+  request: WebhookCallRequest!
+  responses: [WebhookCallResponse!]!
+  status: String!
+  webhook_id: String!
+  webhook_name: String!
+  event_type: String!
+  created_at: String!
+  pathway: ApiPathwayContext
+}
+
+type WebhookCallRequest {
+  endpoint: String!
+  headers: [WebhookCallHeader!]!
+  body: String!
+  method: String!
+}
+
+type WebhookCallHeader {
+  key: String!
+  value: String!
+}
+
+type WebhookCallResponse {
+  status: Float!
+  body: String!
+  date: String!
+}
+
+type ApiPathwayContext {
+  id: String!
+  start_date: String
+  pathway_definition_id: String!
+  patient_id: String
+}
+
+type WebhookCallsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  webhook_calls: [WebhookCall!]!
+}
+
+type OrchestrationFactsPromptPayload implements Payload {
+  code: String!
+  success: Boolean!
+  response: String!
+}
+
+type HostedPagesLinkPayload implements Payload {
+  code: String!
+  success: Boolean!
+
+  """
+  The hosted pages link for the stakeholder. If there is no activity for the stakeholder in the care flow, this link will be null.
+  """
+  hosted_pages_link: HostedPagesLink
+}
+
+type HostedPagesLink {
+  id: ID!
+  pathway_id: String!
+  stakeholder_id: String
+  url: String
+}
+
+type Mutation {
+  addIdentifierToPatient(input: AddIdentifierToPatientInput!): AddIdentifierToPatientPayload!
+  addTrack(input: AddTrackInput!): AddTrackPayload!
+  unscheduleTracks(input: CancelScheduledTracksInput!): CancelScheduledTracksPayload!
+  completeExtensionActivity(input: CompleteExtensionActivityInput!): CompleteExtensionActivityPayload!
+  createPatient(mycare: MyCareOptions, input: CreatePatientInput): CreatePatientPayload!
+  deletePathway(input: DeletePathwayInput!): EmptyPayload!
+  deletePatient(input: DeletePatientInput!): EmptyPayload!
+  evaluateFormRules(input: EvaluateFormRulesInput!): EvaluateFormRulesPayload!
+  markMessageAsRead(input: MarkMessageAsReadInput!): MarkMessageAsReadPayload!
+
+  """Retrieve patient demographics from an external system"""
+  requestPatientDemographics(input: PatientDemographicsInput!): PatientDemographicsPayload!
+  retryActivity(input: RetryActivityInput!): EmptyPayload!
+  retryAllApiCalls(input: RetryAllApiCallsInput!): EmptyPayload!
+  retryAllFailedApiCalls(input: RetryAllFailedApiCallsInput!): EmptyPayload!
+  retryAllFailedWebhookCalls(input: RetryAllFailedWebhookCallsInput!): EmptyPayload!
+  retryAllFailedWebhookCallsForPathwayDefinition(input: RetryAllFailedWebhookCallsForPathwayDefinitionInput!): EmptyPayload!
+  retryAllWebhookCalls(input: RetryAllWebhookCallsInput!): EmptyPayload!
+  retryApiCall(input: RetryApiCallInput!): RetryApiCallPayload!
+  retryPushToEmr(input: RetryPushToEmrInput!): EmptyPayload!
+  retryWebhookCall(input: RetryWebhookCallInput!): RetryWebhookCallPayload!
+  saveBaselineInfo(input: SaveBaselineInfoInput!): EmptyPayload! @deprecated(reason: "We will be deactivating this endpoint in the future.")
+  scheduleTrack(input: ScheduleTrackInput!): ScheduleTrackPayload!
+  startHostedActivitySession(input: StartHostedActivitySessionInput!): StartHostedActivitySessionPayload!
+  startHostedPathwaySessionFromLink(input: StartHostedPathwaySessionFromLinkInput!): StartHostedPathwaySessionFromLinkPayload!
+  startHostedActivitySessionViaHostedPagesLink(input: StartHostedActivitySessionViaHostedPagesLinkInput!): StartHostedActivitySessionPayload!
+
+  """
+  Start a hosted pathway session for a patient uniquely identified by patient_id or patient_identifier. If neither patient_id or patient_identifier is provided, a new anonymous patient will be created.
+  """
+  startHostedPathwaySession(input: StartHostedPathwaySessionInput!): StartHostedPathwaySessionPayload!
+  startPathway(input: StartPathwayInput!): StartPathwayPayload!
+  startPathwayWithPatientIdentifier(input: StartPathwayWithPatientIdentifierInput!): StartPathwayWithPatientIdentifierPayload!
+  stopPathway(input: StopPathwayInput!): EmptyPayload!
+  stopTrack(input: StopTrackInput!): StopTrackPayload!
+  submitChecklist(input: SubmitChecklistInput!): SubmitChecklistPayload!
+  submitFormResponse(input: SubmitFormResponseInput!): SubmitFormResponsePayload!
+  updateBaselineInfo(input: UpdateBaselineInfoInput!): EmptyPayload!
+  updatePatient(input: UpdatePatientInput!): UpdatePatientPayload!
+
+  """
+  Update which patient was created after import request for logging purposes
+  """
+  updatePatientDemographicsQuery(input: UpdatePatientDemographicsQueryInput!): UpdatePatientDemographicsQueryPayload!
+  updatePatientLanguage(input: UpdatePatientLanguageInput!): UpdatePatientLanguagePayload!
+}
+
+type AddIdentifierToPatientPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patient: User
+}
+
+input AddIdentifierToPatientInput {
+  patient_id: String!
+  identifier: IdentifierInput!
+}
+
+input IdentifierInput {
+  system: String!
+  value: String!
+}
+
+type AddTrackPayload implements Payload {
+  code: String!
+  success: Boolean!
+}
+
+input AddTrackInput {
+  pathway_id: String!
+  track_id: String!
+}
+
+type CancelScheduledTracksPayload implements Payload {
+  code: String!
+  success: Boolean!
+  unscheduled_ids: [String!]!
+}
+
+input CancelScheduledTracksInput {
+  ids: [String!]!
+}
+
+type CompleteExtensionActivityPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity!
+}
+
+input CompleteExtensionActivityInput {
+  activity_id: String!
+  data_points: [ExtensionDataPointInput!]!
+}
+
+input ExtensionDataPointInput {
+  key: String!
+  value: String!
+}
+
+type CreatePatientPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patient: User
+}
+
+input MyCareOptions {
+  password: String
+}
+
+input CreatePatientInput {
+  email: String
+  first_name: String
+  last_name: String
+  birth_date: String
+
+  """ISO 639-1 shortcode"""
+  preferred_language: String
+
+  """
+  Sex code as defined by ISO standard IEC_5218, 0 - NOT_KNOWN, 1 - MALE, 2 - FEMALE
+  """
+  sex: Sex
+  national_registry_number: String
+  patient_code: String
+
+  """Must be in valid E164 telephone number format"""
+  phone: String
+
+  """Must be in valid E164 telephone number format"""
+  mobile_phone: String
+  address: AddressInput
+  identifier: [IdentifierInput!] = []
+}
+
+input AddressInput {
+  street: String
+  city: String
+  zip: String
+  state: String
+  country: String
+}
+
+type EmptyPayload implements Payload {
+  code: String!
+  success: Boolean!
+}
+
+input DeletePathwayInput {
+  pathway_id: String!
+}
+
+input DeletePatientInput {
+  patient_id: String!
+}
+
+type EvaluateFormRulesPayload implements Payload {
+  code: String!
+  success: Boolean!
+  results: [QuestionRuleResult!]!
+}
+
+type QuestionRuleResult {
+  question_id: String!
+  rule_id: String!
+  satisfied: Boolean!
+}
+
+input EvaluateFormRulesInput {
+  form_id: String!
+  answers: [AnswerInput!]!
+}
+
+input AnswerInput {
+  question_id: String!
+  value: String!
+}
+
+type MarkMessageAsReadPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity!
+}
+
+input MarkMessageAsReadInput {
+  activity_id: String!
+}
+
+type PatientDemographicsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  query_id: String!
+  status: String!
+  total: Float
+  entry: [UserProfile!]
+}
+
+input PatientDemographicsInput {
+  patient_identifier: String!
+}
+
+input RetryActivityInput {
+  activity_id: String!
+}
+
+input RetryAllApiCallsInput {
+  pathway_id: String!
+}
+
+input RetryAllFailedApiCallsInput {
+  pathway_id: String!
+}
+
+input RetryAllFailedWebhookCallsInput {
+  pathway_id: String!
+}
+
+input RetryAllFailedWebhookCallsForPathwayDefinitionInput {
+  pathway_definition_id: String!
+}
+
+input RetryAllWebhookCallsInput {
+  pathway_id: String!
+}
+
+type RetryApiCallPayload implements Payload {
+  code: String!
+  success: Boolean!
+  api_call: ApiCall!
+}
+
+input RetryApiCallInput {
+  api_call_id: String!
+}
+
+input RetryPushToEmrInput {
+  activity_id: String!
+}
+
+type RetryWebhookCallPayload implements Payload {
+  code: String!
+  success: Boolean!
+  webhook_call: WebhookCall!
+}
+
+input RetryWebhookCallInput {
+  webhook_call_id: String!
+}
+
+input SaveBaselineInfoInput {
+  pathway_id: String!
+  baseline_info: [BaselineInfoInput!]!
+}
+
+input BaselineInfoInput {
+  data_point_definition_id: String!
+  value: String!
+}
+
+type ScheduleTrackPayload implements Payload {
+  code: String!
+  success: Boolean!
+  id: String!
+}
+
+input ScheduleTrackInput {
+  pathway_id: String!
+  track_id: String!
+  scheduled_date: String!
+  cancel_any_scheduled: Boolean
+}
+
+type StartHostedActivitySessionPayload implements Payload {
+  code: String!
+  success: Boolean!
+  session_id: String!
+  session_url: String!
+  language: String
+}
+
+input StartHostedActivitySessionInput {
+  pathway_id: String!
+  success_url: String
+  cancel_url: String
+  stakeholder_id: String!
+
+  """ISO 639-1 shortcode"""
+  language: String
+}
+
+type StartHostedPathwaySessionFromLinkPayload implements Payload {
+  code: String!
+  success: Boolean!
+  session_url: String!
+}
+
+input StartHostedPathwaySessionFromLinkInput {
+  id: String!
+  patient_identifier: IdentifierInput
+}
+
+input StartHostedActivitySessionViaHostedPagesLinkInput {
+  hosted_pages_link_id: String!
+}
+
+type StartHostedPathwaySessionPayload implements Payload {
+  code: String!
+  success: Boolean!
+  session_id: String!
+  session_url: String!
+  pathway_id: String!
+  stakeholder: HostedSessionStakeholder!
+}
+
+input StartHostedPathwaySessionInput {
+  pathway_definition_id: String!
+  success_url: String
+  cancel_url: String
+
+  """
+  Unique id of the patient in Awell, if not provided, patient identifier will be tried to uniquely identify the patient.
+  """
+  patient_id: String
+  data_points: [DataPointInput!]
+
+  """ISO 639-1 shortcode"""
+  language: String
+
+  """
+  If no patient_id is provided this field will be used to uniquely identify the patient.
+  """
+  patient_identifier: IdentifierInput
+
+  """
+  Time-to-live of the session in seconds. This defaults to the maximal value of 3600 seconds (one hour).
+  """
+  ttl: Float = 3600
+}
+
+input DataPointInput {
+  data_point_definition_id: String!
+  value: String!
+}
+
+type StartPathwayPayload implements Payload {
+  code: String!
+  success: Boolean!
+  pathway_id: String!
+  stakeholders: [Stakeholder!]!
+}
+
+input StartPathwayInput {
+  patient_id: String!
+  pathway_definition_id: String!
+  data_points: [DataPointInput!]
+  release_id: String
+}
+
+type StartPathwayWithPatientIdentifierPayload implements Payload {
+  code: String!
+  success: Boolean!
+  pathway_id: String!
+  patient_id: String!
+  stakeholders: [Stakeholder!]!
+}
+
+input StartPathwayWithPatientIdentifierInput {
+  patient_identifier: IdentifierInput!
+  pathway_definition_id: String!
+  data_points: [DataPointInput!]
+  release_id: String
+}
+
+input StopPathwayInput {
+  pathway_id: String!
+  reason: String
+}
+
+type StopTrackPayload implements Payload {
+  code: String!
+  success: Boolean!
+  track: Element!
+}
+
+input StopTrackInput {
+  pathway_id: String!
+  track_id: String!
+}
+
+type SubmitChecklistPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity!
+}
+
+input SubmitChecklistInput {
+  activity_id: String!
+}
+
+type SubmitFormResponsePayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity!
+}
+
+input SubmitFormResponseInput {
+  activity_id: String!
+  response: [QuestionResponseInput!]!
+}
+
+input QuestionResponseInput {
+  question_id: String!
+  value: String!
+}
+
+input UpdateBaselineInfoInput {
+  pathway_id: String!
+  baseline_info: [BaselineInfoInput!]!
+}
+
+type UpdatePatientPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patient: User
+}
+
+input UpdatePatientInput {
+  patient_id: String!
+  profile: PatientProfileInput!
+}
+
+input PatientProfileInput {
+  first_name: String
+  last_name: String
+  birth_date: String
+
+  """ISO 639-1 shortcode"""
+  preferred_language: String
+
+  """
+  Sex code as defined by ISO standard IEC_5218, 0 - NOT_KNOWN, 1 - MALE, 2 - FEMALE
+  """
+  sex: Sex
+  national_registry_number: String
+  patient_code: String
+  email: String
+
+  """Must be in valid E164 telephone number format"""
+  phone: String
+
+  """Must be in valid E164 telephone number format"""
+  mobile_phone: String
+  address: AddressInput
+  identifier: [IdentifierInput!]
+}
+
+type UpdatePatientDemographicsQueryPayload implements Payload {
+  code: String!
+  success: Boolean!
+  created_patient_entry_index: Float!
+  created_patient_id: String!
+}
+
+input UpdatePatientDemographicsQueryInput {
+  """Patient ID of the created patient in Awell"""
+  created_patient_id: String!
+
+  """
+  Index from the array returned from the PDQ response, which was used to create the patient
+  """
+  created_patient_entry_index: Float!
+  query_id: String!
+}
+
+type UpdatePatientLanguagePayload implements Payload {
+  code: String!
+  success: Boolean!
+  user: User
+}
+
+input UpdatePatientLanguageInput {
+  """ISO 639-1 shortcode"""
+  preferred_language: String!
+}
+
+type Subscription {
+  activityCreated(pathway_id: String, only_patient_activities: Boolean): Activity!
+  activityUpdated(pathway_id: String, only_patient_activities: Boolean): Activity!
+  activityCompleted(pathway_id: String, only_patient_activities: Boolean): Activity!
+  activityExpired(pathway_id: String, only_patient_activities: Boolean): Activity!
+  apiCallCreated(pathway_id: String!): ApiCall!
+  apiCallUpdated(pathway_id: String!): ApiCall!
+  elementCreated(pathway_id: String!, element_type: ElementType): Element!
+  elementCompleted(pathway_id: String!, element_type: ElementType): Element!
+  elementUpdated(pathway_id: String!, element_type: ElementType): Element!
+  sessionActivityCreated(only_stakeholder_activities: Boolean): Activity!
+  sessionActivityUpdated(only_stakeholder_activities: Boolean): Activity!
+  sessionActivityCompleted(only_stakeholder_activities: Boolean): Activity!
+  sessionActivityExpired(only_stakeholder_activities: Boolean): Activity!
+  sessionExpired: HostedSession!
+  sessionCompleted: HostedSession!
+  pathwayUpdated(id: ID!): Pathway!
+  webhookCallCreated(pathway_id: String!): WebhookCall!
+  webhookCallUpdated(pathway_id: String!): WebhookCall!
+}

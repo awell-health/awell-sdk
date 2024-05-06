@@ -1,9 +1,13 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "yarn@4.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awell-health/awell-sdk.git"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "generate-sdk": "ts-node ./src/genql/generateSdk.ts",

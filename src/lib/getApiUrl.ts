@@ -1,4 +1,4 @@
-import { Environment } from "../types";
+import { type Environment } from '../types'
 
 /**
  * Returns the appropriate API URL based on the specified environment.
@@ -15,22 +15,22 @@ import { Environment } from "../types";
  */
 export const getApiUrl = (environment?: Environment): string => {
   const DEFAULT_API_URL =
-    "https://api.sandbox.awellhealth.com/orchestration/m2m/graphql";
+    'https://api.sandbox.awellhealth.com/orchestration/m2m/graphql'
 
   switch (environment) {
-    case "development":
-      return "https://api.development.awellhealth.com/orchestration/m2m/graphql";
-    case "staging":
-      return "https://api.staging.awellhealth.com/orchestration/m2m/graphql";
-    case "sandbox":
-      return "https://api.sandbox.awellhealth.com/orchestration/m2m/graphql";
-    case "production-eu":
-      return "https://api.awellhealth.com/orchestration/m2m/graphql";
-    case "production-us":
-      return "https://api.us.awellhealth.com/orchestration/m2m/graphql";
-    case "production-uk":
-      return "https://api.uk.awellhealth.com/orchestration/m2m/graphql";
+    case 'development':
+      return 'https://api.development.awellhealth.com/orchestration/m2m/graphql'
+    case 'staging':
+      return 'https://api.staging.awellhealth.com/orchestration/m2m/graphql'
+    case 'sandbox':
+      return 'https://api.sandbox.awellhealth.com/orchestration/m2m/graphql'
+    case 'production-eu':
+      return 'https://api.awellhealth.com/orchestration/m2m/graphql'
+    case 'production-us':
+      return 'https://api.us.awellhealth.com/orchestration/m2m/graphql'
+    case 'production-uk':
+      return 'https://api.uk.awellhealth.com/orchestration/m2m/graphql'
     default:
-      return DEFAULT_API_URL;
+      return DEFAULT_API_URL
   }
-};
+}

@@ -1,2 +1,2 @@
-export { AwellSdk } from "./AwellSdk";
-export * from './genql/generated/schema';
+export { AwellSdk } from './AwellSdk'
+export * from './genql/generated/schema'

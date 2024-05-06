@@ -1,1 +1,1 @@
-export { getApiUrl } from "./getApiUrl";
+export { getApiUrl } from './getApiUrl'

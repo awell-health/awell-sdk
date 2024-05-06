@@ -1,7 +1,7 @@
-import { isNil } from "lodash";
-import { Client, createClient } from "./genql/generated";
-import { getApiUrl } from "./lib";
-import { Environment } from "./types";
+import { isNil } from 'lodash'
+import { type Client, createClient } from './genql/generated'
+import { getApiUrl } from './lib'
+import { type Environment } from './types'
 
 /**
  * A class representing the Awell SDK.
@@ -10,24 +10,24 @@ export class AwellSdk {
   /**
    * The API key used to authenticate API requests.
    */
-  readonly apiKey: string;
+  readonly apiKey: string
 
   /**
    * The orchestration client that calls the orchestration API.
    */
-  readonly orchestration: Client;
+  readonly orchestration: Client
 
   /**
    * The environment for which the SDK is configured (e.g., development, staging, production).
    * Setting the environment will make sure the correct API URL is called.
    */
-  readonly environment?: Environment;
+  readonly environment?: Environment
 
   /**
    * The custom API URL to be used if provided.
    * Takes presedence over the "environment" when both are specified.
    */
-  readonly apiUrl?: string;
+  readonly apiUrl?: string
 
   /**
    * Creates an instance of the Awell SDK.
@@ -39,18 +39,18 @@ export class AwellSdk {
    * @throws {Error} Will throw an error if both `environment` and `apiUrl` are not provided.
    */
   constructor(opts: {
-    environment?: Environment;
-    apiKey: string;
-    apiUrl?: string;
+    environment?: Environment
+    apiKey: string
+    apiUrl?: string
   }) {
-    this.environment = opts.environment;
-    this.apiKey = opts.apiKey;
-    this.apiUrl = opts.apiUrl;
+    this.environment = opts.environment
+    this.apiKey = opts.apiKey
+    this.apiUrl = opts.apiUrl
 
     if (isNil(this.environment) && isNil(this.apiUrl)) {
       throw new Error(
         'Both "environment" and "apiUrl" are not provided. Provide one of the two to instantiate the SDK.',
-      );
+      )
     }
 
     const orchestrationClient = createClient({
@@ -59,8 +59,8 @@ export class AwellSdk {
       headers: {
         apikey: this.apiKey,
       },
-    });
+    })
 
-    this.orchestration = orchestrationClient;
+    this.orchestration = orchestrationClient
   }
 }

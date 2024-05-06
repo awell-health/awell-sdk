@@ -40,3 +40,9 @@ build/
 .DS_Store
 .env
 *.swp
+
+# JetBrains IDEs
+.idea
+
+# Zed editor
+.zed

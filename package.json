@@ -1,11 +1,11 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packageManager": "yarn@4.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && echo 'Built new ./dist'",
+    "build": "tsc --project tsconfig.build.json",
     "generate-sdk": "ts-node ./src/genql/generateSdk.ts",
     "lint": "eslint src/**/*.ts",
     "test": "jest"

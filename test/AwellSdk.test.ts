@@ -1,4 +1,4 @@
-import { AwellSdk } from '..'
+import { AwellSdk } from '../src'
 
 test('AwellSdk', async () => {
   const sdk = new AwellSdk({

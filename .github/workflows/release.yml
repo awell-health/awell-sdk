@@ -2,7 +2,7 @@ name: Compile and publish package
 
 on:
   push:
-    branches: [ "main", "release/*" ]
+    branches: ['main', 'release/*']
 
 jobs:
   deploy:
@@ -12,10 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
         env:
@@ -38,7 +41,7 @@ jobs:
         run: |
           pkg_version=$(cat package.json | jq -r '.version')
           branch=${GITHUB_REF##*/}
-          
+
           if [[ $branch != "main" ]]; then
             yarn version "$pkg_version-beta$GITHUB_RUN_NUMBER"
             yarn npm publish --tag beta --access public

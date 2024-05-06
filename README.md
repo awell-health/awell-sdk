@@ -10,11 +10,6 @@ The SDK can translates JavaScript code into GraphQL queries, enabling **auto com
 
 ## For Awell
 
-### Todo
-
-- Review
-- Create NPM package (see ""Installation)" so the package can be used as desribed in "Usage"
-
 ### Generate the SDK client
 
 Run `yarn generate-sdk`
@@ -45,7 +40,7 @@ const sdk = new AwellSdk({
 })
 
 // Perform your query our mutation
-sdk.orchestration.query({
+const result = await sdk.orchestration.query({
   publishedPathwayDefinitions: {
     publishedPathwayDefinitions: {
       id: true,
@@ -55,4 +50,7 @@ sdk.orchestration.query({
     },
   },
 })
+
+const definitions =
+  result.publishedPathwayDefinitions.publishedPathwayDefinitions
 ```

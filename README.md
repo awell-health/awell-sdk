@@ -59,17 +59,13 @@ const sdk = new AwellSdk({
 })
 ```
 
-| Option        | Required   | Description                                                                                                                                                                                                                                                          |
-| ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| environment   | No\*       | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: 'development' \| 'staging' \| 'sandbox' \| 'production-eu' \| 'production-us' \|'production-uk'   |
-| apiUrl        | No\*       | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                        |
-| apiKey        | Yes        | The API key to use for authentication.                                                                                                                                                                                                                               |
-| ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| environment   | No\*       | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: 'development' \| 'staging' \| 'sandbox' \| 'production-eu' \| 'production-us' \|'production-uk'   |
-| apiUrl        | No\*       | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                        |
-| apiKey        | Yes        | The API key to use for authentication.                                                                                                                                                                                                                               |
+| Option      | Required | Description                                                                                                                                                                                                                                                        |
+|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| environment | No*      | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: `development` \| `staging` \| `sandbox` \| `production-eu` \| `production-us` \| `production-uk`|
+| apiUrl      | No*      | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                      |
+| apiKey      | Yes      | The API key to use for authentication.                                                                                                                                                                                                                             |
 
-* The SDK will throw an error if neither environment nor apiUrl is provided.
+\* The SDK will throw an error if neither environment nor apiUrl is provided.
 
 ## More information
 

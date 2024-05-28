@@ -144,9 +144,9 @@ export interface DataPointDefinition {
     __typename: 'DataPointDefinition'
 }
 
-export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION'
+export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT'
 
-export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE'
+export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON'
 
 export interface DataPointPossibleValue {
     value: Scalars['String']
@@ -4380,7 +4380,8 @@ export const enumDataPointSourceType = {
    API_CALL: 'API_CALL' as const,
    API_CALL_STATUS: 'API_CALL_STATUS' as const,
    EXTENSION_WEBHOOK: 'EXTENSION_WEBHOOK' as const,
-   EXTENSION_ACTION: 'EXTENSION_ACTION' as const
+   EXTENSION_ACTION: 'EXTENSION_ACTION' as const,
+   DATA_POINT: 'DATA_POINT' as const
 }
 
 export const enumDataPointValueType = {
@@ -4390,7 +4391,8 @@ export const enumDataPointValueType = {
    STRING: 'STRING' as const,
    NUMBERS_ARRAY: 'NUMBERS_ARRAY' as const,
    STRINGS_ARRAY: 'STRINGS_ARRAY' as const,
-   TELEPHONE: 'TELEPHONE' as const
+   TELEPHONE: 'TELEPHONE' as const,
+   JSON: 'JSON' as const
 }
 
 export const enumActivitySubjectType = {

@@ -146,6 +146,7 @@ enum DataPointSourceType {
   API_CALL_STATUS
   EXTENSION_WEBHOOK
   EXTENSION_ACTION
+  DATA_POINT
 }
 
 enum DataPointValueType {
@@ -156,6 +157,7 @@ enum DataPointValueType {
   NUMBERS_ARRAY
   STRINGS_ARRAY
   TELEPHONE
+  JSON
 }
 
 type DataPointPossibleValue {

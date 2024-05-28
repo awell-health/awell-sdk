@@ -1,27 +1,46 @@
 {
   "name": "@awell-health/awell-sdk",
-  "packageManager": "yarn@4.1.1",
-  "main": "src/index.ts",
+  "version": "0.1.4",
+  "packageManager": "yarn@4.2.1",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awell-health/awell-sdk.git"
+  },
   "scripts": {
-    "build": "tsc && echo 'Built new ./build'",
+    "build": "tsc --project tsconfig.build.json && echo 'Built new dist/'",
     "generate-sdk": "ts-node ./src/genql/generateSdk.ts",
+    "lint": "eslint src/**/*.ts",
     "test": "jest"
   },
+  "files": [
+    "dist",
+    "!**/*.test.ts",
+    "!**/__tests__/**",
+    "!**/__mocks__/**"
+  ],
   "dependencies": {
     "@genql/cli": "^6.3.3",
     "dotenv": "^16.4.5",
-    "eslint": "^9.1.1",
-    "lodash": "^4.17.21",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/lodash": "^4",
+    "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.8",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.0.1",
+    "eslint-config-love": "^47.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
     "jest": "^29.7.0",
     "prettier": "3.2.5",
-    "ts-jest": "^29.1.2"
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }

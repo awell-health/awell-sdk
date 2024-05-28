@@ -10,13 +10,6 @@ The SDK can translates JavaScript code into GraphQL queries, enabling **auto com
 
 ## For Awell
 
-### Todo
-
-- Review
-- Create NPM package (see ""Installation)" so the package can be used as desribed in "Usage"
-- Add prettier
-- Add eslint
-
 ### Generate the SDK client
 
 Run `yarn generate-sdk`
@@ -28,7 +21,7 @@ Note: make sure environment variables in `.env` are set.
 ### Installation
 
 ```bash
-yarn add @awell-health/sdk-js
+yarn add @awell-health/awell-sdk
 ```
 
 ### Usage
@@ -38,16 +31,16 @@ Learn more [here](https://genql.dev/docs).
 Remember to always call the SDK on the server to keep your API key secure.
 
 ```javascript
-import { AwellSdk } from "@awell-health/sdk-js";
+import { AwellSdk } from '@awell-health/awell-sdk'
 
 // Create the SDK
 const sdk = new AwellSdk({
-  environment: "production-eu",
-  apiKey: "YOUR_API_KEY",
-});
+  environment: 'production-eu',
+  apiKey: 'YOUR_API_KEY',
+})
 
 // Perform your query our mutation
-sdk.orchestration.query({
+const result = await sdk.orchestration.query({
   publishedPathwayDefinitions: {
     publishedPathwayDefinitions: {
       id: true,
@@ -56,5 +49,8 @@ sdk.orchestration.query({
       release_id: true,
     },
   },
-});
+})
+
+const definitions =
+  result.publishedPathwayDefinitions.publishedPathwayDefinitions
 ```

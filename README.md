@@ -1,32 +1,24 @@
-# Awell SDK (JavaScript)
+# Awell SDK
 
-A JavaScript SDK built with https://genql.dev/. The SDK is auto-generated and should make calling Awell's API easier if if you are on a JavaScript stack.
+The Awell SDK provides convenient access to Awell's APIs from applications written in server-side JavaScript.
 
-The SDK can translates JavaScript code into GraphQL queries, enabling **auto completion** and **validation** for the GraphQL queries. Additional benefits:
+## Powered by GenQL
 
-- Type safe
-- Only generate the client once, only when the schema changes and not every time a query is changed
-- No runtime dependencies (not even graphql)
+The SDK is built using [GenQL](https://genql.dev/), making it easier to call Awell's API if you're using a JavaScript stack. The SDK translates JavaScript code into GraphQL queries, providing auto-completion and validation for your queries.
 
-## For Awell
+## Installation
 
-### Generate the SDK client
+Install the package with:
 
-Run `yarn generate-sdk`
-
-Note: make sure environment variables in `.env` are set.
-
-## For users
-
-### Installation
-
-```bash
+```
+npm install @awell-health/awell-sdk
+# or
 yarn add @awell-health/awell-sdk
 ```
 
-### Usage
+## Usage
 
-Learn more [here](https://genql.dev/docs).
+Learn more about GenQL and its syntax [here](https://genql.dev/docs).
 
 Remember to always call the SDK on the server to keep your API key secure.
 
@@ -53,4 +45,62 @@ const result = await sdk.orchestration.query({
 
 const definitions =
   result.publishedPathwayDefinitions.publishedPathwayDefinitions
+```
+
+## Configuration
+
+The SDK can be initialized with the following options:
+
+```javascript
+const sdk = new AwellSdk({
+  environment: 'sandbox',
+  apiUrl: 'https://api.sandbox.awellhealth.com/orchestration/m2m/graphql',
+  apiKey: 'YOUR_API_KEY',
+})
+```
+
+| Option        | Required   | Description                                                                                                                                                                                                                                                          |
+| ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| environment   | No\*       | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: 'development' \| 'staging' \| 'sandbox' \| 'production-eu' \| 'production-us' \|'production-uk'   |
+| apiUrl        | No\*       | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                        |
+| apiKey        | Yes        | The API key to use for authentication.                                                                                                                                                                                                                               |
+| ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| environment   | No\*       | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: 'development' \| 'staging' \| 'sandbox' \| 'production-eu' \| 'production-us' \|'production-uk'   |
+| apiUrl        | No\*       | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                        |
+| apiKey        | Yes        | The API key to use for authentication.                                                                                                                                                                                                                               |
+
+* The SDK will throw an error if neither environment nor apiUrl is provided.
+
+## More information
+
+You can browse our [Developer Hub](https://developers.awellhealth.com/awell-orchestration/api-reference/overview/graphql-api) to learn more about all queries and mutations. Everything documented on the Developer Hub is available through the SDK.
+
+### Example
+
+The [Get patient query](https://developers.awellhealth.com/awell-orchestration/api-reference/queries/get-patient) as documented on the Developer Hub can be used as follows:
+
+```javascript
+const res = await sdk.orchestration.query({
+  patient: {
+    __args: {
+      id: 'some_patient_id', // Variable
+    },
+    patient: {
+      id: true,
+      profile: {
+        __scalar: true, // get all unnested scalar fields
+        identifier: {
+          __scalar: true, // get all scalar fields within identifier object
+        },
+        address: {
+          street: true,
+          city: true,
+          zip: true,
+          state: true,
+          country: true,
+        },
+      },
+    },
+  },
+})
 ```

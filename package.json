@@ -1,6 +1,6 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "packageManager": "yarn@4.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,10 +22,10 @@
   ],
   "dependencies": {
     "@genql/cli": "^6.3.3",
-    "dotenv": "^16.4.5",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.8",

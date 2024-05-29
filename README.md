@@ -1,6 +1,6 @@
 # Awell SDK
 
-The Awell SDK provides convenient access to Awell's APIs from applications written in server-side JavaScript.
+The Awell SDK provides convenient access to Awell's APIs from applications written in server-side JavaScript. The SDK also exports all of our GraphQL types.
 
 ## Powered by GenQL
 
@@ -20,7 +20,7 @@ yarn add @awell-health/awell-sdk
 
 Learn more about GenQL and its syntax [here](https://genql.dev/docs).
 
-Remember to always call the SDK on the server to keep your API key secure.
+Remember to **always call the SDK on the server** to keep your API key secure.
 
 ```javascript
 import { AwellSdk } from '@awell-health/awell-sdk'
@@ -46,6 +46,19 @@ const result = await sdk.orchestration.query({
 const definitions =
   result.publishedPathwayDefinitions.publishedPathwayDefinitions
 ```
+
+
+### Types
+
+Browse all types [here](https://github.com/awell-health/awell-sdk/blob/main/src/genql/generated/schema.ts) or use our [GraphQL playground](https://developers.awellhealth.com/awell-orchestration/developer-tools/api/schema) to browse the GraphQL schema.
+
+Types can be imported as follows:
+
+```javascript
+import { type Pathway, type Form } from '@awell-health/awell-sdk'
+```
+
+
 
 ## Configuration
 

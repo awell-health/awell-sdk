@@ -1,6 +1,6 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "packageManager": "yarn@4.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,15 +22,16 @@
   ],
   "dependencies": {
     "@genql/cli": "^6.3.3",
+    "crypto": "^1.0.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.8",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.8.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.0.1",
     "eslint-config-love": "^47.0.0",
     "eslint-config-prettier": "^9.1.0",

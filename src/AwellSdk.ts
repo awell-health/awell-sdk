@@ -2,6 +2,7 @@ import { isNil } from 'lodash'
 import { type Client, createClient } from './genql/generated'
 import { getApiUrl } from './lib'
 import { type Environment } from './types'
+import { verify } from './webhooks/verify'
 
 /**
  * A class representing the Awell SDK.
@@ -62,5 +63,19 @@ export class AwellSdk {
     })
 
     this.orchestration = orchestrationClient
+  }
+
+  /**
+   * Webhooks SDK with utility functions
+   */
+  public webhooks = {
+    /**
+     * Verify that the incoming webhook has been sent by Awell and has not been tampered with.
+     * @param {any} body the JSON body of the webhook.
+     * @param {string} signature the base64 encoded signature taken from the `x-awell-signature` header.
+     * @param {string} publicKey your public signing key available in Awell Studio.
+     * @returns true if the signature is valid
+     */
+    verify
   }
 }

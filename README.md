@@ -59,7 +59,7 @@ import { type Pathway, type Form } from '@awell-health/awell-sdk'
 import {
   AwellSdk,
   type WebhookEvent,
-  type WebhookBodyPayload
+  type WebhookPayload
 } from '@awell-health/awell-sdk'
 
 const PUBLIC_KEY = 'your_public_key' // Available in Awell Studio

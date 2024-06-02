@@ -10,3 +10,18 @@ export enum WebhookEvent {
   SESSION_COMPLETED = 'session.completed',
   SESSION_EXPIRED = 'session.expired',
 }
+
+export type WebhookPayload = {
+  event_type: string
+  date?: string
+  complete_date?: string
+  start_date?: string
+  activity_id?: string
+  activity?: any
+  session?: any
+  pathway?: any
+  data_point?: any
+  reminder?: any
+  form?: any
+  response?: any
+}

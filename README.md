@@ -1,10 +1,6 @@
 # Awell SDK
 
-The Awell SDK provides convenient access to Awell's APIs from applications written in server-side JavaScript. The SDK also exports all of our GraphQL types.
-
-## Powered by GenQL
-
-The SDK is built using [GenQL](https://genql.dev/), making it easier to call Awell's API if you're using a JavaScript stack. The SDK translates JavaScript code into GraphQL queries, providing auto-completion and validation for your queries.
+The Awell SDK provides convenient access to Awell's APIs and webhooks from applications written in server-side JavaScript. The SDK also exports all of our GraphQL types.
 
 ## Installation
 
@@ -18,7 +14,7 @@ yarn add @awell-health/awell-sdk
 
 ## Usage
 
-Learn more about GenQL and its syntax [here](https://genql.dev/docs).
+Learn more about the syntax of the SDK [here](https://genql.dev/docs).
 
 Remember to **always call the SDK on the server** to keep your API key secure.
 
@@ -47,7 +43,6 @@ const definitions =
   result.publishedPathwayDefinitions.publishedPathwayDefinitions
 ```
 
-
 ### Types
 
 Browse all types [here](https://github.com/awell-health/awell-sdk/blob/main/src/genql/generated/schema.ts) or use our [GraphQL playground](https://developers.awellhealth.com/awell-orchestration/developer-tools/api/schema) to browse the GraphQL schema.
@@ -58,7 +53,63 @@ Types can be imported as follows:
 import { type Pathway, type Form } from '@awell-health/awell-sdk'
 ```
 
+### Webhooks
 
+```javascript
+import {
+  AwellSdk,
+  type WebhookEvent,
+  type WebhookBodyPayload
+} from '@awell-health/awell-sdk'
+
+const PUBLIC_KEY = 'your_public_key' // Available in Awell Studio
+
+app.post(
+  '/awell-webhook-listener',
+  express.json({ type: 'application/json' }),
+  (request, response) => {
+    // Needed if you want to verify the incoming webhook
+    const signature = req.headers['x-awell-signature'] as string;
+
+    const requestBody = request.body as WebhookPayload
+
+    const sdk = new AwellSdk({
+      environment: 'production-eu',
+      apiKey: 'YOUR_API_KEY',
+    })
+
+    /**
+     * Verify that the incoming webhook has been sent
+     * by Awell and has not been tampered with
+     */
+    const isValid = sdk.webhooks.verify(
+      requestBody,
+      signature,
+      PUBLIC_KEY,
+    )
+
+    // If webhook you received is legitimate, you can process it
+    if (isValid) {
+      const { event } = requestBody
+
+      // Handle the event
+      switch (event.event_type) {
+        case WebhookEvent.PATHWAY_STARTED: {
+          const pathway = event?.pathway
+          console.log(pathway)
+          // Your code
+          break
+        }
+        default:
+          console.log(`Unhandled event type ${event.event_type}`)
+      }
+    }
+
+    // Return a response to acknowledge receipt of the event
+    response.json({ received: true })
+  },
+)
+```
 
 ## Configuration
 
@@ -72,11 +123,11 @@ const sdk = new AwellSdk({
 })
 ```
 
-| Option      | Required | Description                                                                                                                                                                                                                                                        |
-|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| environment | No*      | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: `development` \| `staging` \| `sandbox` \| `production-eu` \| `production-us` \| `production-uk`|
-| apiUrl      | No*      | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                      |
-| apiKey      | Yes      | The API key to use for authentication.                                                                                                                                                                                                                             |
+| Option      | Required | Description                                                                                                                                                                                                                                                         |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| environment | No\*     | The Awell environment to use for the SDK. The SDK will automatically target the correct endpoint for the environment you specified. Following options are allowed: `development` \| `staging` \| `sandbox` \| `production-eu` \| `production-us` \| `production-uk` |
+| apiUrl      | No\*     | The API URL. Takes presedence over the "environment" when both are specified.                                                                                                                                                                                       |
+| apiKey      | Yes      | The API key to use for authentication.                                                                                                                                                                                                                              |
 
 \* The SDK will throw an error if neither environment nor apiUrl is provided.
 

@@ -1,4 +1,4 @@
-import { type Environment } from '../types'
+import { type Environment } from '../types/Environment'
 
 /**
  * Returns the appropriate API URL based on the specified environment.

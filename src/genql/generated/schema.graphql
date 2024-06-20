@@ -239,6 +239,7 @@ type Activity {
 
   """Url for icon, only used by extensions custom actions"""
   icon_url: String
+  action_component: ActionComponent
 
   """
   Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now.
@@ -363,6 +364,12 @@ type PathwayContext {
   track_id: String
   step_id: String
   action_id: String
+}
+
+type ActionComponent {
+  definition_id: String
+  release_id: String
+  title: String
 }
 
 enum FormDisplayMode {
@@ -844,6 +851,7 @@ type HostedSessionPayload implements Payload {
   success: Boolean!
   session: HostedSession!
   branding: BrandingSettings
+  metadata: SessionMetadata
 }
 
 type HostedSession {
@@ -885,6 +893,11 @@ type BrandingSettings {
   """Automatically save question answers locally in Hosted Pages"""
   hosted_page_autosave: Boolean
   custom_theme: String
+}
+
+type SessionMetadata {
+  pathway_definition_id: String
+  tenant_id: String
 }
 
 type MessagePayload implements Payload {

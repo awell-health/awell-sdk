@@ -220,6 +220,7 @@ export interface Activity {
     stakeholders: (ActivityObject[] | null)
     /** Url for icon, only used by extensions custom actions */
     icon_url: (Scalars['String'] | null)
+    action_component: (ActionComponent | null)
     /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
     form_display_mode: (FormDisplayMode | null)
     form: (Form | null)
@@ -289,6 +290,13 @@ export interface PathwayContext {
     step_id: (Scalars['String'] | null)
     action_id: (Scalars['String'] | null)
     __typename: 'PathwayContext'
+}
+
+export interface ActionComponent {
+    definition_id: (Scalars['String'] | null)
+    release_id: (Scalars['String'] | null)
+    title: (Scalars['String'] | null)
+    __typename: 'ActionComponent'
 }
 
 export type FormDisplayMode = 'CONVERSATIONAL' | 'REGULAR'
@@ -700,6 +708,7 @@ export interface HostedSessionPayload {
     success: Scalars['Boolean']
     session: HostedSession
     branding: (BrandingSettings | null)
+    metadata: (SessionMetadata | null)
     __typename: 'HostedSessionPayload'
 }
 
@@ -734,6 +743,12 @@ export interface BrandingSettings {
     hosted_page_autosave: (Scalars['Boolean'] | null)
     custom_theme: (Scalars['String'] | null)
     __typename: 'BrandingSettings'
+}
+
+export interface SessionMetadata {
+    pathway_definition_id: (Scalars['String'] | null)
+    tenant_id: (Scalars['String'] | null)
+    __typename: 'SessionMetadata'
 }
 
 export interface MessagePayload {
@@ -1716,6 +1731,7 @@ export interface ActivityGenqlSelection{
     stakeholders?: ActivityObjectGenqlSelection
     /** Url for icon, only used by extensions custom actions */
     icon_url?: boolean | number
+    action_component?: ActionComponentGenqlSelection
     /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
     form_display_mode?: boolean | number
     form?: FormGenqlSelection
@@ -1781,6 +1797,14 @@ export interface PathwayContextGenqlSelection{
     track_id?: boolean | number
     step_id?: boolean | number
     action_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ActionComponentGenqlSelection{
+    definition_id?: boolean | number
+    release_id?: boolean | number
+    title?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2225,6 +2249,7 @@ export interface HostedSessionPayloadGenqlSelection{
     success?: boolean | number
     session?: HostedSessionGenqlSelection
     branding?: BrandingSettingsGenqlSelection
+    metadata?: SessionMetadataGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2257,6 +2282,13 @@ export interface BrandingSettingsGenqlSelection{
     /** Automatically save question answers locally in Hosted Pages */
     hosted_page_autosave?: boolean | number
     custom_theme?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface SessionMetadataGenqlSelection{
+    pathway_definition_id?: boolean | number
+    tenant_id?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3346,6 +3378,14 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const ActionComponent_possibleTypes: string[] = ['ActionComponent']
+    export const isActionComponent = (obj?: { __typename?: any } | null): obj is ActionComponent => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActionComponent"')
+      return ActionComponent_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Form_possibleTypes: string[] = ['Form']
     export const isForm = (obj?: { __typename?: any } | null): obj is Form => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isForm"')
@@ -3766,6 +3806,14 @@ export interface SubscriptionGenqlSelection{
     export const isBrandingSettings = (obj?: { __typename?: any } | null): obj is BrandingSettings => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isBrandingSettings"')
       return BrandingSettings_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const SessionMetadata_possibleTypes: string[] = ['SessionMetadata']
+    export const isSessionMetadata = (obj?: { __typename?: any } | null): obj is SessionMetadata => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isSessionMetadata"')
+      return SessionMetadata_possibleTypes.includes(obj.__typename)
     }
     
 

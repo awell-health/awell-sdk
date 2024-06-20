@@ -8,7 +8,11 @@
     "esModuleInterop": true,
     "declaration": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+  },
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }

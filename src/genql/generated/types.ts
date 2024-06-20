@@ -13,28 +13,28 @@ export default {
         31,
         32,
         33,
-        39,
-        43,
+        40,
         44,
-        54,
-        56,
-        58,
-        60,
-        71,
-        74,
-        87,
+        45,
+        55,
+        57,
+        59,
+        61,
+        72,
+        75,
         88,
         89,
-        97,
-        107,
-        109,
-        113,
+        90,
+        98,
+        108,
+        110,
         115,
-        124,
-        128,
-        129,
-        136,
-        160
+        117,
+        126,
+        130,
+        131,
+        138,
+        162
     ],
     "types": {
         "Query": {
@@ -75,10 +75,10 @@ export default {
                 21,
                 {
                     "pagination": [
-                        64
+                        65
                     ],
                     "sorting": [
-                        65
+                        66
                     ],
                     "pathway_id": [
                         3,
@@ -90,10 +90,10 @@ export default {
                 21,
                 {
                     "pagination": [
-                        64
+                        65
                     ],
                     "sorting": [
-                        65
+                        66
                     ],
                     "pathway_id": [
                         3,
@@ -105,13 +105,13 @@ export default {
                 21,
                 {
                     "pagination": [
-                        64
-                    ],
-                    "sorting": [
                         65
                     ],
-                    "filters": [
+                    "sorting": [
                         66
+                    ],
+                    "filters": [
+                        67
                     ]
                 }
             ],
@@ -129,7 +129,7 @@ export default {
                 }
             ],
             "apiCall": [
-                68,
+                69,
                 {
                     "id": [
                         3,
@@ -138,7 +138,7 @@ export default {
                 }
             ],
             "apiCalls": [
-                75,
+                76,
                 {
                     "pathway_id": [
                         3,
@@ -147,7 +147,7 @@ export default {
                 }
             ],
             "calculationAction": [
-                76,
+                77,
                 {
                     "id": [
                         3,
@@ -156,7 +156,7 @@ export default {
                 }
             ],
             "calculationResults": [
-                77,
+                78,
                 {
                     "pathway_id": [
                         3,
@@ -169,7 +169,7 @@ export default {
                 }
             ],
             "checklist": [
-                79,
+                80,
                 {
                     "id": [
                         3,
@@ -178,7 +178,7 @@ export default {
                 }
             ],
             "clinicalNote": [
-                81,
+                82,
                 {
                     "id": [
                         3,
@@ -187,7 +187,7 @@ export default {
                 }
             ],
             "pathwayElements": [
-                85,
+                86,
                 {
                     "pathway_id": [
                         3,
@@ -196,7 +196,7 @@ export default {
                 }
             ],
             "emrReport": [
-                91,
+                92,
                 {
                     "id": [
                         3,
@@ -205,7 +205,7 @@ export default {
                 }
             ],
             "extensionActivityRecord": [
-                94,
+                95,
                 {
                     "id": [
                         3,
@@ -214,7 +214,7 @@ export default {
                 }
             ],
             "form": [
-                100,
+                101,
                 {
                     "id": [
                         3,
@@ -223,7 +223,7 @@ export default {
                 }
             ],
             "forms": [
-                101,
+                102,
                 {
                     "pathway_definition_id": [
                         3,
@@ -235,7 +235,7 @@ export default {
                 }
             ],
             "formResponse": [
-                102,
+                103,
                 {
                     "pathway_id": [
                         3,
@@ -248,7 +248,7 @@ export default {
                 }
             ],
             "hostedSessionActivities": [
-                104,
+                105,
                 {
                     "only_stakeholder_activities": [
                         4
@@ -256,10 +256,10 @@ export default {
                 }
             ],
             "hostedSession": [
-                105
+                106
             ],
             "message": [
-                111,
+                113,
                 {
                     "id": [
                         3,
@@ -268,22 +268,22 @@ export default {
                 }
             ],
             "pathwayFacts": [
-                116,
+                118,
                 {
                     "pagination": [
-                        64
-                    ],
-                    "sorting": [
                         65
                     ],
+                    "sorting": [
+                        66
+                    ],
                     "filters": [
-                        118,
+                        120,
                         "PathwayFactsFilters!"
                     ]
                 }
             ],
             "pathwayDataPointDefinitions": [
-                120,
+                122,
                 {
                     "pathway_definition_id": [
                         3
@@ -293,12 +293,12 @@ export default {
                         "String!"
                     ],
                     "filters": [
-                        121
+                        123
                     ]
                 }
             ],
             "pathway": [
-                122,
+                124,
                 {
                     "id": [
                         3,
@@ -307,27 +307,27 @@ export default {
                 }
             ],
             "myPathways": [
-                139
+                141
             ],
             "pathways": [
-                139,
+                141,
                 {
                     "pagination": [
-                        64
-                    ],
-                    "sorting": [
                         65
                     ],
+                    "sorting": [
+                        66
+                    ],
                     "filters": [
-                        141
+                        143
                     ]
                 }
             ],
             "patientDemographicsQueryConfiguration": [
-                144
+                146
             ],
             "patient": [
-                145,
+                147,
                 {
                     "id": [
                         3,
@@ -336,21 +336,21 @@ export default {
                 }
             ],
             "patients": [
-                146,
+                148,
                 {
                     "pagination": [
-                        64
-                    ],
-                    "sorting": [
                         65
                     ],
+                    "sorting": [
+                        66
+                    ],
                     "filters": [
-                        147
+                        149
                     ]
                 }
             ],
             "patientByIdentifier": [
-                145,
+                147,
                 {
                     "system": [
                         3,
@@ -363,27 +363,27 @@ export default {
                 }
             ],
             "publishedPathwayDefinitions": [
-                150
+                152
             ],
             "publishedPathwayDefinitionsDashboard": [
-                150,
+                152,
                 {
                     "pagination": [
-                        64
-                    ],
-                    "sorting": [
                         65
                     ],
+                    "sorting": [
+                        66
+                    ],
                     "filters": [
-                        154
+                        156
                     ]
                 }
             ],
             "getStatusForPublishedPathwayDefinitions": [
-                150
+                152
             ],
             "scheduledSteps": [
-                155,
+                157,
                 {
                     "pathway_id": [
                         3,
@@ -392,7 +392,7 @@ export default {
                 }
             ],
             "searchPatientsByPatientCode": [
-                156,
+                158,
                 {
                     "patient_code": [
                         3,
@@ -401,7 +401,7 @@ export default {
                 }
             ],
             "searchPatientsByNationalRegistryNumber": [
-                156,
+                158,
                 {
                     "national_registry_number": [
                         3,
@@ -410,7 +410,7 @@ export default {
                 }
             ],
             "filterStakeholders": [
-                157,
+                159,
                 {
                     "pathway_definition_ids": [
                         3,
@@ -427,7 +427,7 @@ export default {
                 }
             ],
             "stakeholdersByPathwayDefinitionIds": [
-                157,
+                159,
                 {
                     "pathway_definition_ids": [
                         3,
@@ -436,7 +436,7 @@ export default {
                 }
             ],
             "stakeholdersByReleaseIds": [
-                157,
+                159,
                 {
                     "release_ids": [
                         3,
@@ -445,7 +445,7 @@ export default {
                 }
             ],
             "stakeholdersByDefinitionIds": [
-                157,
+                159,
                 {
                     "stakeholder_definition_ids": [
                         3,
@@ -454,7 +454,7 @@ export default {
                 }
             ],
             "adHocTracksByPathway": [
-                161,
+                163,
                 {
                     "pathway_id": [
                         3,
@@ -463,7 +463,7 @@ export default {
                 }
             ],
             "adHocTracksByRelease": [
-                161,
+                163,
                 {
                     "release_id": [
                         3,
@@ -472,10 +472,10 @@ export default {
                 }
             ],
             "whoami": [
-                162
+                164
             ],
             "webhookCall": [
-                166,
+                168,
                 {
                     "webhook_call_id": [
                         3,
@@ -484,7 +484,7 @@ export default {
                 }
             ],
             "webhookCalls": [
-                172,
+                174,
                 {
                     "pathway_id": [
                         3,
@@ -493,10 +493,10 @@ export default {
                 }
             ],
             "webhookCallsForTenant": [
-                172
+                174
             ],
             "webhookCallsForPathwayDefinition": [
-                172,
+                174,
                 {
                     "pathway_definition_id": [
                         3,
@@ -505,7 +505,7 @@ export default {
                 }
             ],
             "getOrchestrationFactsFromPrompt": [
-                173,
+                175,
                 {
                     "pathway_id": [
                         3,
@@ -518,7 +518,7 @@ export default {
                 }
             ],
             "hostedPagesLink": [
-                174,
+                176,
                 {
                     "pathway_id": [
                         3,
@@ -565,154 +565,154 @@ export default {
                 20
             ],
             "on_ApiCallPayload": [
-                68
+                69
             ],
             "on_ApiCallsPayload": [
-                75
-            ],
-            "on_ActionPayload": [
                 76
             ],
-            "on_CalculationResultsPayload": [
+            "on_ActionPayload": [
                 77
             ],
+            "on_CalculationResultsPayload": [
+                78
+            ],
             "on_ChecklistPayload": [
-                79
+                80
             ],
             "on_ClinicalNotePayload": [
-                81
+                82
             ],
             "on_ElementsPayload": [
-                85
+                86
             ],
             "on_EmrReportPayload": [
-                91
+                92
             ],
             "on_ExtensionActivityRecordPayload": [
-                94
+                95
             ],
             "on_FormPayload": [
-                100
-            ],
-            "on_FormsPayload": [
                 101
             ],
-            "on_FormResponsePayload": [
+            "on_FormsPayload": [
                 102
             ],
-            "on_HostedSessionActivitiesPayload": [
-                104
+            "on_FormResponsePayload": [
+                103
             ],
-            "on_HostedSessionPayload": [
+            "on_HostedSessionActivitiesPayload": [
                 105
             ],
+            "on_HostedSessionPayload": [
+                106
+            ],
             "on_MessagePayload": [
-                111
+                113
             ],
             "on_PathwayDataPointDefinitionsPayload": [
-                120
-            ],
-            "on_PathwayPayload": [
                 122
             ],
+            "on_PathwayPayload": [
+                124
+            ],
             "on_PatientPayload": [
-                145
+                147
             ],
             "on_ScheduledStepsPayload": [
-                155
-            ],
-            "on_SearchPatientsPayload": [
-                156
-            ],
-            "on_StakeholdersPayload": [
                 157
             ],
+            "on_SearchPatientsPayload": [
+                158
+            ],
+            "on_StakeholdersPayload": [
+                159
+            ],
             "on_TracksPayload": [
-                161
+                163
             ],
             "on_CurrentUserPayload": [
-                162
+                164
             ],
             "on_WebhookCallPayload": [
-                166
+                168
             ],
             "on_WebhookCallsPayload": [
-                172
-            ],
-            "on_OrchestrationFactsPromptPayload": [
-                173
-            ],
-            "on_HostedPagesLinkPayload": [
                 174
             ],
+            "on_OrchestrationFactsPromptPayload": [
+                175
+            ],
+            "on_HostedPagesLinkPayload": [
+                176
+            ],
             "on_AddIdentifierToPatientPayload": [
-                177
+                179
             ],
             "on_AddTrackPayload": [
-                180
-            ],
-            "on_CancelScheduledTracksPayload": [
                 182
             ],
-            "on_CompleteExtensionActivityPayload": [
+            "on_CancelScheduledTracksPayload": [
                 184
             ],
+            "on_CompleteExtensionActivityPayload": [
+                186
+            ],
             "on_CreatePatientPayload": [
-                187
+                189
             ],
             "on_EmptyPayload": [
-                191
+                193
             ],
             "on_EvaluateFormRulesPayload": [
-                194
+                196
             ],
             "on_MarkMessageAsReadPayload": [
-                198
-            ],
-            "on_PatientDemographicsPayload": [
                 200
             ],
+            "on_PatientDemographicsPayload": [
+                202
+            ],
             "on_RetryApiCallPayload": [
-                208
+                210
             ],
             "on_RetryWebhookCallPayload": [
-                211
+                213
             ],
             "on_ScheduleTrackPayload": [
-                215
-            ],
-            "on_StartHostedActivitySessionPayload": [
                 217
             ],
-            "on_StartHostedPathwaySessionFromLinkPayload": [
+            "on_StartHostedActivitySessionPayload": [
                 219
             ],
+            "on_StartHostedPathwaySessionFromLinkPayload": [
+                221
+            ],
             "on_StartHostedPathwaySessionPayload": [
-                222
+                224
             ],
             "on_StartPathwayPayload": [
-                225
-            ],
-            "on_StartPathwayWithPatientIdentifierPayload": [
                 227
             ],
-            "on_StopTrackPayload": [
-                230
+            "on_StartPathwayWithPatientIdentifierPayload": [
+                229
             ],
-            "on_SubmitChecklistPayload": [
+            "on_StopTrackPayload": [
                 232
             ],
-            "on_SubmitFormResponsePayload": [
+            "on_SubmitChecklistPayload": [
                 234
             ],
+            "on_SubmitFormResponsePayload": [
+                236
+            ],
             "on_UpdatePatientPayload": [
-                238
+                240
             ],
             "on_UpdatePatientDemographicsQueryPayload": [
-                241
+                243
             ],
             "on_UpdatePatientLanguagePayload": [
-                243
+                245
             ],
             "__typename": [
                 3
@@ -962,7 +962,7 @@ export default {
                 26
             ],
             "metadata": [
-                63
+                64
             ],
             "__typename": [
                 3
@@ -985,16 +985,16 @@ export default {
                 21
             ],
             "on_OrchestrationFactsPayload": [
-                116
+                118
             ],
             "on_PathwaysPayload": [
-                139
+                141
             ],
             "on_PatientsPayload": [
-                146
+                148
             ],
             "on_PublishedPathwayDefinitionsPayload": [
-                150
+                152
             ],
             "__typename": [
                 3
@@ -1087,11 +1087,14 @@ export default {
             "icon_url": [
                 3
             ],
-            "form_display_mode": [
+            "action_component": [
                 39
             ],
-            "form": [
+            "form_display_mode": [
                 40
+            ],
+            "form": [
+                41
             ],
             "__typename": [
                 3
@@ -1218,6 +1221,20 @@ export default {
                 3
             ]
         },
+        "ActionComponent": {
+            "definition_id": [
+                3
+            ],
+            "release_id": [
+                3
+            ],
+            "title": [
+                3
+            ],
+            "__typename": [
+                3
+            ]
+        },
         "FormDisplayMode": {},
         "Form": {
             "release_id": [
@@ -1242,10 +1259,10 @@ export default {
                 3
             ],
             "questions": [
-                41
+                42
             ],
             "previous_answers": [
-                61,
+                62,
                 {
                     "pathway_id": [
                         3,
@@ -1274,19 +1291,19 @@ export default {
                 14
             ],
             "options": [
-                42
-            ],
-            "questionType": [
                 43
             ],
-            "userQuestionType": [
+            "questionType": [
                 44
             ],
-            "questionConfig": [
+            "userQuestionType": [
                 45
             ],
+            "questionConfig": [
+                46
+            ],
             "rule": [
-                55
+                56
             ],
             "metadata": [
                 3
@@ -1325,19 +1342,19 @@ export default {
                 4
             ],
             "slider": [
-                46
-            ],
-            "phone": [
                 47
             ],
-            "number": [
+            "phone": [
                 48
             ],
+            "number": [
+                49
+            ],
             "multiple_select": [
-                50
+                51
             ],
             "date": [
-                53
+                54
             ],
             "__typename": [
                 3
@@ -1385,7 +1402,7 @@ export default {
         },
         "NumberConfig": {
             "range": [
-                49
+                50
             ],
             "__typename": [
                 3
@@ -1407,10 +1424,10 @@ export default {
         },
         "MultipleSelectConfig": {
             "range": [
-                51
+                52
             ],
             "exclusive_option": [
-                52
+                53
             ],
             "__typename": [
                 3
@@ -1443,7 +1460,7 @@ export default {
         },
         "DateConfig": {
             "allowed_dates": [
-                54
+                55
             ],
             "include_date_of_response": [
                 4
@@ -1461,10 +1478,10 @@ export default {
                 3
             ],
             "boolean_operator": [
-                56
+                57
             ],
             "conditions": [
-                57
+                58
             ],
             "__typename": [
                 3
@@ -1482,10 +1499,10 @@ export default {
                 3
             ],
             "operator": [
-                58
+                59
             ],
             "operand": [
-                59
+                60
             ],
             "__typename": [
                 3
@@ -1494,7 +1511,7 @@ export default {
         "ConditionOperator": {},
         "Operand": {
             "type": [
-                60
+                61
             ],
             "value": [
                 3
@@ -1512,7 +1529,7 @@ export default {
                 3
             ],
             "answers": [
-                62
+                63
             ],
             "__typename": [
                 3
@@ -1576,7 +1593,7 @@ export default {
                 19
             ],
             "patient_id": [
-                67
+                68
             ],
             "activity_type": [
                 19
@@ -1607,7 +1624,7 @@ export default {
                 4
             ],
             "api_call": [
-                69
+                70
             ],
             "__typename": [
                 3
@@ -1618,16 +1635,16 @@ export default {
                 6
             ],
             "request": [
-                70
+                71
             ],
             "responses": [
-                73
+                74
             ],
             "created_at": [
                 3
             ],
             "status": [
-                74
+                75
             ],
             "title": [
                 3
@@ -1638,13 +1655,13 @@ export default {
         },
         "ApiCallRequest": {
             "method": [
-                71
+                72
             ],
             "endpoint": [
                 3
             ],
             "headers": [
-                72
+                73
             ],
             "body": [
                 3
@@ -1688,7 +1705,7 @@ export default {
                 4
             ],
             "api_calls": [
-                69
+                70
             ],
             "__typename": [
                 3
@@ -1716,7 +1733,7 @@ export default {
                 4
             ],
             "result": [
-                78
+                79
             ],
             "__typename": [
                 3
@@ -1750,7 +1767,7 @@ export default {
                 4
             ],
             "checklist": [
-                80
+                81
             ],
             "__typename": [
                 3
@@ -1775,7 +1792,7 @@ export default {
                 4
             ],
             "clinical_note": [
-                82
+                83
             ],
             "__typename": [
                 3
@@ -1786,10 +1803,10 @@ export default {
                 6
             ],
             "narratives": [
-                83
+                84
             ],
             "context": [
-                84
+                85
             ],
             "__typename": [
                 3
@@ -1831,7 +1848,7 @@ export default {
                 4
             ],
             "elements": [
-                86
+                87
             ],
             "__typename": [
                 3
@@ -1848,7 +1865,7 @@ export default {
                 3
             ],
             "type": [
-                87
+                88
             ],
             "start_date": [
                 3
@@ -1860,16 +1877,16 @@ export default {
                 35
             ],
             "activity_type": [
-                88
+                89
             ],
             "status": [
-                89
+                90
             ],
             "context": [
                 38
             ],
             "stakeholders": [
-                90
+                91
             ],
             "__typename": [
                 3
@@ -1897,7 +1914,7 @@ export default {
                 4
             ],
             "report": [
-                92
+                93
             ],
             "__typename": [
                 3
@@ -1911,7 +1928,7 @@ export default {
                 3
             ],
             "metadata": [
-                93
+                94
             ],
             "__typename": [
                 3
@@ -1939,7 +1956,7 @@ export default {
                 4
             ],
             "record": [
-                95
+                96
             ],
             "__typename": [
                 3
@@ -1962,16 +1979,16 @@ export default {
                 3
             ],
             "fields": [
-                96
+                97
             ],
             "date": [
                 3
             ],
             "settings": [
-                98
+                99
             ],
             "data_points": [
-                99
+                100
             ],
             "__typename": [
                 3
@@ -1982,7 +1999,7 @@ export default {
                 6
             ],
             "type": [
-                97
+                98
             ],
             "label": [
                 3
@@ -2028,7 +2045,7 @@ export default {
                 4
             ],
             "form": [
-                40
+                41
             ],
             "__typename": [
                 3
@@ -2042,7 +2059,7 @@ export default {
                 4
             ],
             "forms": [
-                40
+                41
             ],
             "__typename": [
                 3
@@ -2056,7 +2073,7 @@ export default {
                 4
             ],
             "response": [
-                103
+                104
             ],
             "__typename": [
                 3
@@ -2064,7 +2081,7 @@ export default {
         },
         "FormResponse": {
             "answers": [
-                62
+                63
             ],
             "__typename": [
                 3
@@ -2092,10 +2109,13 @@ export default {
                 4
             ],
             "session": [
-                106
+                107
             ],
             "branding": [
-                110
+                111
+            ],
+            "metadata": [
+                112
             ],
             "__typename": [
                 3
@@ -2115,10 +2135,10 @@ export default {
                 3
             ],
             "status": [
-                107
+                108
             ],
             "stakeholder": [
-                108
+                109
             ],
             "__typename": [
                 3
@@ -2130,7 +2150,7 @@ export default {
                 6
             ],
             "type": [
-                109
+                110
             ],
             "name": [
                 3
@@ -2163,6 +2183,17 @@ export default {
                 3
             ]
         },
+        "SessionMetadata": {
+            "pathway_definition_id": [
+                3
+            ],
+            "tenant_id": [
+                3
+            ],
+            "__typename": [
+                3
+            ]
+        },
         "MessagePayload": {
             "code": [
                 3
@@ -2171,7 +2202,7 @@ export default {
                 4
             ],
             "message": [
-                112
+                114
             ],
             "__typename": [
                 3
@@ -2188,10 +2219,10 @@ export default {
                 3
             ],
             "format": [
-                113
+                115
             ],
             "attachments": [
-                114
+                116
             ],
             "__typename": [
                 3
@@ -2209,7 +2240,7 @@ export default {
                 3
             ],
             "type": [
-                115
+                117
             ],
             "__typename": [
                 3
@@ -2230,7 +2261,7 @@ export default {
                 25
             ],
             "facts": [
-                117
+                119
             ],
             "__typename": [
                 3
@@ -2258,7 +2289,7 @@ export default {
                 3
             ],
             "date": [
-                119
+                121
             ],
             "keyword": [
                 3
@@ -2311,7 +2342,7 @@ export default {
                 4
             ],
             "pathway": [
-                123
+                125
             ],
             "__typename": [
                 3
@@ -2337,13 +2368,13 @@ export default {
                 3
             ],
             "start_date": [
-                124
+                126
             ],
             "stop_date": [
-                124
+                126
             ],
             "complete_date": [
-                124
+                126
             ],
             "activities": [
                 26
@@ -2352,7 +2383,7 @@ export default {
                 26
             ],
             "swimlanes": [
-                125
+                127
             ],
             "status": [
                 9
@@ -2361,13 +2392,13 @@ export default {
                 3
             ],
             "tracks": [
-                132
+                134
             ],
             "dashboards": [
-                133
+                135
             ],
             "patient": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -2376,13 +2407,13 @@ export default {
         "SafeDate": {},
         "Swimlanes": {
             "lanes": [
-                126
+                128
             ],
             "items": [
-                127
+                129
             ],
             "links": [
-                131
+                133
             ],
             "__typename": [
                 3
@@ -2419,16 +2450,16 @@ export default {
                 3
             ],
             "date": [
-                124
+                126
             ],
             "category": [
-                128
+                130
             ],
             "type": [
-                129
+                131
             ],
             "documentation": [
-                130
+                132
             ],
             "track_id": [
                 6
@@ -2503,7 +2534,7 @@ export default {
                 3
             ],
             "profile": [
-                135
+                137
             ],
             "__typename": [
                 3
@@ -2529,7 +2560,7 @@ export default {
                 3
             ],
             "sex": [
-                136
+                138
             ],
             "national_registry_number": [
                 3
@@ -2544,10 +2575,10 @@ export default {
                 3
             ],
             "address": [
-                137
+                139
             ],
             "identifier": [
-                138
+                140
             ],
             "__typename": [
                 3
@@ -2599,7 +2630,7 @@ export default {
                 25
             ],
             "pathways": [
-                140
+                142
             ],
             "__typename": [
                 3
@@ -2625,13 +2656,13 @@ export default {
                 3
             ],
             "start_date": [
-                124
+                126
             ],
             "stop_date": [
-                124
+                126
             ],
             "complete_date": [
-                124
+                126
             ],
             "version": [
                 10
@@ -2642,7 +2673,7 @@ export default {
         },
         "FilterPathways": {
             "pathway_definition_id": [
-                142
+                144
             ],
             "status": [
                 19
@@ -2651,13 +2682,13 @@ export default {
                 19
             ],
             "version": [
-                143
+                145
             ],
             "release_id": [
                 19
             ],
             "start_date": [
-                119
+                121
             ],
             "__typename": [
                 3
@@ -2698,7 +2729,7 @@ export default {
                 4
             ],
             "patient": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -2718,7 +2749,7 @@ export default {
                 25
             ],
             "patients": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -2729,16 +2760,16 @@ export default {
                 19
             ],
             "patient_code": [
-                67
+                68
             ],
             "national_registry_number": [
-                67
+                68
             ],
             "name": [
-                148
+                150
             ],
             "search": [
-                149
+                151
             ],
             "__typename": [
                 3
@@ -2777,7 +2808,7 @@ export default {
                 25
             ],
             "publishedPathwayDefinitions": [
-                151
+                153
             ],
             "__typename": [
                 3
@@ -2800,16 +2831,16 @@ export default {
                 3
             ],
             "created": [
-                152
+                154
             ],
             "last_updated": [
-                152
+                154
             ],
             "latest": [
-                153
+                155
             ],
             "all": [
-                153
+                155
             ],
             "total_activities": [
                 10
@@ -2842,7 +2873,7 @@ export default {
                 12
             ],
             "track_definitions": [
-                132
+                134
             ],
             "__typename": [
                 3
@@ -2856,7 +2887,7 @@ export default {
                 3
             ],
             "date": [
-                124
+                126
             ],
             "__typename": [
                 3
@@ -2884,7 +2915,7 @@ export default {
         },
         "FilterPathwayDefinitionsParams": {
             "search": [
-                149
+                151
             ],
             "__typename": [
                 3
@@ -2898,7 +2929,7 @@ export default {
                 4
             ],
             "steps": [
-                86
+                87
             ],
             "__typename": [
                 3
@@ -2912,7 +2943,7 @@ export default {
                 4
             ],
             "patients": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -2926,7 +2957,7 @@ export default {
                 4
             ],
             "stakeholders": [
-                158
+                160
             ],
             "__typename": [
                 3
@@ -2940,10 +2971,10 @@ export default {
                 3
             ],
             "label": [
-                159
+                161
             ],
             "clinical_app_role": [
-                160
+                162
             ],
             "release_id": [
                 3
@@ -2972,7 +3003,7 @@ export default {
                 4
             ],
             "tracks": [
-                132
+                134
             ],
             "__typename": [
                 3
@@ -2986,7 +3017,7 @@ export default {
                 4
             ],
             "user": [
-                163
+                165
             ],
             "__typename": [
                 3
@@ -3000,10 +3031,10 @@ export default {
                 3
             ],
             "profile": [
-                135
+                137
             ],
             "tenant": [
-                164
+                166
             ],
             "__typename": [
                 3
@@ -3026,7 +3057,7 @@ export default {
                 4
             ],
             "identifier_systems": [
-                165
+                167
             ],
             "__typename": [
                 3
@@ -3054,7 +3085,7 @@ export default {
                 4
             ],
             "webhook_call": [
-                167
+                169
             ],
             "__typename": [
                 3
@@ -3065,10 +3096,10 @@ export default {
                 6
             ],
             "request": [
-                168
+                170
             ],
             "responses": [
-                170
+                172
             ],
             "status": [
                 3
@@ -3086,7 +3117,7 @@ export default {
                 3
             ],
             "pathway": [
-                171
+                173
             ],
             "__typename": [
                 3
@@ -3097,7 +3128,7 @@ export default {
                 3
             ],
             "headers": [
-                169
+                171
             ],
             "body": [
                 3
@@ -3159,7 +3190,7 @@ export default {
                 4
             ],
             "webhook_calls": [
-                167
+                169
             ],
             "__typename": [
                 3
@@ -3187,7 +3218,7 @@ export default {
                 4
             ],
             "hosted_pages_link": [
-                175
+                177
             ],
             "__typename": [
                 3
@@ -3212,318 +3243,318 @@ export default {
         },
         "Mutation": {
             "addIdentifierToPatient": [
-                177,
+                179,
                 {
                     "input": [
-                        178,
+                        180,
                         "AddIdentifierToPatientInput!"
                     ]
                 }
             ],
             "addTrack": [
-                180,
+                182,
                 {
                     "input": [
-                        181,
+                        183,
                         "AddTrackInput!"
                     ]
                 }
             ],
             "unscheduleTracks": [
-                182,
+                184,
                 {
                     "input": [
-                        183,
+                        185,
                         "CancelScheduledTracksInput!"
                     ]
                 }
             ],
             "completeExtensionActivity": [
-                184,
+                186,
                 {
                     "input": [
-                        185,
+                        187,
                         "CompleteExtensionActivityInput!"
                     ]
                 }
             ],
             "createPatient": [
-                187,
+                189,
                 {
                     "mycare": [
-                        188
+                        190
                     ],
                     "input": [
-                        189
+                        191
                     ]
                 }
             ],
             "deletePathway": [
-                191,
+                193,
                 {
                     "input": [
-                        192,
+                        194,
                         "DeletePathwayInput!"
                     ]
                 }
             ],
             "deletePatient": [
-                191,
+                193,
                 {
                     "input": [
-                        193,
+                        195,
                         "DeletePatientInput!"
                     ]
                 }
             ],
             "evaluateFormRules": [
-                194,
+                196,
                 {
                     "input": [
-                        196,
+                        198,
                         "EvaluateFormRulesInput!"
                     ]
                 }
             ],
             "markMessageAsRead": [
-                198,
+                200,
                 {
                     "input": [
-                        199,
+                        201,
                         "MarkMessageAsReadInput!"
                     ]
                 }
             ],
             "requestPatientDemographics": [
-                200,
+                202,
                 {
                     "input": [
-                        201,
+                        203,
                         "PatientDemographicsInput!"
                     ]
                 }
             ],
             "retryActivity": [
-                191,
+                193,
                 {
                     "input": [
-                        202,
+                        204,
                         "RetryActivityInput!"
                     ]
                 }
             ],
             "retryAllApiCalls": [
-                191,
+                193,
                 {
                     "input": [
-                        203,
+                        205,
                         "RetryAllApiCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedApiCalls": [
-                191,
+                193,
                 {
                     "input": [
-                        204,
+                        206,
                         "RetryAllFailedApiCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedWebhookCalls": [
-                191,
+                193,
                 {
                     "input": [
-                        205,
+                        207,
                         "RetryAllFailedWebhookCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedWebhookCallsForPathwayDefinition": [
-                191,
+                193,
                 {
                     "input": [
-                        206,
+                        208,
                         "RetryAllFailedWebhookCallsForPathwayDefinitionInput!"
                     ]
                 }
             ],
             "retryAllWebhookCalls": [
-                191,
+                193,
                 {
                     "input": [
-                        207,
+                        209,
                         "RetryAllWebhookCallsInput!"
                     ]
                 }
             ],
             "retryApiCall": [
-                208,
+                210,
                 {
                     "input": [
-                        209,
+                        211,
                         "RetryApiCallInput!"
                     ]
                 }
             ],
             "retryPushToEmr": [
-                191,
+                193,
                 {
                     "input": [
-                        210,
+                        212,
                         "RetryPushToEmrInput!"
                     ]
                 }
             ],
             "retryWebhookCall": [
-                211,
+                213,
                 {
                     "input": [
-                        212,
+                        214,
                         "RetryWebhookCallInput!"
                     ]
                 }
             ],
             "saveBaselineInfo": [
-                191,
+                193,
                 {
                     "input": [
-                        213,
+                        215,
                         "SaveBaselineInfoInput!"
                     ]
                 }
             ],
             "scheduleTrack": [
-                215,
+                217,
                 {
                     "input": [
-                        216,
+                        218,
                         "ScheduleTrackInput!"
                     ]
                 }
             ],
             "startHostedActivitySession": [
-                217,
+                219,
                 {
                     "input": [
-                        218,
+                        220,
                         "StartHostedActivitySessionInput!"
                     ]
                 }
             ],
             "startHostedPathwaySessionFromLink": [
-                219,
+                221,
                 {
                     "input": [
-                        220,
+                        222,
                         "StartHostedPathwaySessionFromLinkInput!"
                     ]
                 }
             ],
             "startHostedActivitySessionViaHostedPagesLink": [
-                217,
+                219,
                 {
                     "input": [
-                        221,
+                        223,
                         "StartHostedActivitySessionViaHostedPagesLinkInput!"
                     ]
                 }
             ],
             "startHostedPathwaySession": [
-                222,
+                224,
                 {
                     "input": [
-                        223,
+                        225,
                         "StartHostedPathwaySessionInput!"
                     ]
                 }
             ],
             "startPathway": [
-                225,
+                227,
                 {
                     "input": [
-                        226,
+                        228,
                         "StartPathwayInput!"
                     ]
                 }
             ],
             "startPathwayWithPatientIdentifier": [
-                227,
+                229,
                 {
                     "input": [
-                        228,
+                        230,
                         "StartPathwayWithPatientIdentifierInput!"
                     ]
                 }
             ],
             "stopPathway": [
-                191,
+                193,
                 {
                     "input": [
-                        229,
+                        231,
                         "StopPathwayInput!"
                     ]
                 }
             ],
             "stopTrack": [
-                230,
+                232,
                 {
                     "input": [
-                        231,
+                        233,
                         "StopTrackInput!"
                     ]
                 }
             ],
             "submitChecklist": [
-                232,
+                234,
                 {
                     "input": [
-                        233,
+                        235,
                         "SubmitChecklistInput!"
                     ]
                 }
             ],
             "submitFormResponse": [
-                234,
+                236,
                 {
                     "input": [
-                        235,
+                        237,
                         "SubmitFormResponseInput!"
                     ]
                 }
             ],
             "updateBaselineInfo": [
-                191,
+                193,
                 {
                     "input": [
-                        237,
+                        239,
                         "UpdateBaselineInfoInput!"
                     ]
                 }
             ],
             "updatePatient": [
-                238,
+                240,
                 {
                     "input": [
-                        239,
+                        241,
                         "UpdatePatientInput!"
                     ]
                 }
             ],
             "updatePatientDemographicsQuery": [
-                241,
+                243,
                 {
                     "input": [
-                        242,
+                        244,
                         "UpdatePatientDemographicsQueryInput!"
                     ]
                 }
             ],
             "updatePatientLanguage": [
-                243,
+                245,
                 {
                     "input": [
-                        244,
+                        246,
                         "UpdatePatientLanguageInput!"
                     ]
                 }
@@ -3540,7 +3571,7 @@ export default {
                 4
             ],
             "patient": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -3551,7 +3582,7 @@ export default {
                 3
             ],
             "identifier": [
-                179
+                181
             ],
             "__typename": [
                 3
@@ -3631,7 +3662,7 @@ export default {
                 3
             ],
             "data_points": [
-                186
+                188
             ],
             "__typename": [
                 3
@@ -3656,7 +3687,7 @@ export default {
                 4
             ],
             "patient": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -3687,7 +3718,7 @@ export default {
                 3
             ],
             "sex": [
-                136
+                138
             ],
             "national_registry_number": [
                 3
@@ -3702,10 +3733,10 @@ export default {
                 3
             ],
             "address": [
-                190
+                192
             ],
             "identifier": [
-                179
+                181
             ],
             "__typename": [
                 3
@@ -3766,7 +3797,7 @@ export default {
                 4
             ],
             "results": [
-                195
+                197
             ],
             "__typename": [
                 3
@@ -3791,7 +3822,7 @@ export default {
                 3
             ],
             "answers": [
-                197
+                199
             ],
             "__typename": [
                 3
@@ -3847,7 +3878,7 @@ export default {
                 10
             ],
             "entry": [
-                135
+                137
             ],
             "__typename": [
                 3
@@ -3917,7 +3948,7 @@ export default {
                 4
             ],
             "api_call": [
-                69
+                70
             ],
             "__typename": [
                 3
@@ -3947,7 +3978,7 @@ export default {
                 4
             ],
             "webhook_call": [
-                167
+                169
             ],
             "__typename": [
                 3
@@ -3966,7 +3997,7 @@ export default {
                 3
             ],
             "baseline_info": [
-                214
+                216
             ],
             "__typename": [
                 3
@@ -4073,7 +4104,7 @@ export default {
                 3
             ],
             "patient_identifier": [
-                179
+                181
             ],
             "__typename": [
                 3
@@ -4104,7 +4135,7 @@ export default {
                 3
             ],
             "stakeholder": [
-                108
+                109
             ],
             "__typename": [
                 3
@@ -4124,13 +4155,13 @@ export default {
                 3
             ],
             "data_points": [
-                224
+                226
             ],
             "language": [
                 3
             ],
             "patient_identifier": [
-                179
+                181
             ],
             "ttl": [
                 10
@@ -4161,7 +4192,7 @@ export default {
                 3
             ],
             "stakeholders": [
-                158
+                160
             ],
             "__typename": [
                 3
@@ -4175,7 +4206,7 @@ export default {
                 3
             ],
             "data_points": [
-                224
+                226
             ],
             "release_id": [
                 3
@@ -4198,7 +4229,7 @@ export default {
                 3
             ],
             "stakeholders": [
-                158
+                160
             ],
             "__typename": [
                 3
@@ -4206,13 +4237,13 @@ export default {
         },
         "StartPathwayWithPatientIdentifierInput": {
             "patient_identifier": [
-                179
+                181
             ],
             "pathway_definition_id": [
                 3
             ],
             "data_points": [
-                224
+                226
             ],
             "release_id": [
                 3
@@ -4240,7 +4271,7 @@ export default {
                 4
             ],
             "track": [
-                86
+                87
             ],
             "__typename": [
                 3
@@ -4298,7 +4329,7 @@ export default {
                 3
             ],
             "response": [
-                236
+                238
             ],
             "__typename": [
                 3
@@ -4320,7 +4351,7 @@ export default {
                 3
             ],
             "baseline_info": [
-                214
+                216
             ],
             "__typename": [
                 3
@@ -4334,7 +4365,7 @@ export default {
                 4
             ],
             "patient": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -4345,7 +4376,7 @@ export default {
                 3
             ],
             "profile": [
-                240
+                242
             ],
             "__typename": [
                 3
@@ -4365,7 +4396,7 @@ export default {
                 3
             ],
             "sex": [
-                136
+                138
             ],
             "national_registry_number": [
                 3
@@ -4383,10 +4414,10 @@ export default {
                 3
             ],
             "address": [
-                190
+                192
             ],
             "identifier": [
-                179
+                181
             ],
             "__typename": [
                 3
@@ -4431,7 +4462,7 @@ export default {
                 4
             ],
             "user": [
-                134
+                136
             ],
             "__typename": [
                 3
@@ -4491,7 +4522,7 @@ export default {
                 }
             ],
             "apiCallCreated": [
-                69,
+                70,
                 {
                     "pathway_id": [
                         3,
@@ -4500,7 +4531,7 @@ export default {
                 }
             ],
             "apiCallUpdated": [
-                69,
+                70,
                 {
                     "pathway_id": [
                         3,
@@ -4509,38 +4540,38 @@ export default {
                 }
             ],
             "elementCreated": [
-                86,
+                87,
                 {
                     "pathway_id": [
                         3,
                         "String!"
                     ],
                     "element_type": [
-                        87
+                        88
                     ]
                 }
             ],
             "elementCompleted": [
-                86,
+                87,
                 {
                     "pathway_id": [
                         3,
                         "String!"
                     ],
                     "element_type": [
-                        87
+                        88
                     ]
                 }
             ],
             "elementUpdated": [
-                86,
+                87,
                 {
                     "pathway_id": [
                         3,
                         "String!"
                     ],
                     "element_type": [
-                        87
+                        88
                     ]
                 }
             ],
@@ -4577,13 +4608,13 @@ export default {
                 }
             ],
             "sessionExpired": [
-                106
+                107
             ],
             "sessionCompleted": [
-                106
+                107
             ],
             "pathwayUpdated": [
-                123,
+                125,
                 {
                     "id": [
                         6,
@@ -4592,7 +4623,7 @@ export default {
                 }
             ],
             "webhookCallCreated": [
-                167,
+                169,
                 {
                     "pathway_id": [
                         3,
@@ -4601,7 +4632,7 @@ export default {
                 }
             ],
             "webhookCallUpdated": [
-                167,
+                169,
                 {
                     "pathway_id": [
                         3,

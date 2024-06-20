@@ -1,8 +1,9 @@
 import { isNil } from 'lodash'
 import { type Client, createClient } from './genql/generated'
 import { getApiUrl } from './lib'
-import { type Environment } from './types'
+import { type Environment } from './types/Environment'
 import { verify } from './webhooks/verify'
+import { awellFormResponseToHealthieFormAnswers } from './lib/utils/healthie/awellFormResponseToHealthieFormAnswers'
 
 /**
  * A class representing the Awell SDK.
@@ -76,6 +77,15 @@ export class AwellSdk {
      * @param {string} publicKey your public signing key available in Awell Studio.
      * @returns true if the signature is valid
      */
-    verify
+    verify,
+  }
+
+  /**
+   * Utility functions for the SDK
+   */
+  public utils = {
+    healthie: {
+      awellFormResponseToHealthieFormAnswers,
+    },
   }
 }

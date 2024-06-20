@@ -28,6 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@genql/cli", "npm:6.3.3"],\
+          ["@medplum/fhirtypes", "npm:3.1.8"],\
           ["@types/jest", "npm:29.5.12"],\
           ["@types/lodash", "npm:4.17.1"],\
           ["@types/node", "npm:20.12.8"],\
@@ -68,6 +69,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@awell-health/awell-sdk", "workspace:."],\
           ["@genql/cli", "npm:6.3.3"],\
+          ["@medplum/fhirtypes", "npm:3.1.8"],\
           ["@types/jest", "npm:29.5.12"],\
           ["@types/lodash", "npm:4.17.1"],\
           ["@types/node", "npm:20.12.8"],\
@@ -1529,6 +1531,15 @@ const RAW_RUNTIME_STATE =
           ["@jridgewell/trace-mapping", "npm:0.3.9"],\
           ["@jridgewell/resolve-uri", "npm:3.1.2"],\
           ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@medplum/fhirtypes", [\
+      ["npm:3.1.8", {\
+        "packageLocation": "./.yarn/cache/@medplum-fhirtypes-npm-3.1.8-05cec759bf-368e5195fe.zip/node_modules/@medplum/fhirtypes/",\
+        "packageDependencies": [\
+          ["@medplum/fhirtypes", "npm:3.1.8"]\
         ],\
         "linkType": "HARD"\
       }]\

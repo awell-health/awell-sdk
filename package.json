@@ -1,6 +1,6 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "packageManager": "yarn@4.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "@genql/cli": "^6.3.3",
+    "@medplum/fhirtypes": "^3.1.8",
     "crypto": "^1.0.1",
     "lodash": "^4.17.21"
   },

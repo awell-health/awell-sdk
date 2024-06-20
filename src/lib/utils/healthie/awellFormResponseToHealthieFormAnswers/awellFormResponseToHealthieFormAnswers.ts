@@ -3,7 +3,7 @@ import {
   type FormResponse,
   type Question,
   type Answer,
-} from '@/genql/generated/schema'
+} from '../../../../genql/generated/schema'
 import { type FormAnswerInput as HealthieFormAnswerInput } from '@/types/HealthieSchema'
 import { isNil } from 'lodash'
 

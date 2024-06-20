@@ -1,4 +1,4 @@
-import { type FormResponse } from '@/genql/generated/schema'
+import { type FormResponse } from '../../../../../genql/generated/schema'
 
 export const awellFormResponse: FormResponse = {
   __typename: 'FormResponse',

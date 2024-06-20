@@ -1,6 +1,6 @@
 import {
   type Form,
-} from '@/genql/generated/schema'
+} from '../../../../../genql/generated/schema'
 
 export const awellFormDefinition: Form = {
   "__typename": 'Form',

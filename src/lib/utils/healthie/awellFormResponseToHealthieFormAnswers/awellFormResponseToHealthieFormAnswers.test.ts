@@ -8,7 +8,6 @@ describe('awellFormResponseToHealthieFormAnswers', () => {
       awellFormResponse,
     })
 
-    console.log(res)
     expect(res.formAnswers).toEqual([
       { custom_module_id: '9', answer: '+32476581696' },
       { custom_module_id: '3', answer: '0' },

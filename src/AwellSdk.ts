@@ -3,7 +3,11 @@ import { type Client, createClient } from './genql/generated'
 import { getApiUrl } from './lib'
 import { type Environment } from './types/Environment'
 import { verify } from './webhooks/verify'
-import { awellFormResponseToHealthieFormAnswers } from './lib/utils/healthie/awellFormResponseToHealthieFormAnswers'
+import {
+  awellFormResponseToHealthieFormAnswers,
+  AwellFormResponseToFhirQuestionnaireResponseItems,
+  AwellFormToFhirQuestionnaire,
+} from './lib/utils'
 
 /**
  * A class representing the Awell SDK.
@@ -87,5 +91,9 @@ export class AwellSdk {
     healthie: {
       awellFormResponseToHealthieFormAnswers,
     },
+    fhir: {
+      AwellFormToFhirQuestionnaire,
+      AwellFormResponseToFhirQuestionnaireResponseItems
+    }
   }
 }

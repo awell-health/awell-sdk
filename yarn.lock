@@ -20,6 +20,7 @@ __metadata:
   resolution: "@awell-health/awell-sdk@workspace:."
   dependencies:
     "@genql/cli": "npm:^6.3.3"
+    "@medplum/fhirtypes": "npm:^3.1.8"
     "@types/jest": "npm:^29.5.12"
     "@types/lodash": "npm:^4.17.1"
     "@types/node": "npm:^20.12.8"
@@ -945,6 +946,13 @@ __metadata:
     "@jridgewell/resolve-uri": "npm:^3.1.0"
     "@jridgewell/sourcemap-codec": "npm:^1.4.14"
   checksum: 10c0/3d1ce6ebc69df9682a5a8896b414c6537e428a1d68b02fcc8363b04284a8ca0df04d0ee3013132252ab14f2527bc13bea6526a912ecb5658f0e39fd2860b4df4
+  languageName: node
+  linkType: hard
+
+"@medplum/fhirtypes@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "@medplum/fhirtypes@npm:3.1.8"
+  checksum: 10c0/368e5195feaf4123b815b014b7ef087951ebaf5b77be618401b8e814f4c3212ffaa4ecac1ba0b3848a948b526e8230a87418d8a07a866aa3bef335927b6a0149
   languageName: node
   linkType: hard
 

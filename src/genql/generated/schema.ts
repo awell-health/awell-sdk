@@ -484,7 +484,7 @@ export interface ApiCallRequest {
     __typename: 'ApiCallRequest'
 }
 
-export type ApiCallRequestMethod = 'GET' | 'POST'
+export type ApiCallRequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 
 export interface ApiCallHeader {
     key: Scalars['String']
@@ -4581,7 +4581,10 @@ export const enumConditionOperandType = {
 
 export const enumApiCallRequestMethod = {
    GET: 'GET' as const,
-   POST: 'POST' as const
+   POST: 'POST' as const,
+   PATCH: 'PATCH' as const,
+   PUT: 'PUT' as const,
+   DELETE: 'DELETE' as const
 }
 
 export const enumApiCallStatus = {

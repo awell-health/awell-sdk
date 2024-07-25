@@ -615,6 +615,9 @@ type ApiCallRequest {
 enum ApiCallRequestMethod {
   GET
   POST
+  PATCH
+  PUT
+  DELETE
 }
 
 type ApiCallHeader {

@@ -43,6 +43,43 @@ const definitions =
   result.publishedPathwayDefinitions.publishedPathwayDefinitions
 ```
 
+### Batching requests
+
+You can minimize network requests and server load fetching queries that are near in time using batching.
+
+```typescript
+const sdk = new AwellSdk({
+  apiUrl: process.env.AWELL_API_URL,
+  apiKey: process.env.AWELL_API_KEY,
+})
+
+// These queries will trigger only one network request
+const res = await Promise.all([
+  sdk.orchestration.query({
+    pathway: {
+      __args: {
+        id: 'pathway-1',
+      },
+      success: true,
+      pathway: {
+        __scalar: true
+      },
+    },
+  }),
+  sdk.orchestration.query({
+    pathway: {
+      __args: {
+        id: 'pathway-2',
+      },
+      success: true,
+      pathway: {
+        __scalar: true
+      },
+    },
+  }),
+])
+```
+
 ### Types
 
 Browse all types [here](https://github.com/awell-health/awell-sdk/blob/main/src/genql/generated/schema.ts) or use our [GraphQL playground](https://developers.awellhealth.com/awell-orchestration/developer-tools/api/schema) to browse the GraphQL schema.

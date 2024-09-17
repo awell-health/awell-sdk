@@ -1,7 +1,44 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		}
-	]
+  "folders": [
+    {
+      "path": "..",
+    },
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/.yarn": true,
+      "**/.pnp.*": true,
+    },
+    "typescript.tsdk": ".yarn/sdks/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/*.js.map": true,
+      "**/.retool_types/**": true,
+      ".cache": true,
+    },
+    "eslint.nodePath": ".yarn/sdks",
+    "eslint.run": "onSave",
+    "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  },
+  "extensions": {
+    "recommendations": [
+      "arcanis.vscode-zipfs",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+    ],
+  },
 }

@@ -9,15 +9,21 @@ describe('awellFormResponseToHealthieFormAnswers', () => {
     })
 
     expect(res.formAnswers).toEqual([
-      { custom_module_id: '9', answer: '+32476581696' },
-      { custom_module_id: '3', answer: '0' },
-      { custom_module_id: '1', answer: '0' },
-      { custom_module_id: '7', answer: 'short' },
-      { custom_module_id: '6', answer: '2' },
-      { custom_module_id: '2', answer: 'O1\nO2' },
-      { custom_module_id: '4', answer: '5' },
-      { custom_module_id: '8', answer: 'long text' },
-      { custom_module_id: '5', answer: '2024-06-21T00:00:00.000Z' },
+      { custom_module_id: 'single_select_number', answer: 'Option 1' },
+      { custom_module_id: 'single_select_string', answer: 'Option 1' },
+      { custom_module_id: 'multi_select_number', answer: 'Option 1\nOption 2' },
+      { custom_module_id: 'multi_select_string', answer: 'Option 1\nOption 2' },
+      { custom_module_id: 'yes_no', answer: 'Yes' },
+      { custom_module_id: 'slider', answer: '5' },
+      { custom_module_id: 'date', answer: '2024-09-17' },
+      { custom_module_id: 'email', answer: 'nick@awellhealth.com' },
+      { custom_module_id: 'number', answer: '1' },
+      { custom_module_id: 'short_text', answer: 'A short answer' },
+      {
+        custom_module_id: 'long_text',
+        answer: `\\u003cp\\u003eA long text\\u003c/p\\u003e\\u003cp\\u003eNew paragraph\\u003c/p\\u003e`,
+      },
+      { custom_module_id: 'phone', answer: '+32476581696' },
     ])
     expect(res.omittedFormAnswers).toEqual([])
   })

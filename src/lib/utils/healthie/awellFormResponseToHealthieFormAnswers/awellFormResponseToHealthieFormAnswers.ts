@@ -5,29 +5,14 @@ import {
   type Answer,
 } from '../../../../genql/generated/schema'
 import { type FormAnswerInput as HealthieFormAnswerInput } from '@/types/HealthieSchema'
-import { isNil } from 'lodash'
-
-/**
- * Extracts multiple select answers from a question response and formats it to Healthie format.
- * @param {Question} questionDefinition - The definition of the question.
- * @param {Answer} questionResponse - The response to the question.
- * @returns {string} The concatenated labels of the selected answers, joined by \n.
- */
-const getMultipleSelectAnswers = (
-  questionDefinition: Question,
-  questionResponse: Answer,
-): Pick<HealthieFormAnswerInput, 'answer'>['answer'] => {
-  const answerValues = JSON.parse(questionResponse.value) as (string | number)[]
-  const answerOptions = questionDefinition.options
-
-  const answerLabels = answerValues.map((answerValue) => {
-    return answerOptions?.find(
-      (answerOption) => String(answerOption.value) === String(answerValue),
-    )?.label
-  })
-
-  return answerLabels.join('\n')
-}
+import { has, isNil } from 'lodash'
+import {
+  getBooleanAnswer,
+  getDateAnswer,
+  getLongTextAnswer,
+  getMultipleSelectAnswers,
+  getSingleSelectAnswer,
+} from './utils'
 
 /**
  * Retrieves the answer for a given question based on its type.
@@ -35,7 +20,7 @@ const getMultipleSelectAnswers = (
  * @param {Answer} questionResponse - The response to the question.
  * @returns {string} The answer in Healthie format.
  */
-const getAnswer = (
+const getAnswerInHealthieFormat = (
   questionDefinition: Question,
   questionResponse: Answer,
 ): Pick<HealthieFormAnswerInput, 'answer'>['answer'] => {
@@ -43,15 +28,17 @@ const getAnswer = (
 
   switch (userQuestionType) {
     case 'YES_NO':
-      return String(questionResponse.value)
+      return getBooleanAnswer(questionResponse.value)
     case 'DATE':
-      return String(questionResponse.value)
+      return getDateAnswer(questionResponse.value)
     case 'NUMBER':
       return String(questionResponse.value)
-    case 'LONG_TEXT':
-      return String(questionResponse.value)
+    case 'LONG_TEXT': {
+      const { escapedHtml } = getLongTextAnswer(questionResponse.value)
+      return escapedHtml
+    }
     case 'MULTIPLE_CHOICE':
-      return String(questionResponse.value)
+      return getSingleSelectAnswer(questionDefinition, questionResponse)
     case 'MULTIPLE_SELECT':
       return getMultipleSelectAnswers(questionDefinition, questionResponse)
     case 'SLIDER':
@@ -59,6 +46,8 @@ const getAnswer = (
     case 'SHORT_TEXT':
       return String(questionResponse.value)
     case 'TELEPHONE':
+      return String(questionResponse.value)
+    case 'EMAIL':
       return String(questionResponse.value)
     default:
       return String(questionResponse.value)
@@ -72,17 +61,17 @@ const getAnswer = (
  */
 const getCustomModuleIdForAwellQuestion = (
   questionDefinition?: Question,
-): string | null => {
-  if (isNil(questionDefinition)) return null
+): string | undefined => {
+  if (isNil(questionDefinition)) return undefined
 
   const metaDataAsJson = JSON.parse(
     questionDefinition.metadata ?? '{}',
   ) as Record<string, string>
 
-  if (metaDataAsJson.hasOwnProperty('healthieCustomModuleId')) {
-    return metaDataAsJson['healthieCustomModuleId']
+  if (has(metaDataAsJson, 'healthieCustomModuleId')) {
+    return metaDataAsJson.healthieCustomModuleId
   } else {
-    return null
+    return undefined
   }
 }
 
@@ -113,7 +102,7 @@ export const awellFormResponseToHealthieFormAnswers = (opts: {
       (q) => q.id === questionResponse.question_id,
     )
 
-    if (!questionDefinition) {
+    if (questionDefinition === undefined) {
       omittedFormAnswers.push({
         questionId: questionResponse.question_id,
         reason:
@@ -124,20 +113,24 @@ export const awellFormResponseToHealthieFormAnswers = (opts: {
 
     const customModuleId = getCustomModuleIdForAwellQuestion(questionDefinition)
 
-    if (!customModuleId) {
+    if (customModuleId === undefined) {
       omittedFormAnswers.push({
         questionId: questionResponse.question_id,
-        reason: 'Question is missing `healthieCustomModuleId` metadata',
+        reason:
+          'Unable to map this question to a Healthie form because it is missing the `healthieCustomModuleId` metadata required for proper integration.',
       })
       return
     }
 
     try {
-      const answer = getAnswer(questionDefinition, questionResponse)
+      const answer = getAnswerInHealthieFormat(
+        questionDefinition,
+        questionResponse,
+      )
 
       formAnswers.push({
         custom_module_id: customModuleId,
-        answer: answer,
+        answer,
       })
     } catch (error) {
       const errorMessage =

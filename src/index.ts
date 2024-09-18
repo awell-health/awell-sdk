@@ -1,4 +1,4 @@
-export { type Environment } from './types'
+export { type Environment, HealthieOmitType } from './types'
 export * from './genql/generated/schema'
 export * from './webhooks/types'
 

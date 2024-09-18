@@ -1,2 +1,1 @@
-export { awellFormResponseToHealthieFormAnswers } from './awellFormResponseToHealthieFormAnswers'
-
+export * from './awellFormResponseToHealthieFormAnswers'

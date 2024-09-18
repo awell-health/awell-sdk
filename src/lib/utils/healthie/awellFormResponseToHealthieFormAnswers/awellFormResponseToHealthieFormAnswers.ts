@@ -4,7 +4,10 @@ import {
   type Question,
   type Answer,
 } from '../../../../genql/generated/schema'
-import { type FormAnswerInput as HealthieFormAnswerInput } from '@/types/HealthieSchema'
+import {
+  type FormAnswerInput as HealthieFormAnswerInput,
+  HealthieOmitType,
+} from '../../../../types'
 import { has, isNil } from 'lodash'
 import {
   getBooleanAnswer,
@@ -20,7 +23,7 @@ import {
  * @param {Answer} questionResponse - The response to the question.
  * @returns {string} The answer in Healthie format.
  */
-const getAnswerInHealthieFormat = (
+export const getAnswerInHealthieFormat = (
   questionDefinition: Question,
   questionResponse: Answer,
 ): Pick<HealthieFormAnswerInput, 'answer'>['answer'] => {
@@ -78,6 +81,7 @@ const getCustomModuleIdForAwellQuestion = (
 export interface OmittedFormAnswer {
   questionId: string
   reason: string
+  omitType: HealthieOmitType
 }
 
 /**
@@ -107,6 +111,7 @@ export const awellFormResponseToHealthieFormAnswers = (opts: {
         questionId: questionResponse.question_id,
         reason:
           'No corresponding question definition found in the form definition',
+        omitType: HealthieOmitType.QUESTION_NOT_FOUND_IN_FORM_DEFINITION,
       })
       return
     }
@@ -117,7 +122,8 @@ export const awellFormResponseToHealthieFormAnswers = (opts: {
       omittedFormAnswers.push({
         questionId: questionResponse.question_id,
         reason:
-          'Unable to map this question to a Healthie form because it is missing the `healthieCustomModuleId` metadata required for proper integration.',
+          'Unable to map this question to a Healthie question because it misses the `healthieCustomModuleId` metadata required for proper integration.',
+        omitType: HealthieOmitType.MISSING_MAPPING,
       })
       return
     }
@@ -139,6 +145,7 @@ export const awellFormResponseToHealthieFormAnswers = (opts: {
       omittedFormAnswers.push({
         questionId: questionResponse.question_id,
         reason: `Error processing answer: ${errorMessage}`,
+        omitType: HealthieOmitType.OTHER,
       })
     }
   })

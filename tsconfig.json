@@ -9,9 +9,9 @@
     "declaration": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]

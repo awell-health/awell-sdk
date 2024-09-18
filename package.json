@@ -1,10 +1,9 @@
 {
   "name": "@awell-health/awell-sdk",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "packageManager": "yarn@4.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awell-health/awell-sdk.git"

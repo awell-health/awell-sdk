@@ -1,0 +1,1 @@
+export { getLongTextAnswer } from './getLongTextAnswer'

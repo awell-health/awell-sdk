@@ -19,20 +19,20 @@ type Query {
   form(id: String!): FormPayload!
   forms(pathway_definition_id: String!, release_id: String): FormsPayload!
   formResponse(pathway_id: String!, activity_id: String!): FormResponsePayload!
+  generateRetoolEmbedUrl(landingPageUuid: String!, groupIds: [String!]!, userInfo: UserInfoParams!): GenerateRetoolEmbedUrlPayload!
   hostedSessionActivities(only_stakeholder_activities: Boolean): HostedSessionActivitiesPayload!
   hostedSession: HostedSessionPayload!
   message(id: String!): MessagePayload!
   pathwayFacts(pagination: PaginationParams, sorting: SortingParams, filters: PathwayFactsFilters!): OrchestrationFactsPayload!
   pathwayDataPointDefinitions(pathway_definition_id: String, release_id: String!, filters: FilterPathwayDataPointDefinitionsParams): PathwayDataPointDefinitionsPayload!
   pathway(id: String!): PathwayPayload!
-  myPathways: PathwaysPayload!
+  myPathways: PathwaysPayload! @deprecated(reason: "Use the `pathways` query instead.")
   pathways(pagination: PaginationParams, sorting: SortingParams, filters: FilterPathways): PathwaysPayload!
   patientDemographicsQueryConfiguration: PatientDemographicsQueryConfigurationPayload!
   patient(id: String!): PatientPayload!
   patients(pagination: PaginationParams, sorting: SortingParams, filters: FilterPatients): PatientsPayload!
   patientByIdentifier(system: String!, value: String!): PatientPayload!
   publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
-  publishedPathwayDefinitionsDashboard(pagination: PaginationParams, sorting: SortingParams, filters: FilterPathwayDefinitionsParams): PublishedPathwayDefinitionsPayload!
   getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
   scheduledSteps(pathway_id: String!): ScheduledStepsPayload!
   searchPatientsByPatientCode(patient_code: String!): SearchPatientsPayload!
@@ -50,6 +50,7 @@ type Query {
   webhookCallsForPathwayDefinition(pathway_definition_id: String!): WebhookCallsPayload!
   getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
+  pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String): DataPointPayload!
 }
 
 type ScheduledTracksPayload implements Payload {
@@ -429,6 +430,7 @@ enum UserQuestionType {
   MULTIPLE_CHOICE_GRID
   SIGNATURE
   TELEPHONE
+  EMAIL
 }
 
 type QuestionConfig {
@@ -532,6 +534,8 @@ enum ConditionOperator {
   IS_EMPTY
   IS_NOT_EMPTY
   IS_TODAY
+  IS_LESS_THAN_X_DAYS_AGO
+  IS_MORE_THAN_X_DAYS_AGO
 }
 
 type Operand {
@@ -843,6 +847,19 @@ type FormResponse {
   answers: [Answer!]!
 }
 
+type GenerateRetoolEmbedUrlPayload implements Payload {
+  code: String!
+  success: Boolean!
+  url: String
+}
+
+input UserInfoParams {
+  firstName: String!
+  lastName: String!
+  email: String!
+  id: String!
+}
+
 type HostedSessionActivitiesPayload implements Payload {
   code: String!
   success: Boolean!
@@ -978,6 +995,9 @@ type PathwayPayload implements Payload {
   pathway: Pathway
 }
 
+"""
+A care flow, also including any activities or swimlanes. Otherwise, it should be almost identical to the PathwaySummary, which is returned when retrieving a list of care flows.
+"""
 type Pathway {
   pathway_definition_id: String!
   release_id: String!
@@ -996,69 +1016,14 @@ type Pathway {
   Activities, sorted by date in descending order. For larger care flows, only the most recent 1000 activities are included. To see a complete list of activities, please use the `activity` query and appropriate filters.
   """
   latestActivities: [Activity!]!
-  swimlanes: Swimlanes!
   status: PathwayStatus!
   status_explanation: String
   tracks: [Track!]!
-  dashboards: PathwayDashboard
   patient: User!
 }
 
 """Safe date scalar that can serialize string or date"""
 scalar SafeDate
-
-type Swimlanes {
-  lanes: [Swimlane!]!
-  items: [SwimlaneItem!]!
-  links: [SwimlaneLink!]!
-}
-
-type Swimlane {
-  id: ID!
-  title: String!
-}
-
-type SwimlaneItem {
-  id: ID!
-  lane_id: ID!
-  row_index: Float!
-  column_index: Float!
-  title: String!
-  info: String
-  date: SafeDate
-  category: SwimlaneItemCategory!
-  type: SwimlaneItemType!
-  documentation: FormattedText
-  track_id: ID
-}
-
-enum SwimlaneItemCategory {
-  ACTION
-  STEP
-  TRACK
-  TRACK_START
-  TRACK_END
-  PATHWAY_START
-  PATHWAY_END
-}
-
-enum SwimlaneItemType {
-  active
-  completed
-  pending
-  possible
-}
-
-type FormattedText {
-  content: TranslatedText!
-  format: String!
-}
-
-type SwimlaneLink {
-  id: ID!
-  origin_id: ID!
-  destination_id: ID!
-}
 
 type Track {
   """The definition ID of the Track, can be used for adding or scheduling"""
@@ -1070,12 +1035,6 @@ type Track {
   Whether the track can be triggered manually (i.e. via addTrack or scheduleTrack mutations)
   """
   can_trigger_manually: Boolean
-}
-
-type PathwayDashboard {
-  dashboard_ids: [String!]!
-  cumulio_auth_id: String!
-  cumulio_auth_token: String!
 }
 
 type User {
@@ -1131,6 +1090,9 @@ type PathwaysPayload implements PaginationAndSortingPayload {
   pathways: [PathwaySummary!]!
 }
 
+"""
+A summary of a pathway instance, excluding any activities. Useful for list views.
+"""
 type PathwaySummary {
   pathway_definition_id: String
   id: ID!
@@ -1250,10 +1212,6 @@ type PathwayDefinitionDetails {
   stopped_careflows: Float
   completed_careflows: Float
   total_patients: Float
-}
-
-input FilterPathwayDefinitionsParams {
-  search: TextFilterContains
 }
 
 type ScheduledStepsPayload implements Payload {
@@ -1399,12 +1357,31 @@ type HostedPagesLink {
   url: String
 }
 
+type DataPointPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  dataPoints: [DataPoint!]!
+}
+
+type DataPoint {
+  id: ID!
+  key: String!
+  data_set_id: String!
+  serialized_value: String
+  data_point_definition_id: String!
+  date: String!
+  valueType: DataPointValueType!
+  activity_id: String
+}
+
 type Mutation {
   addIdentifierToPatient(input: AddIdentifierToPatientInput!): AddIdentifierToPatientPayload!
   addTrack(input: AddTrackInput!): AddTrackPayload!
   unscheduleTracks(input: CancelScheduledTracksInput!): CancelScheduledTracksPayload!
   completeExtensionActivity(input: CompleteExtensionActivityInput!): CompleteExtensionActivityPayload!
-  createPatient(mycare: MyCareOptions, input: CreatePatientInput): CreatePatientPayload!
+  createPatient(input: CreatePatientInput): CreatePatientPayload!
   deletePathway(input: DeletePathwayInput!): EmptyPayload!
   deletePatient(input: DeletePatientInput!): EmptyPayload!
   evaluateFormRules(input: EvaluateFormRulesInput!): EvaluateFormRulesPayload!
@@ -1438,6 +1415,7 @@ type Mutation {
   submitChecklist(input: SubmitChecklistInput!): SubmitChecklistPayload!
   submitFormResponse(input: SubmitFormResponseInput!): SubmitFormResponsePayload!
   updateBaselineInfo(input: UpdateBaselineInfoInput!): EmptyPayload!
+  updateEmrReportStatus(input: UpdateEmrReportStatusInput!): UpdateEmrReportStatusPayload!
   updatePatient(input: UpdatePatientInput!): UpdatePatientPayload!
 
   """
@@ -1445,6 +1423,7 @@ type Mutation {
   """
   updatePatientDemographicsQuery(input: UpdatePatientDemographicsQueryInput!): UpdatePatientDemographicsQueryPayload!
   updatePatientLanguage(input: UpdatePatientLanguageInput!): UpdatePatientLanguagePayload!
+  verify_identity(input: VerifyIdentityInput!): IdentityVerificationPayload!
 }
 
 type AddIdentifierToPatientPayload implements Payload {
@@ -1503,10 +1482,6 @@ type CreatePatientPayload implements Payload {
   code: String!
   success: Boolean!
   patient: User
-}
-
-input MyCareOptions {
-  password: String
 }
 
 input CreatePatientInput {
@@ -1819,6 +1794,23 @@ input UpdateBaselineInfoInput {
   baseline_info: [BaselineInfoInput!]!
 }
 
+type UpdateEmrReportStatusPayload implements Payload {
+  code: String!
+  success: Boolean!
+  request: EMRRequest
+}
+
+type EMRRequest {
+  id: String
+  status: String
+}
+
+input UpdateEmrReportStatusInput {
+  request_id: String!
+  status: String!
+  reason: String!
+}
+
 type UpdatePatientPayload implements Payload {
   code: String!
   success: Boolean!
@@ -1882,6 +1874,17 @@ type UpdatePatientLanguagePayload implements Payload {
 input UpdatePatientLanguageInput {
   """ISO 639-1 shortcode"""
   preferred_language: String!
+}
+
+type IdentityVerificationPayload implements Payload {
+  code: String!
+  success: Boolean!
+  is_verified: Boolean!
+}
+
+input VerifyIdentityInput {
+  dob: String
+  pathway_id: String!
 }
 
 type Subscription {

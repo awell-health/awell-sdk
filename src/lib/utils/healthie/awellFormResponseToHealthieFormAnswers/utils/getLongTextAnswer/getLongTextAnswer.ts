@@ -6,6 +6,9 @@
  * where paragraphs are stored as plain text separated by double newline characters.
  * The transformed output is intended for the Healthie (destination) system, which expects
  * Unicode-escaped HTML strings for proper rendering of text content.
+ * 
+ * IMPORTANT: When Sending data to Healthie they expect HTML-encoded multiline text
+ * Like this: "<p>Some long text I have in here</p>\n<p>With new lines</p>" - they then do their own logic for displaying it
  *
  * @param text - The plain text input from Awell where paragraphs are separated by double newline characters.
  * @returns {Object} An object containing both the normal HTML and the Unicode escaped HTML string.

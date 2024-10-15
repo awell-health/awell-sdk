@@ -21,7 +21,7 @@ describe('awellFormResponseToHealthieFormAnswers', () => {
       { custom_module_id: 'short_text', answer: 'A short answer' },
       {
         custom_module_id: 'long_text',
-        answer: `\\u003cp\\u003eA long text\\u003c/p\\u003e\\u003cp\\u003eNew paragraph\\u003c/p\\u003e`,
+        answer: `<p>A long text</p><p>New paragraph</p>`,
       },
       { custom_module_id: 'phone', answer: '+32476581696' },
     ])

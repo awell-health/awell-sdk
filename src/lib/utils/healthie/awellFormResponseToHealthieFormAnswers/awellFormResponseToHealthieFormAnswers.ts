@@ -37,8 +37,8 @@ export const getAnswerInHealthieFormat = (
     case 'NUMBER':
       return String(questionResponse.value)
     case 'LONG_TEXT': {
-      const { escapedHtml } = getLongTextAnswer(questionResponse.value)
-      return escapedHtml
+      const { html } = getLongTextAnswer(questionResponse.value)
+      return html
     }
     case 'MULTIPLE_CHOICE':
       return getSingleSelectAnswer(questionDefinition, questionResponse)

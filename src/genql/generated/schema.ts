@@ -9,6 +9,7 @@ export type Scalars = {
     ID: string,
     Float: number,
     Int: number,
+    JSON: any,
     SafeDate: any,
 }
 
@@ -66,6 +67,7 @@ export interface Query {
     getOrchestrationFactsFromPrompt: OrchestrationFactsPromptPayload
     hostedPagesLink: HostedPagesLinkPayload
     pathwayDataPoints: DataPointPayload
+    decisionOutputs: DecisionOutputsPayload
     __typename: 'Query'
 }
 
@@ -76,7 +78,7 @@ export interface ScheduledTracksPayload {
     __typename: 'ScheduledTracksPayload'
 }
 
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
 
 export interface ScheduledTrack {
     id: Scalars['ID']
@@ -146,7 +148,7 @@ export interface DataPointDefinition {
     __typename: 'DataPointDefinition'
 }
 
-export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT'
+export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT' | 'DECISION'
 
 export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON'
 
@@ -223,6 +225,7 @@ export interface Activity {
     /** Url for icon, only used by extensions custom actions */
     icon_url: (Scalars['String'] | null)
     action_component: (ActionComponent | null)
+    metadata: (Scalars['JSON'] | null)
     /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
     form_display_mode: (FormDisplayMode | null)
     form: (Form | null)
@@ -249,7 +252,7 @@ export interface ActivityObject {
     __typename: 'ActivityObject'
 }
 
-export type ActivityObjectType = 'ACTION' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'PLUGIN' | 'PLUGIN_ACTION'
+export type ActivityObjectType = 'ACTION' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'PLUGIN' | 'PLUGIN_ACTION'
 
 export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
 
@@ -341,7 +344,7 @@ export interface Option {
 
 export type QuestionType = 'MULTIPLE_CHOICE' | 'INPUT' | 'NO_INPUT'
 
-export type UserQuestionType = 'MULTIPLE_SELECT' | 'MULTIPLE_CHOICE' | 'NUMBER' | 'YES_NO' | 'DATE' | 'SHORT_TEXT' | 'LONG_TEXT' | 'SLIDER' | 'DESCRIPTION' | 'MULTIPLE_CHOICE_GRID' | 'SIGNATURE' | 'TELEPHONE' | 'EMAIL'
+export type UserQuestionType = 'MULTIPLE_SELECT' | 'MULTIPLE_CHOICE' | 'NUMBER' | 'YES_NO' | 'DATE' | 'SHORT_TEXT' | 'LONG_TEXT' | 'SLIDER' | 'DESCRIPTION' | 'MULTIPLE_CHOICE_GRID' | 'SIGNATURE' | 'TELEPHONE' | 'EMAIL' | 'ICD10_CLASSIFICATION'
 
 export interface QuestionConfig {
     recode_enabled: (Scalars['Boolean'] | null)
@@ -1178,7 +1181,15 @@ export interface DataPoint {
     __typename: 'DataPoint'
 }
 
+export interface DecisionOutputsPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    outputs: Scalars['String']
+    __typename: 'DecisionOutputsPayload'
+}
+
 export interface Mutation {
+    addActivityMetadata: AddActivityMetadataPayload
     addIdentifierToPatient: AddIdentifierToPatientPayload
     addTrack: AddTrackPayload
     unscheduleTracks: CancelScheduledTracksPayload
@@ -1221,6 +1232,13 @@ export interface Mutation {
     updatePatientLanguage: UpdatePatientLanguagePayload
     verify_identity: IdentityVerificationPayload
     __typename: 'Mutation'
+}
+
+export interface AddActivityMetadataPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    activity: Activity
+    __typename: 'AddActivityMetadataPayload'
 }
 
 export interface AddIdentifierToPatientPayload {
@@ -1461,7 +1479,7 @@ export interface QueryGenqlSelection{
     pathwayElements?: (ElementsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     emrReport?: (EmrReportPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     extensionActivityRecord?: (ExtensionActivityRecordPayloadGenqlSelection & { __args: {id: Scalars['String']} })
-    form?: (FormPayloadGenqlSelection & { __args: {id: Scalars['String']} })
+    form?: (FormPayloadGenqlSelection & { __args: {pathway_id?: (Scalars['String'] | null), id: Scalars['String']} })
     forms?: (FormsPayloadGenqlSelection & { __args: {pathway_definition_id: Scalars['String'], release_id?: (Scalars['String'] | null)} })
     formResponse?: (FormResponsePayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     generateRetoolEmbedUrl?: (GenerateRetoolEmbedUrlPayloadGenqlSelection & { __args: {landingPageUuid: Scalars['String'], groupIds: Scalars['String'][], userInfo: UserInfoParams} })
@@ -1497,6 +1515,7 @@ export interface QueryGenqlSelection{
     getOrchestrationFactsFromPrompt?: (OrchestrationFactsPromptPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], prompt: Scalars['String']} })
     hostedPagesLink?: (HostedPagesLinkPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], stakeholder_id: Scalars['String']} })
     pathwayDataPoints?: (DataPointPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], activity_id?: (Scalars['String'] | null), data_point_definition_id?: (Scalars['String'] | null)} })
+    decisionOutputs?: (DecisionOutputsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1543,6 +1562,8 @@ export interface PayloadGenqlSelection{
     on_WebhookCallsPayload?: WebhookCallsPayloadGenqlSelection
     on_OrchestrationFactsPromptPayload?: OrchestrationFactsPromptPayloadGenqlSelection
     on_HostedPagesLinkPayload?: HostedPagesLinkPayloadGenqlSelection
+    on_DecisionOutputsPayload?: DecisionOutputsPayloadGenqlSelection
+    on_AddActivityMetadataPayload?: AddActivityMetadataPayloadGenqlSelection
     on_AddIdentifierToPatientPayload?: AddIdentifierToPatientPayloadGenqlSelection
     on_AddTrackPayload?: AddTrackPayloadGenqlSelection
     on_CancelScheduledTracksPayload?: CancelScheduledTracksPayloadGenqlSelection
@@ -1740,6 +1761,7 @@ export interface ActivityGenqlSelection{
     /** Url for icon, only used by extensions custom actions */
     icon_url?: boolean | number
     action_component?: ActionComponentGenqlSelection
+    metadata?: boolean | number
     /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
     form_display_mode?: boolean | number
     form?: FormGenqlSelection
@@ -2783,7 +2805,16 @@ export interface DataPointGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface DecisionOutputsPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    outputs?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface MutationGenqlSelection{
+    addActivityMetadata?: (AddActivityMetadataPayloadGenqlSelection & { __args: {input: AddActivityMetadataInput} })
     addIdentifierToPatient?: (AddIdentifierToPatientPayloadGenqlSelection & { __args: {input: AddIdentifierToPatientInput} })
     addTrack?: (AddTrackPayloadGenqlSelection & { __args: {input: AddTrackInput} })
     unscheduleTracks?: (CancelScheduledTracksPayloadGenqlSelection & { __args: {input: CancelScheduledTracksInput} })
@@ -2828,6 +2859,16 @@ export interface MutationGenqlSelection{
     __typename?: boolean | number
     __scalar?: boolean | number
 }
+
+export interface AddActivityMetadataPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    activity?: ActivityGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AddActivityMetadataInput {activity_id: Scalars['String'],note?: (Scalars['String'] | null),metadata: Scalars['JSON']}
 
 export interface AddIdentifierToPatientPayloadGenqlSelection{
     code?: boolean | number
@@ -3039,7 +3080,9 @@ language?: (Scalars['String'] | null),
 /** If no patient_id is provided this field will be used to uniquely identify the patient. */
 patient_identifier?: (IdentifierInput | null),
 /** Time-to-live of the session in seconds. This defaults to the maximal value of 3600 seconds (one hour). */
-ttl?: (Scalars['Float'] | null)}
+ttl?: (Scalars['Float'] | null),
+/** Specify the stakeholder for the hosted session. If not provided, the stakeholder will be the patient by default */
+stakeholder_definition_id?: (Scalars['String'] | null)}
 
 export interface DataPointInput {data_point_definition_id: Scalars['String'],value: Scalars['String']}
 
@@ -3216,7 +3259,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -4192,10 +4235,26 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const DecisionOutputsPayload_possibleTypes: string[] = ['DecisionOutputsPayload']
+    export const isDecisionOutputsPayload = (obj?: { __typename?: any } | null): obj is DecisionOutputsPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDecisionOutputsPayload"')
+      return DecisionOutputsPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Mutation_possibleTypes: string[] = ['Mutation']
     export const isMutation = (obj?: { __typename?: any } | null): obj is Mutation => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isMutation"')
       return Mutation_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AddActivityMetadataPayload_possibleTypes: string[] = ['AddActivityMetadataPayload']
+    export const isAddActivityMetadataPayload = (obj?: { __typename?: any } | null): obj is AddActivityMetadataPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAddActivityMetadataPayload"')
+      return AddActivityMetadataPayload_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4443,7 +4502,8 @@ export const enumDataPointSourceType = {
    API_CALL_STATUS: 'API_CALL_STATUS' as const,
    EXTENSION_WEBHOOK: 'EXTENSION_WEBHOOK' as const,
    EXTENSION_ACTION: 'EXTENSION_ACTION' as const,
-   DATA_POINT: 'DATA_POINT' as const
+   DATA_POINT: 'DATA_POINT' as const,
+   DECISION: 'DECISION' as const
 }
 
 export const enumDataPointValueType = {
@@ -4497,6 +4557,7 @@ export const enumActivityObjectType = {
    CALCULATION: 'CALCULATION' as const,
    CHECKLIST: 'CHECKLIST' as const,
    CLINICAL_NOTE: 'CLINICAL_NOTE' as const,
+   DECISION: 'DECISION' as const,
    EVALUATED_RULE: 'EVALUATED_RULE' as const,
    EMR_REPORT: 'EMR_REPORT' as const,
    FORM: 'FORM' as const,
@@ -4551,7 +4612,8 @@ export const enumUserQuestionType = {
    MULTIPLE_CHOICE_GRID: 'MULTIPLE_CHOICE_GRID' as const,
    SIGNATURE: 'SIGNATURE' as const,
    TELEPHONE: 'TELEPHONE' as const,
-   EMAIL: 'EMAIL' as const
+   EMAIL: 'EMAIL' as const,
+   ICD10_CLASSIFICATION: 'ICD10_CLASSIFICATION' as const
 }
 
 export const enumAllowedDatesOptions = {

@@ -16,7 +16,7 @@ type Query {
   pathwayElements(pathway_id: String!): ElementsPayload!
   emrReport(id: String!): EmrReportPayload!
   extensionActivityRecord(id: String!): ExtensionActivityRecordPayload!
-  form(id: String!): FormPayload!
+  form(pathway_id: String, id: String!): FormPayload!
   forms(pathway_definition_id: String!, release_id: String): FormsPayload!
   formResponse(pathway_id: String!, activity_id: String!): FormResponsePayload!
   generateRetoolEmbedUrl(landingPageUuid: String!, groupIds: [String!]!, userInfo: UserInfoParams!): GenerateRetoolEmbedUrlPayload!
@@ -51,6 +51,7 @@ type Query {
   getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
   pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String): DataPointPayload!
+  decisionOutputs(pathway_id: String!, activity_id: String!): DecisionOutputsPayload!
 }
 
 type ScheduledTracksPayload implements Payload {
@@ -148,6 +149,7 @@ enum DataPointSourceType {
   EXTENSION_WEBHOOK
   EXTENSION_ACTION
   DATA_POINT
+  DECISION
 }
 
 enum DataPointValueType {
@@ -241,6 +243,7 @@ type Activity {
   """Url for icon, only used by extensions custom actions"""
   icon_url: String
   action_component: ActionComponent
+  metadata: JSON
 
   """
   Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now.
@@ -303,6 +306,7 @@ enum ActivityObjectType {
   CALCULATION
   CHECKLIST
   CLINICAL_NOTE
+  DECISION
   EVALUATED_RULE
   EMR_REPORT
   FORM
@@ -373,6 +377,11 @@ type ActionComponent {
   title: String
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 enum FormDisplayMode {
   CONVERSATIONAL
   REGULAR
@@ -431,6 +440,7 @@ enum UserQuestionType {
   SIGNATURE
   TELEPHONE
   EMAIL
+  ICD10_CLASSIFICATION
 }
 
 type QuestionConfig {
@@ -1376,7 +1386,14 @@ type DataPoint {
   activity_id: String
 }
 
+type DecisionOutputsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  outputs: String!
+}
+
 type Mutation {
+  addActivityMetadata(input: AddActivityMetadataInput!): AddActivityMetadataPayload!
   addIdentifierToPatient(input: AddIdentifierToPatientInput!): AddIdentifierToPatientPayload!
   addTrack(input: AddTrackInput!): AddTrackPayload!
   unscheduleTracks(input: CancelScheduledTracksInput!): CancelScheduledTracksPayload!
@@ -1424,6 +1441,18 @@ type Mutation {
   updatePatientDemographicsQuery(input: UpdatePatientDemographicsQueryInput!): UpdatePatientDemographicsQueryPayload!
   updatePatientLanguage(input: UpdatePatientLanguageInput!): UpdatePatientLanguagePayload!
   verify_identity(input: VerifyIdentityInput!): IdentityVerificationPayload!
+}
+
+type AddActivityMetadataPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity!
+}
+
+input AddActivityMetadataInput {
+  activity_id: String!
+  note: String
+  metadata: JSON!
 }
 
 type AddIdentifierToPatientPayload implements Payload {
@@ -1711,6 +1740,11 @@ input StartHostedPathwaySessionInput {
   Time-to-live of the session in seconds. This defaults to the maximal value of 3600 seconds (one hour).
   """
   ttl: Float = 3600
+
+  """
+  Specify the stakeholder for the hosted session. If not provided, the stakeholder will be the patient by default
+  """
+  stakeholder_definition_id: String
 }
 
 input DataPointInput {

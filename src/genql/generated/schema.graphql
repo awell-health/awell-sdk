@@ -50,7 +50,7 @@ type Query {
   webhookCallsForPathwayDefinition(pathway_definition_id: String!): WebhookCallsPayload!
   getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
-  pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String): DataPointPayload!
+  pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String, data_point_key: String): DataPointPayload!
   decisionOutputs(pathway_id: String!, activity_id: String!): DecisionOutputsPayload!
 }
 

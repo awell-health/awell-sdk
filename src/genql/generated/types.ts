@@ -553,6 +553,9 @@ export default {
                     ],
                     "data_point_definition_id": [
                         3
+                    ],
+                    "data_point_key": [
+                        3
                     ]
                 }
             ],

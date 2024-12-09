@@ -5,6 +5,7 @@ type Query {
   myPendingActivities: ActivitiesPayload!
   myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
   pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  activity(id: String!): ActivityPayload!
   activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
   pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
   apiCall(id: String!): ApiCallPayload!
@@ -588,6 +589,12 @@ input PaginationParams {
 input SortingParams {
   field: String!
   direction: String!
+}
+
+type ActivityPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity
 }
 
 input FilterActivitiesParams {
@@ -1377,7 +1384,7 @@ type DataPointPayload implements PaginationAndSortingPayload {
 
 type DataPoint {
   id: ID!
-  key: String!
+  key: String
   data_set_id: String!
   serialized_value: String
   data_point_definition_id: String!

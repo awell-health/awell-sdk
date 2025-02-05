@@ -182,28 +182,28 @@ export const formDefinitionMock: Form = {
           value: -1,
           value_string: 'some option',
           label: 'Option 1',
-          __typename: 'Option'
+          __typename: 'Option',
         },
         {
           id: 'JYHA_c6UFLJX',
           value: 3232,
           value_string: '3232',
           label: 'Option 2',
-          __typename: 'Option'
+          __typename: 'Option',
         },
         {
           id: 'xmXV065kgDEk',
           value: -1,
           value_string: 'another option',
           label: 'Option 3',
-          __typename: 'Option'
+          __typename: 'Option',
         },
         {
           id: 'eCrmxno3fpcy',
           value: -1,
           value_string: 'option 4',
           label: 'fdsfds',
-          __typename: 'Option'
+          __typename: 'Option',
         },
       ],
       rule: null,
@@ -288,6 +288,20 @@ export const formDefinitionMock: Form = {
       dataPointValueType: enumDataPointValueType.STRING,
       questionType: enumQuestionType.INPUT,
       userQuestionType: enumUserQuestionType.LONG_TEXT,
+      metadata: null,
+      options: [],
+      rule: null,
+      questionConfig: null,
+      __typename: 'Question',
+    },
+    {
+      id: 'anotherDescriptionItemId',
+      definition_id: 'anotherDescriptionItemDefinitionId',
+      title: '<p class="slate-p">Another description content</p>',
+      key: 'anotherDescription',
+      dataPointValueType: null,
+      questionType: enumQuestionType.NO_INPUT,
+      userQuestionType: enumUserQuestionType.DESCRIPTION,
       metadata: null,
       options: [],
       rule: null,

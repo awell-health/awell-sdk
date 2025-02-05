@@ -9,18 +9,19 @@ import {
   type QuestionnaireResponseItemAnswer as FhirQuestionnaireResponseItemAnswer,
 } from '@medplum/fhirtypes'
 import { isNil } from 'lodash'
+import { slateToEscapedJsString } from '../../awell'
 
 const getQuestionLabel = (
   awellFormDefinition: Form,
-  questionId: string
+  questionId: string,
 ): string => {
   const itemDefinition = awellFormDefinition.questions.find(
-    (item) => item.id === questionId
+    (item) => item.id === questionId,
   )
 
   if (isNil(itemDefinition)) {
     throw new Error(
-      `Could not find question definition for question with id ${questionId}`
+      `Could not find question definition for question with id ${questionId}`,
     )
   }
 
@@ -28,7 +29,7 @@ const getQuestionLabel = (
 }
 
 const getMultipleSelectFhirAnswers = (
-  itemResponse: Answer
+  itemResponse: Answer,
 ): FhirQuestionnaireResponseItemAnswer[] => {
   const itemResponseValueArray = JSON.parse(itemResponse.value) as Array<
     number | string
@@ -47,15 +48,15 @@ const getMultipleSelectFhirAnswers = (
 
 const getAnswer = (
   awellFormDefinition: Form,
-  itemResponse: Answer
+  itemResponse: Answer,
 ): FhirQuestionnaireResponseItemAnswer[] => {
   const itemDefinition = awellFormDefinition.questions.find(
-    (item) => item.id === itemResponse.question_id
+    (item) => item.id === itemResponse.question_id,
   )
 
   if (isNil(itemDefinition)) {
     throw new Error(
-      `Could not find question definition for question with id ${itemResponse.question_id}`
+      `Could not find question definition for question with id ${itemResponse.question_id}`,
     )
   }
 
@@ -128,14 +129,49 @@ export const AwellFormResponseToFhirQuestionnaireResponseItems = (opts: {
   awellFormDefinition: Form
   awellFormResponse: FormResponse
 }): FhirQuestionnaireResponseItem[] => {
-  return opts.awellFormResponse.answers.map((itemResponse) => {
+  /**
+   * Description items are not included in the form response,
+   * but should be added to the questionnaire response.
+   * See https://build.fhir.org/questionnaireresponse.html#validation
+   */
+  const descriptionQuestions = opts.awellFormDefinition.questions.filter(
+    (_q) => _q.userQuestionType === enumUserQuestionType.DESCRIPTION,
+  )
+
+  const descriptionQuestionsAsFhirItems = descriptionQuestions.map((item) => {
     return {
-      linkId: itemResponse.question_id,
-      text: getQuestionLabel(
-        opts.awellFormDefinition,
-        itemResponse.question_id
-      ),
-      answer: getAnswer(opts.awellFormDefinition, itemResponse),
+      linkId: item.id,
+      text: slateToEscapedJsString(item.title),
     } satisfies FhirQuestionnaireResponseItem
+  })
+
+  const questionnaireResponseItems = opts.awellFormResponse.answers.map(
+    (itemResponse) => {
+      return {
+        linkId: itemResponse.question_id,
+        text: getQuestionLabel(
+          opts.awellFormDefinition,
+          itemResponse.question_id,
+        ),
+        answer: getAnswer(opts.awellFormDefinition, itemResponse),
+      } satisfies FhirQuestionnaireResponseItem
+    },
+  )
+
+  /**
+   * Sort the questionnaire response items by the original question order.
+   */
+  const originalQuestionOrder = opts.awellFormDefinition.questions.map(
+    (q) => q.id,
+  )
+
+  return [
+    ...descriptionQuestionsAsFhirItems,
+    ...questionnaireResponseItems,
+  ].sort((a, b) => {
+    return (
+      originalQuestionOrder.indexOf(a.linkId) -
+      originalQuestionOrder.indexOf(b.linkId)
+    )
   })
 }

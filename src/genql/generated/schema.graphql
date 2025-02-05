@@ -5,8 +5,11 @@ type Query {
   myPendingActivities: ActivitiesPayload!
   myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
   pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  careflowActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: FilterCareflowActivitiesParams): ActivitiesPayload!
+  activity(id: String!): ActivityPayload!
   activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
   pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
+  careflowActivityTypes(careflow_id: String!): ActivityTypesPayload!
   apiCall(id: String!): ApiCallPayload!
   apiCalls(pathway_id: String!): ApiCallsPayload!
   calculationAction(id: String!): ActionPayload!
@@ -19,7 +22,7 @@ type Query {
   form(pathway_id: String, id: String!): FormPayload!
   forms(pathway_definition_id: String!, release_id: String): FormsPayload!
   formResponse(pathway_id: String!, activity_id: String!): FormResponsePayload!
-  generateRetoolEmbedUrl(landingPageUuid: String!, groupIds: [String!]!, userInfo: UserInfoParams!): GenerateRetoolEmbedUrlPayload!
+  generateRetoolEmbedUrl(landingPageUuid: String!, groupIds: [String!]!, userInfo: UserInfoParams!, releaseVersion: String): GenerateRetoolEmbedUrlPayload!
   hostedSessionActivities(only_stakeholder_activities: Boolean): HostedSessionActivitiesPayload!
   hostedSession: HostedSessionPayload!
   message(id: String!): MessagePayload!
@@ -319,6 +322,7 @@ enum ActivityObjectType {
   USER
   EMR_REQUEST
   TRACK
+  TIMER
   PLUGIN
   PLUGIN_ACTION
 }
@@ -590,6 +594,29 @@ input SortingParams {
   direction: String!
 }
 
+input FilterCareflowActivitiesParams {
+  action: [String!]
+  activity_status: [String!]
+  activity_type: [String!]
+  stakeholders: [String!]
+  hide_system_activities: Boolean
+  date_range: DateRangeInput
+}
+
+input DateRangeInput {
+  from: SafeDate!
+  to: SafeDate!
+}
+
+"""Safe date scalar that can serialize string or date"""
+scalar SafeDate
+
+type ActivityPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activity: Activity
+}
+
 input FilterActivitiesParams {
   action: StringArrayFilter
   activity_status: StringArrayFilter
@@ -602,6 +629,12 @@ input FilterActivitiesParams {
 
 input TextFilterEquals {
   eq: String
+}
+
+type ActivityTypesPayload implements Payload {
+  code: String!
+  success: Boolean!
+  activityTypes: [String!]!
 }
 
 type ApiCallPayload implements Payload {
@@ -891,6 +924,7 @@ type HostedSession {
   cancel_url: String
   status: HostedSessionStatus!
   stakeholder: HostedSessionStakeholder!
+  user_context: HostedSessionUserContext
 }
 
 enum HostedSessionStatus {
@@ -908,6 +942,11 @@ type HostedSessionStakeholder {
 enum HostedSessionStakeholderType {
   PATIENT
   STAKEHOLDER
+}
+
+type HostedSessionUserContext {
+  stytch_member_id: String
+  stytch_member_email: String
 }
 
 type BrandingSettings {
@@ -1031,9 +1070,6 @@ type Pathway {
   tracks: [Track!]!
   patient: User!
 }
-
-"""Safe date scalar that can serialize string or date"""
-scalar SafeDate
 
 type Track {
   """The definition ID of the Track, can be used for adding or scheduling"""
@@ -1377,7 +1413,7 @@ type DataPointPayload implements PaginationAndSortingPayload {
 
 type DataPoint {
   id: ID!
-  key: String!
+  key: String
   data_set_id: String!
   serialized_value: String
   data_point_definition_id: String!
@@ -1681,6 +1717,7 @@ type StartHostedActivitySessionPayload implements Payload {
   session_id: String!
   session_url: String!
   language: String
+  user_context: HostedSessionUserContext
 }
 
 input StartHostedActivitySessionInput {
@@ -1691,6 +1728,12 @@ input StartHostedActivitySessionInput {
 
   """ISO 639-1 shortcode"""
   language: String
+  user_context: HostedSessionUserContextInput
+}
+
+input HostedSessionUserContextInput {
+  stytch_member_id: String
+  stytch_member_email: String
 }
 
 type StartHostedPathwaySessionFromLinkPayload implements Payload {
@@ -1715,6 +1758,7 @@ type StartHostedPathwaySessionPayload implements Payload {
   session_url: String!
   pathway_id: String!
   stakeholder: HostedSessionStakeholder!
+  user_context: HostedSessionUserContext
 }
 
 input StartHostedPathwaySessionInput {
@@ -1745,6 +1789,7 @@ input StartHostedPathwaySessionInput {
   Specify the stakeholder for the hosted session. If not provided, the stakeholder will be the patient by default
   """
   stakeholder_definition_id: String
+  user_context: HostedSessionUserContextInput
 }
 
 input DataPointInput {

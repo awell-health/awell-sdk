@@ -5,6 +5,7 @@ type Query {
   myPendingActivities: ActivitiesPayload!
   myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
   pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  careflowActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: FilterCareflowActivitiesParams): ActivitiesPayload!
   activity(id: String!): ActivityPayload!
   activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
   pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
@@ -592,6 +593,23 @@ input SortingParams {
   field: String!
   direction: String!
 }
+
+input FilterCareflowActivitiesParams {
+  action: [String!]
+  activity_status: [String!]
+  activity_type: [String!]
+  stakeholders: [String!]
+  hide_system_activities: Boolean
+  date_range: DateRangeInput
+}
+
+input DateRangeInput {
+  from: SafeDate!
+  to: SafeDate!
+}
+
+"""Safe date scalar that can serialize string or date"""
+scalar SafeDate
 
 type ActivityPayload implements Payload {
   code: String!

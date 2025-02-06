@@ -28,7 +28,7 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
       item: [
         {
           linkId: 'MUha7ldV6gJL',
-          text: '"<p class=\\"slate-p\\">This is a description question. It&#x27;s doesn&#x27;t collect any data but just shows some text to the user.</p>"',
+          text: "This is a description question. It\\'s doesn\\'t collect any data but just shows some text to the user.",
           type: 'display',
         },
         {
@@ -99,6 +99,11 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
           linkId: 'PwQq1MVz3sYn',
           text: 'Question that collects a string but long-form (textarea)',
           type: 'text',
+        },
+        {
+          linkId: 'anotherDescriptionItemId',
+          text: 'Another description content',
+          type: 'display',
         },
         {
           linkId: 'uuir17H9iz9P',

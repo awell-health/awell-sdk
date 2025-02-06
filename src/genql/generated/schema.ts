@@ -20,9 +20,11 @@ export interface Query {
     myPendingActivities: ActivitiesPayload
     myActivities: ActivitiesPayload
     pathwayActivities: ActivitiesPayload
+    careflowActivities: ActivitiesPayload
     activity: ActivityPayload
     activities: ActivitiesPayload
     pathwayStepActivities: ActivitiesPayload
+    careflowActivityTypes: ActivityTypesPayload
     apiCall: ApiCallPayload
     apiCalls: ApiCallsPayload
     calculationAction: ActionPayload
@@ -79,7 +81,7 @@ export interface ScheduledTracksPayload {
     __typename: 'ScheduledTracksPayload'
 }
 
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
 
 export interface ScheduledTrack {
     id: Scalars['ID']
@@ -253,7 +255,7 @@ export interface ActivityObject {
     __typename: 'ActivityObject'
 }
 
-export type ActivityObjectType = 'ACTION' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'PLUGIN' | 'PLUGIN_ACTION'
+export type ActivityObjectType = 'ACTION' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
 
 export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
 
@@ -470,6 +472,13 @@ export interface ActivityPayload {
     success: Scalars['Boolean']
     activity: (Activity | null)
     __typename: 'ActivityPayload'
+}
+
+export interface ActivityTypesPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    activityTypes: Scalars['String'][]
+    __typename: 'ActivityTypesPayload'
 }
 
 export interface ApiCallPayload {
@@ -739,6 +748,7 @@ export interface HostedSession {
     cancel_url: (Scalars['String'] | null)
     status: HostedSessionStatus
     stakeholder: HostedSessionStakeholder
+    user_context: (HostedSessionUserContext | null)
     __typename: 'HostedSession'
 }
 
@@ -752,6 +762,12 @@ export interface HostedSessionStakeholder {
 }
 
 export type HostedSessionStakeholderType = 'PATIENT' | 'STAKEHOLDER'
+
+export interface HostedSessionUserContext {
+    stytch_member_id: (Scalars['String'] | null)
+    stytch_member_email: (Scalars['String'] | null)
+    __typename: 'HostedSessionUserContext'
+}
 
 export interface BrandingSettings {
     accent_color: (Scalars['String'] | null)
@@ -1347,6 +1363,7 @@ export interface StartHostedActivitySessionPayload {
     session_id: Scalars['String']
     session_url: Scalars['String']
     language: (Scalars['String'] | null)
+    user_context: (HostedSessionUserContext | null)
     __typename: 'StartHostedActivitySessionPayload'
 }
 
@@ -1364,6 +1381,7 @@ export interface StartHostedPathwaySessionPayload {
     session_url: Scalars['String']
     pathway_id: Scalars['String']
     stakeholder: HostedSessionStakeholder
+    user_context: (HostedSessionUserContext | null)
     __typename: 'StartHostedPathwaySessionPayload'
 }
 
@@ -1476,9 +1494,11 @@ export interface QueryGenqlSelection{
     myPendingActivities?: ActivitiesPayloadGenqlSelection
     myActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String']} })
     pathwayActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String']} })
+    careflowActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], filters?: (FilterCareflowActivitiesParams | null)} })
     activity?: (ActivityPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     activities?: (ActivitiesPayloadGenqlSelection & { __args?: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), filters?: (FilterActivitiesParams | null)} })
     pathwayStepActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], step_id: Scalars['String']} })
+    careflowActivityTypes?: (ActivityTypesPayloadGenqlSelection & { __args: {careflow_id: Scalars['String']} })
     apiCall?: (ApiCallPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     apiCalls?: (ApiCallsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     calculationAction?: (ActionPayloadGenqlSelection & { __args: {id: Scalars['String']} })
@@ -1491,7 +1511,7 @@ export interface QueryGenqlSelection{
     form?: (FormPayloadGenqlSelection & { __args: {pathway_id?: (Scalars['String'] | null), id: Scalars['String']} })
     forms?: (FormsPayloadGenqlSelection & { __args: {pathway_definition_id: Scalars['String'], release_id?: (Scalars['String'] | null)} })
     formResponse?: (FormResponsePayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
-    generateRetoolEmbedUrl?: (GenerateRetoolEmbedUrlPayloadGenqlSelection & { __args: {landingPageUuid: Scalars['String'], groupIds: Scalars['String'][], userInfo: UserInfoParams} })
+    generateRetoolEmbedUrl?: (GenerateRetoolEmbedUrlPayloadGenqlSelection & { __args: {landingPageUuid: Scalars['String'], groupIds: Scalars['String'][], userInfo: UserInfoParams, releaseVersion?: (Scalars['String'] | null)} })
     hostedSessionActivities?: (HostedSessionActivitiesPayloadGenqlSelection & { __args?: {only_stakeholder_activities?: (Scalars['Boolean'] | null)} })
     hostedSession?: HostedSessionPayloadGenqlSelection
     message?: (MessagePayloadGenqlSelection & { __args: {id: Scalars['String']} })
@@ -1544,6 +1564,7 @@ export interface PayloadGenqlSelection{
     on_PatientPathwaysPayload?: PatientPathwaysPayloadGenqlSelection
     on_BaselineInfoPayload?: BaselineInfoPayloadGenqlSelection
     on_ActivityPayload?: ActivityPayloadGenqlSelection
+    on_ActivityTypesPayload?: ActivityTypesPayloadGenqlSelection
     on_ApiCallPayload?: ApiCallPayloadGenqlSelection
     on_ApiCallsPayload?: ApiCallsPayloadGenqlSelection
     on_ActionPayload?: ActionPayloadGenqlSelection
@@ -2017,6 +2038,10 @@ export interface PaginationParams {offset: Scalars['Int'],count: Scalars['Int']}
 
 export interface SortingParams {field: Scalars['String'],direction: Scalars['String']}
 
+export interface FilterCareflowActivitiesParams {action?: (Scalars['String'][] | null),activity_status?: (Scalars['String'][] | null),activity_type?: (Scalars['String'][] | null),stakeholders?: (Scalars['String'][] | null),hide_system_activities?: (Scalars['Boolean'] | null),date_range?: (DateRangeInput | null)}
+
+export interface DateRangeInput {from: Scalars['SafeDate'],to: Scalars['SafeDate']}
+
 export interface ActivityPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
@@ -2028,6 +2053,14 @@ export interface ActivityPayloadGenqlSelection{
 export interface FilterActivitiesParams {action?: (StringArrayFilter | null),activity_status?: (StringArrayFilter | null),pathway_definition_id?: (StringArrayFilter | null),patient_id?: (TextFilterEquals | null),activity_type?: (StringArrayFilter | null),stakeholders?: (StringArrayFilter | null),pathway_status?: (StringArrayFilter | null)}
 
 export interface TextFilterEquals {eq?: (Scalars['String'] | null)}
+
+export interface ActivityTypesPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    activityTypes?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
 
 export interface ApiCallPayloadGenqlSelection{
     code?: boolean | number
@@ -2319,6 +2352,7 @@ export interface HostedSessionGenqlSelection{
     cancel_url?: boolean | number
     status?: boolean | number
     stakeholder?: HostedSessionStakeholderGenqlSelection
+    user_context?: HostedSessionUserContextGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2327,6 +2361,13 @@ export interface HostedSessionStakeholderGenqlSelection{
     id?: boolean | number
     type?: boolean | number
     name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface HostedSessionUserContextGenqlSelection{
+    stytch_member_id?: boolean | number
+    stytch_member_email?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3059,13 +3100,16 @@ export interface StartHostedActivitySessionPayloadGenqlSelection{
     session_id?: boolean | number
     session_url?: boolean | number
     language?: boolean | number
+    user_context?: HostedSessionUserContextGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
 export interface StartHostedActivitySessionInput {pathway_id: Scalars['String'],success_url?: (Scalars['String'] | null),cancel_url?: (Scalars['String'] | null),stakeholder_id: Scalars['String'],
 /** ISO 639-1 shortcode */
-language?: (Scalars['String'] | null)}
+language?: (Scalars['String'] | null),user_context?: (HostedSessionUserContextInput | null)}
+
+export interface HostedSessionUserContextInput {stytch_member_id?: (Scalars['String'] | null),stytch_member_email?: (Scalars['String'] | null)}
 
 export interface StartHostedPathwaySessionFromLinkPayloadGenqlSelection{
     code?: boolean | number
@@ -3086,6 +3130,7 @@ export interface StartHostedPathwaySessionPayloadGenqlSelection{
     session_url?: boolean | number
     pathway_id?: boolean | number
     stakeholder?: HostedSessionStakeholderGenqlSelection
+    user_context?: HostedSessionUserContextGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3100,7 +3145,7 @@ patient_identifier?: (IdentifierInput | null),
 /** Time-to-live of the session in seconds. This defaults to the maximal value of 3600 seconds (one hour). */
 ttl?: (Scalars['Float'] | null),
 /** Specify the stakeholder for the hosted session. If not provided, the stakeholder will be the patient by default */
-stakeholder_definition_id?: (Scalars['String'] | null)}
+stakeholder_definition_id?: (Scalars['String'] | null),user_context?: (HostedSessionUserContextInput | null)}
 
 export interface DataPointInput {data_point_definition_id: Scalars['String'],value: Scalars['String']}
 
@@ -3277,7 +3322,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -3613,6 +3658,14 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const ActivityTypesPayload_possibleTypes: string[] = ['ActivityTypesPayload']
+    export const isActivityTypesPayload = (obj?: { __typename?: any } | null): obj is ActivityTypesPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActivityTypesPayload"')
+      return ActivityTypesPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const ApiCallPayload_possibleTypes: string[] = ['ApiCallPayload']
     export const isApiCallPayload = (obj?: { __typename?: any } | null): obj is ApiCallPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isApiCallPayload"')
@@ -3889,6 +3942,14 @@ export interface SubscriptionGenqlSelection{
     export const isHostedSessionStakeholder = (obj?: { __typename?: any } | null): obj is HostedSessionStakeholder => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isHostedSessionStakeholder"')
       return HostedSessionStakeholder_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const HostedSessionUserContext_possibleTypes: string[] = ['HostedSessionUserContext']
+    export const isHostedSessionUserContext = (obj?: { __typename?: any } | null): obj is HostedSessionUserContext => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isHostedSessionUserContext"')
+      return HostedSessionUserContext_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4596,6 +4657,7 @@ export const enumActivityObjectType = {
    USER: 'USER' as const,
    EMR_REQUEST: 'EMR_REQUEST' as const,
    TRACK: 'TRACK' as const,
+   TIMER: 'TIMER' as const,
    PLUGIN: 'PLUGIN' as const,
    PLUGIN_ACTION: 'PLUGIN_ACTION' as const
 }

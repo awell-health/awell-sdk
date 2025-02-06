@@ -1,5 +1,5 @@
 import { AwellFormResponseToFhirQuestionnaireResponseItems } from '.'
-import { formDefinitionMock, formResponseMock } from '../__testdata__'
+import { formResponseMock, formDefinitionMock } from '../__testdata__'
 
 describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
   test('Should work', async () => {
@@ -10,13 +10,8 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
 
     expect(res).toEqual([
       {
-        linkId: '-hCGgfqR3zZ7',
-        text: 'Yes or no? (boolean)',
-        answer: [
-          {
-            valueBoolean: true,
-          },
-        ],
+        linkId: 'MUha7ldV6gJL',
+        text: "This is a description question. It\\'s doesn\\'t collect any data but just shows some text to the user.",
       },
       {
         linkId: 'bVGD5I6ckKZx',
@@ -31,21 +26,30 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
         ],
       },
       {
-        linkId: 'C9dHRQWojfkP',
-        text: 'Question that collects a numeric value',
-        answer: [
-          {
-            valueInteger: 1,
-          },
-        ],
-      },
-      {
         linkId: 'KcvNZ5dJHPf0',
         text: 'Single select (string)',
         answer: [
           {
             valueCoding: {
               code: 'option_3',
+              display: 'Option 3',
+            },
+          },
+        ],
+      },
+      {
+        linkId: 'saf_RczvRbay',
+        text: 'Multiple select (number)',
+        answer: [
+          {
+            valueCoding: {
+              code: '0',
+              display: 'Option 1',
+            },
+          },
+          {
+            valueCoding: {
+              code: '2',
               display: 'Option 3',
             },
           },
@@ -70,47 +74,11 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
         ],
       },
       {
-        linkId: 'PwQq1MVz3sYn',
-        text: 'Question that collects a string but long-form (textarea)',
+        linkId: '-hCGgfqR3zZ7',
+        text: 'Yes or no? (boolean)',
         answer: [
           {
-            valueString: 'long hello world',
-          },
-        ],
-      },
-      {
-        linkId: 'saf_RczvRbay',
-        text: 'Multiple select (number)',
-        answer: [
-          {
-            valueCoding: {
-              code: '0',
-              display: 'Option 1',
-            },
-          },
-          {
-            valueCoding: {
-              code: '2',
-              display: 'Option 3',
-            },
-          },
-        ],
-      },
-      {
-        linkId: 'uuir17H9iz9P',
-        text: 'Question that collects a phone number',
-        answer: [
-          {
-            valueString: '+32476581696',
-          },
-        ],
-      },
-      {
-        linkId: 'vn-VF15nIsv_',
-        text: 'Question that collects a sstring value',
-        answer: [
-          {
-            valueString: 'hello world',
+            valueBoolean: true,
           },
         ],
       },
@@ -129,6 +97,46 @@ describe('AwellFormResponsetoFhirQuestionnaireResponse', () => {
         answer: [
           {
             valueDateTime: '2024-05-04T00:00:00.000Z',
+          },
+        ],
+      },
+      {
+        linkId: 'C9dHRQWojfkP',
+        text: 'Question that collects a numeric value',
+        answer: [
+          {
+            valueInteger: 1,
+          },
+        ],
+      },
+      {
+        linkId: 'vn-VF15nIsv_',
+        text: 'Question that collects a sstring value',
+        answer: [
+          {
+            valueString: 'hello world',
+          },
+        ],
+      },
+      {
+        linkId: 'PwQq1MVz3sYn',
+        text: 'Question that collects a string but long-form (textarea)',
+        answer: [
+          {
+            valueString: 'long hello world',
+          },
+        ],
+      },
+      {
+        linkId: 'anotherDescriptionItemId',
+        text: 'Another description content',
+      },
+      {
+        linkId: 'uuir17H9iz9P',
+        text: 'Question that collects a phone number',
+        answer: [
+          {
+            valueString: '+32476581696',
           },
         ],
       },

@@ -10,9 +10,10 @@ import {
   type QuestionnaireItemAnswerOption as FhirQuestionnaireItemAnswerOption,
 } from '@medplum/fhirtypes'
 import { kebabCase, pickBy } from 'lodash'
+import { slateToEscapedJsString } from '../../awell'
 
 const getQuestionnaireItemType = (
-  question: Question
+  question: Question,
 ): Pick<FhirQuestionnaireItem, 'type'> => {
   const userQuestionType = question.userQuestionType
 
@@ -65,7 +66,7 @@ const getQuestionnaireItemType = (
 }
 
 const getSelectAnswerOptions = (
-  answerOptions: Option[]
+  answerOptions: Option[],
 ): FhirQuestionnaireItemAnswerOption[] => {
   return answerOptions.map((option) => {
     return {
@@ -83,7 +84,7 @@ const getFormItems = (formQuestions: Question[]): FhirQuestionnaireItem[] => {
       linkId: q.id,
       text:
         q.userQuestionType === enumUserQuestionType.DESCRIPTION
-          ? JSON.stringify(q.title) // Description titles are slate and gives errors when using JSON.parse
+          ? slateToEscapedJsString(q.title)
           : q.title,
       type: getQuestionnaireItemType(q).type,
       repeats:
@@ -107,7 +108,7 @@ const getFormItems = (formQuestions: Question[]): FhirQuestionnaireItem[] => {
 }
 
 export const AwellFormToFhirQuestionnaire = (
-  awellFormDefinition: Form
+  awellFormDefinition: Form,
 ): FhirQuestionnaire => {
   return {
     resourceType: 'Questionnaire',

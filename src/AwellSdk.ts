@@ -7,6 +7,7 @@ import {
   awellFormResponseToHealthieFormAnswers,
   AwellFormResponseToFhirQuestionnaireResponseItems,
   AwellFormToFhirQuestionnaire,
+  slateToEscapedJsString,
 } from './lib/utils'
 
 /**
@@ -93,7 +94,10 @@ export class AwellSdk {
     },
     fhir: {
       AwellFormToFhirQuestionnaire,
-      AwellFormResponseToFhirQuestionnaireResponseItems
-    }
+      AwellFormResponseToFhirQuestionnaireResponseItems,
+    },
+    awell: {
+      slateToEscapedJsString,
+    },
   }
 }

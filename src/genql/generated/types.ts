@@ -897,6 +897,9 @@ export default {
             "stop_date": [
                 3
             ],
+            "start_date": [
+                3
+            ],
             "release_id": [
                 3
             ],

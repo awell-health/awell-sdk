@@ -96,6 +96,7 @@ type PatientPathway {
   pathway_definition_id: String!
   complete_date: String
   stop_date: String
+  start_date: String!
   release_id: String!
   version: Float
   total_activities: Float

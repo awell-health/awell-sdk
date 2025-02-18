@@ -113,6 +113,7 @@ export interface PatientPathway {
     pathway_definition_id: Scalars['String']
     complete_date: (Scalars['String'] | null)
     stop_date: (Scalars['String'] | null)
+    start_date: Scalars['String']
     release_id: Scalars['String']
     version: (Scalars['Float'] | null)
     total_activities: (Scalars['Float'] | null)
@@ -1656,6 +1657,7 @@ export interface PatientPathwayGenqlSelection{
     pathway_definition_id?: boolean | number
     complete_date?: boolean | number
     stop_date?: boolean | number
+    start_date?: boolean | number
     release_id?: boolean | number
     version?: boolean | number
     total_activities?: boolean | number

@@ -71,6 +71,8 @@ export interface Query {
     hostedPagesLink: HostedPagesLinkPayload
     pathwayDataPoints: DataPointPayload
     decisionOutputs: DecisionOutputsPayload
+    /** Generate a signed URL for file upload to GCS */
+    getSignedUrl: FileUploadGCSPayload
     __typename: 'Query'
 }
 
@@ -81,7 +83,7 @@ export interface ScheduledTracksPayload {
     __typename: 'ScheduledTracksPayload'
 }
 
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
 
 export interface ScheduledTrack {
     id: Scalars['ID']
@@ -154,7 +156,7 @@ export interface DataPointDefinition {
 
 export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT' | 'DECISION'
 
-export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON'
+export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON' | 'ATTACHMENT' | 'ATTACHMENTS_ARRAY'
 
 export interface DataPointPossibleValue {
     value: Scalars['String']
@@ -348,7 +350,7 @@ export interface Option {
 
 export type QuestionType = 'MULTIPLE_CHOICE' | 'INPUT' | 'NO_INPUT'
 
-export type UserQuestionType = 'MULTIPLE_SELECT' | 'MULTIPLE_CHOICE' | 'NUMBER' | 'YES_NO' | 'DATE' | 'SHORT_TEXT' | 'LONG_TEXT' | 'SLIDER' | 'DESCRIPTION' | 'MULTIPLE_CHOICE_GRID' | 'SIGNATURE' | 'TELEPHONE' | 'EMAIL' | 'ICD10_CLASSIFICATION'
+export type UserQuestionType = 'MULTIPLE_SELECT' | 'MULTIPLE_CHOICE' | 'NUMBER' | 'YES_NO' | 'DATE' | 'SHORT_TEXT' | 'LONG_TEXT' | 'SLIDER' | 'DESCRIPTION' | 'MULTIPLE_CHOICE_GRID' | 'SIGNATURE' | 'TELEPHONE' | 'EMAIL' | 'ICD10_CLASSIFICATION' | 'FILE' | 'IMAGE'
 
 export interface QuestionConfig {
     recode_enabled: (Scalars['Boolean'] | null)
@@ -359,6 +361,7 @@ export interface QuestionConfig {
     number: (NumberConfig | null)
     multiple_select: (MultipleSelectConfig | null)
     date: (DateConfig | null)
+    file_storage: (FileStorageQuestionConfig | null)
     __typename: 'QuestionConfig'
 }
 
@@ -418,6 +421,12 @@ export interface DateConfig {
 }
 
 export type AllowedDatesOptions = 'PAST' | 'FUTURE' | 'ALL'
+
+export interface FileStorageQuestionConfig {
+    file_storage_destination_id: (Scalars['String'] | null)
+    accepted_file_types: (Scalars['String'][] | null)
+    __typename: 'FileStorageQuestionConfig'
+}
 
 export interface Rule {
     id: Scalars['ID']
@@ -905,6 +914,7 @@ export interface UserProfile {
     mobile_phone: (Scalars['String'] | null)
     address: (Address | null)
     identifier: (Identifier[] | null)
+    patient_timezone: (Scalars['String'] | null)
     __typename: 'UserProfile'
 }
 
@@ -1211,6 +1221,14 @@ export interface DecisionOutputsPayload {
     success: Scalars['Boolean']
     outputs: Scalars['String']
     __typename: 'DecisionOutputsPayload'
+}
+
+export interface FileUploadGCSPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    upload_url: Scalars['String']
+    file_url: Scalars['String']
+    __typename: 'FileUploadGCSPayload'
 }
 
 export interface Mutation {
@@ -1546,6 +1564,8 @@ export interface QueryGenqlSelection{
     hostedPagesLink?: (HostedPagesLinkPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], stakeholder_id: Scalars['String']} })
     pathwayDataPoints?: (DataPointPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], activity_id?: (Scalars['String'] | null), data_point_definition_id?: (Scalars['String'] | null), data_point_key?: (Scalars['String'] | null)} })
     decisionOutputs?: (DecisionOutputsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
+    /** Generate a signed URL for file upload to GCS */
+    getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_id: Scalars['String']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1595,6 +1615,7 @@ export interface PayloadGenqlSelection{
     on_OrchestrationFactsPromptPayload?: OrchestrationFactsPromptPayloadGenqlSelection
     on_HostedPagesLinkPayload?: HostedPagesLinkPayloadGenqlSelection
     on_DecisionOutputsPayload?: DecisionOutputsPayloadGenqlSelection
+    on_FileUploadGCSPayload?: FileUploadGCSPayloadGenqlSelection
     on_AddActivityMetadataPayload?: AddActivityMetadataPayloadGenqlSelection
     on_AddIdentifierToPatientPayload?: AddIdentifierToPatientPayloadGenqlSelection
     on_AddTrackPayload?: AddTrackPayloadGenqlSelection
@@ -1920,6 +1941,7 @@ export interface QuestionConfigGenqlSelection{
     number?: NumberConfigGenqlSelection
     multiple_select?: MultipleSelectConfigGenqlSelection
     date?: DateConfigGenqlSelection
+    file_storage?: FileStorageQuestionConfigGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1983,6 +2005,13 @@ export interface ExclusiveOptionConfigGenqlSelection{
 export interface DateConfigGenqlSelection{
     allowed_dates?: boolean | number
     include_date_of_response?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FileStorageQuestionConfigGenqlSelection{
+    file_storage_destination_id?: boolean | number
+    accepted_file_types?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2523,6 +2552,7 @@ export interface UserProfileGenqlSelection{
     mobile_phone?: boolean | number
     address?: AddressGenqlSelection
     identifier?: IdentifierGenqlSelection
+    patient_timezone?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2874,6 +2904,15 @@ export interface DecisionOutputsPayloadGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface FileUploadGCSPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    upload_url?: boolean | number
+    file_url?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface MutationGenqlSelection{
     addActivityMetadata?: (AddActivityMetadataPayloadGenqlSelection & { __args: {input: AddActivityMetadataInput} })
     addIdentifierToPatient?: (AddIdentifierToPatientPayloadGenqlSelection & { __args: {input: AddIdentifierToPatientInput} })
@@ -2990,7 +3029,9 @@ sex?: (Sex | null),national_registry_number?: (Scalars['String'] | null),patient
 /** Must be in valid E164 telephone number format */
 phone?: (Scalars['String'] | null),
 /** Must be in valid E164 telephone number format */
-mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),identifier?: (IdentifierInput[] | null)}
+mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),identifier?: (IdentifierInput[] | null),
+/** Must be a valid IANA timezone */
+patient_timezone?: (Scalars['String'] | null)}
 
 export interface AddressInput {street?: (Scalars['String'] | null),city?: (Scalars['String'] | null),zip?: (Scalars['String'] | null),state?: (Scalars['String'] | null),country?: (Scalars['String'] | null)}
 
@@ -3245,7 +3286,9 @@ sex?: (Sex | null),national_registry_number?: (Scalars['String'] | null),patient
 /** Must be in valid E164 telephone number format */
 phone?: (Scalars['String'] | null),
 /** Must be in valid E164 telephone number format */
-mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),identifier?: (IdentifierInput[] | null)}
+mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),identifier?: (IdentifierInput[] | null),
+/** Must be a valid IANA timezone */
+patient_timezone?: (Scalars['String'] | null)}
 
 export interface UpdatePatientDemographicsQueryPayloadGenqlSelection{
     code?: boolean | number
@@ -3324,7 +3367,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -3600,6 +3643,14 @@ export interface SubscriptionGenqlSelection{
     export const isDateConfig = (obj?: { __typename?: any } | null): obj is DateConfig => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isDateConfig"')
       return DateConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FileStorageQuestionConfig_possibleTypes: string[] = ['FileStorageQuestionConfig']
+    export const isFileStorageQuestionConfig = (obj?: { __typename?: any } | null): obj is FileStorageQuestionConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFileStorageQuestionConfig"')
+      return FileStorageQuestionConfig_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4332,6 +4383,14 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const FileUploadGCSPayload_possibleTypes: string[] = ['FileUploadGCSPayload']
+    export const isFileUploadGCSPayload = (obj?: { __typename?: any } | null): obj is FileUploadGCSPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFileUploadGCSPayload"')
+      return FileUploadGCSPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Mutation_possibleTypes: string[] = ['Mutation']
     export const isMutation = (obj?: { __typename?: any } | null): obj is Mutation => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isMutation"')
@@ -4603,7 +4662,9 @@ export const enumDataPointValueType = {
    NUMBERS_ARRAY: 'NUMBERS_ARRAY' as const,
    STRINGS_ARRAY: 'STRINGS_ARRAY' as const,
    TELEPHONE: 'TELEPHONE' as const,
-   JSON: 'JSON' as const
+   JSON: 'JSON' as const,
+   ATTACHMENT: 'ATTACHMENT' as const,
+   ATTACHMENTS_ARRAY: 'ATTACHMENTS_ARRAY' as const
 }
 
 export const enumActivitySubjectType = {
@@ -4703,7 +4764,9 @@ export const enumUserQuestionType = {
    SIGNATURE: 'SIGNATURE' as const,
    TELEPHONE: 'TELEPHONE' as const,
    EMAIL: 'EMAIL' as const,
-   ICD10_CLASSIFICATION: 'ICD10_CLASSIFICATION' as const
+   ICD10_CLASSIFICATION: 'ICD10_CLASSIFICATION' as const,
+   FILE: 'FILE' as const,
+   IMAGE: 'IMAGE' as const
 }
 
 export const enumAllowedDatesOptions = {

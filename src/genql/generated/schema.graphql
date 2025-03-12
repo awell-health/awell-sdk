@@ -55,6 +55,9 @@ type Query {
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
   pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String, data_point_key: String): DataPointPayload!
   decisionOutputs(pathway_id: String!, activity_id: String!): DecisionOutputsPayload!
+
+  """Generate a signed URL for file upload to GCS"""
+  getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_id: String!): FileUploadGCSPayload!
 }
 
 type ScheduledTracksPayload implements Payload {
@@ -165,6 +168,8 @@ enum DataPointValueType {
   STRINGS_ARRAY
   TELEPHONE
   JSON
+  ATTACHMENT
+  ATTACHMENTS_ARRAY
 }
 
 type DataPointPossibleValue {
@@ -446,6 +451,8 @@ enum UserQuestionType {
   TELEPHONE
   EMAIL
   ICD10_CLASSIFICATION
+  FILE
+  IMAGE
 }
 
 type QuestionConfig {
@@ -457,6 +464,7 @@ type QuestionConfig {
   number: NumberConfig
   multiple_select: MultipleSelectConfig
   date: DateConfig
+  file_storage: FileStorageQuestionConfig
 }
 
 type SliderConfig {
@@ -510,6 +518,11 @@ enum AllowedDatesOptions {
   PAST
   FUTURE
   ALL
+}
+
+type FileStorageQuestionConfig {
+  file_storage_destination_id: String
+  accepted_file_types: [String!]
 }
 
 type Rule {
@@ -1108,6 +1121,7 @@ type UserProfile {
   mobile_phone: String
   address: Address
   identifier: [Identifier!]
+  patient_timezone: String
 }
 
 enum Sex {
@@ -1429,6 +1443,13 @@ type DecisionOutputsPayload implements Payload {
   outputs: String!
 }
 
+type FileUploadGCSPayload implements Payload {
+  code: String!
+  success: Boolean!
+  upload_url: String!
+  file_url: String!
+}
+
 type Mutation {
   addActivityMetadata(input: AddActivityMetadataInput!): AddActivityMetadataPayload!
   addIdentifierToPatient(input: AddIdentifierToPatientInput!): AddIdentifierToPatientPayload!
@@ -1573,6 +1594,9 @@ input CreatePatientInput {
   mobile_phone: String
   address: AddressInput
   identifier: [IdentifierInput!] = []
+
+  """Must be a valid IANA timezone"""
+  patient_timezone: String
 }
 
 input AddressInput {
@@ -1925,6 +1949,9 @@ input PatientProfileInput {
   mobile_phone: String
   address: AddressInput
   identifier: [IdentifierInput!]
+
+  """Must be a valid IANA timezone"""
+  patient_timezone: String
 }
 
 type UpdatePatientDemographicsQueryPayload implements Payload {

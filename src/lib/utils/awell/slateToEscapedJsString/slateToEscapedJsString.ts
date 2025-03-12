@@ -1,8 +1,30 @@
 import { JSDOM } from 'jsdom'
 
-export const slateToEscapedJsString = (html: string): string => {
+/**
+ * Converts HTML content to a plain text string while preserving paragraph and line break formatting.
+ *
+ * @param {string} html - The input HTML string to be converted.
+ * @param {Object} [opts] - Optional configuration options.
+ * @param {'single' | 'double'} [opts.paragraphSpacing='single'] - Determines the number of new lines (`\n`) after paragraphs.
+ *   - `'single'` (default) → Adds one `\n` after each paragraph (`<p>`), making the output more compact.
+ *   - `'double'` → Adds two `\n\n` after each paragraph, improving readability in plain-text formats like emails, logs, and CLI output.
+ *
+ * @returns {string} The escaped plain text string with structured line breaks.
+ */
+export const slateToEscapedJsString = (
+  html: string,
+  opts?: {
+    /**
+     *
+     */
+    paragraphSpacing?: 'single' | 'double'
+  },
+): string => {
+  const { paragraphSpacing = 'single' } = opts ?? {}
+  const sanitizedHtml = html.replace(/\n/g, '<br>')
+
   // Use JSDOM to parse the HTML since we're in a Node.js environment
-  const dom = new JSDOM(html)
+  const dom = new JSDOM(sanitizedHtml)
   const doc = dom.window.document
 
   // Define constants for node types
@@ -35,7 +57,10 @@ export const slateToEscapedJsString = (html: string): string => {
             .map(traverseAndFormat)
             .join('')
             .trim()
-          return content === '' ? '\n\n' : `${content}`
+
+          const spacing = paragraphSpacing === 'single' ? '\n' : '\n\n'
+
+          return content === '' ? spacing : `${content}${spacing}`
         }
         case 'H1':
         case 'H2':
@@ -47,15 +72,15 @@ export const slateToEscapedJsString = (html: string): string => {
         case 'BR':
           return '\n'
         case 'UL':
-          return `\n${Array.from(element.childNodes)
+          return `${Array.from(element.childNodes)
             .filter((child) => child.nodeName === 'LI')
             .map((child) => `- ${traverseAndFormat(child)}`)
-            .join('\n')}`
+            .join('\n')}\n`
         case 'OL':
-          return `\n${Array.from(element.childNodes)
+          return `${Array.from(element.childNodes)
             .filter((child) => child.nodeName === 'LI')
             .map((child, index) => `${index + 1}. ${traverseAndFormat(child)}`)
-            .join('\n')}`
+            .join('\n')}\n`
         case 'LI':
           return `${Array.from(node.childNodes).map(traverseAndFormat).join('')}`
         default:

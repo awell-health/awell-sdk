@@ -53,6 +53,7 @@ export interface Query {
     patientByIdentifier: PatientPayload
     publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
     getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
+    getPublishedCareflowVersions: CareflowVersionsPayload
     scheduledSteps: ScheduledStepsPayload
     searchPatientsByPatientCode: SearchPatientsPayload
     searchPatientsByNationalRegistryNumber: SearchPatientsPayload
@@ -286,6 +287,7 @@ export interface SubActivity {
     error_category: (Scalars['String'] | null)
     object: (ActivityObject | null)
     text: (TranslatedText | null)
+    scheduled_date: (Scalars['String'] | null)
     __typename: 'SubActivity'
 }
 
@@ -1039,6 +1041,25 @@ export interface PathwayDefinitionDetails {
     __typename: 'PathwayDefinitionDetails'
 }
 
+export interface CareflowVersionsPayload {
+    careflowVersions: CareflowVersions[]
+    __typename: 'CareflowVersionsPayload'
+}
+
+export interface CareflowVersions {
+    careflow_definition_id: Scalars['String']
+    versions: (CareflowVersion[] | null)
+    __typename: 'CareflowVersions'
+}
+
+export interface CareflowVersion {
+    version: (Scalars['Float'] | null)
+    release_id: (Scalars['String'] | null)
+    release_date: (Scalars['String'] | null)
+    live: (Scalars['Boolean'] | null)
+    __typename: 'CareflowVersion'
+}
+
 export interface ScheduledStepsPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
@@ -1511,8 +1532,8 @@ export interface QueryGenqlSelection{
     patientPathways?: (PatientPathwaysPayloadGenqlSelection & { __args: {patient_id: Scalars['String'], filters?: (FilterPatientPathways | null)} })
     baselineInfo?: (BaselineInfoPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     myPendingActivities?: ActivitiesPayloadGenqlSelection
-    myActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String']} })
-    pathwayActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String']} })
+    myActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], track_id?: (Scalars['String'] | null)} })
+    pathwayActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], track_id?: (Scalars['String'] | null)} })
     careflowActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], filters?: (FilterCareflowActivitiesParams | null)} })
     activity?: (ActivityPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     activities?: (ActivitiesPayloadGenqlSelection & { __args?: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), filters?: (FilterActivitiesParams | null)} })
@@ -1524,7 +1545,7 @@ export interface QueryGenqlSelection{
     calculationResults?: (CalculationResultsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     checklist?: (ChecklistPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     clinicalNote?: (ClinicalNotePayloadGenqlSelection & { __args: {id: Scalars['String']} })
-    pathwayElements?: (ElementsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
+    pathwayElements?: (ElementsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], track_id?: (Scalars['String'] | null)} })
     emrReport?: (EmrReportPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     extensionActivityRecord?: (ExtensionActivityRecordPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     form?: (FormPayloadGenqlSelection & { __args: {pathway_id?: (Scalars['String'] | null), id: Scalars['String']} })
@@ -1546,6 +1567,7 @@ export interface QueryGenqlSelection{
     patientByIdentifier?: (PatientPayloadGenqlSelection & { __args: {system: Scalars['String'], value: Scalars['String']} })
     publishedPathwayDefinitions?: PublishedPathwayDefinitionsPayloadGenqlSelection
     getStatusForPublishedPathwayDefinitions?: PublishedPathwayDefinitionsPayloadGenqlSelection
+    getPublishedCareflowVersions?: (CareflowVersionsPayloadGenqlSelection & { __args?: {careflow_definition_id?: (Scalars['String'] | null)} })
     scheduledSteps?: (ScheduledStepsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     searchPatientsByPatientCode?: (SearchPatientsPayloadGenqlSelection & { __args: {patient_code: Scalars['String']} })
     searchPatientsByNationalRegistryNumber?: (SearchPatientsPayloadGenqlSelection & { __args: {national_registry_number: Scalars['String']} })
@@ -1865,6 +1887,7 @@ export interface SubActivityGenqlSelection{
     error_category?: boolean | number
     object?: ActivityObjectGenqlSelection
     text?: TranslatedTextGenqlSelection
+    scheduled_date?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2695,6 +2718,28 @@ export interface PathwayDefinitionDetailsGenqlSelection{
     stopped_careflows?: boolean | number
     completed_careflows?: boolean | number
     total_patients?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CareflowVersionsPayloadGenqlSelection{
+    careflowVersions?: CareflowVersionsGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CareflowVersionsGenqlSelection{
+    careflow_definition_id?: boolean | number
+    versions?: CareflowVersionGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CareflowVersionGenqlSelection{
+    version?: boolean | number
+    release_id?: boolean | number
+    release_date?: boolean | number
+    live?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -4195,6 +4240,30 @@ export interface SubscriptionGenqlSelection{
     export const isPathwayDefinitionDetails = (obj?: { __typename?: any } | null): obj is PathwayDefinitionDetails => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPathwayDefinitionDetails"')
       return PathwayDefinitionDetails_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CareflowVersionsPayload_possibleTypes: string[] = ['CareflowVersionsPayload']
+    export const isCareflowVersionsPayload = (obj?: { __typename?: any } | null): obj is CareflowVersionsPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCareflowVersionsPayload"')
+      return CareflowVersionsPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CareflowVersions_possibleTypes: string[] = ['CareflowVersions']
+    export const isCareflowVersions = (obj?: { __typename?: any } | null): obj is CareflowVersions => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCareflowVersions"')
+      return CareflowVersions_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CareflowVersion_possibleTypes: string[] = ['CareflowVersion']
+    export const isCareflowVersion = (obj?: { __typename?: any } | null): obj is CareflowVersion => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCareflowVersion"')
+      return CareflowVersion_possibleTypes.includes(obj.__typename)
     }
     
 

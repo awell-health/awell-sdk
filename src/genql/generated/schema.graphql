@@ -3,8 +3,8 @@ type Query {
   patientPathways(patient_id: String!, filters: FilterPatientPathways): PatientPathwaysPayload!
   baselineInfo(pathway_id: String!): BaselineInfoPayload!
   myPendingActivities: ActivitiesPayload!
-  myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
-  pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!): ActivitiesPayload!
+  myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload!
+  pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload!
   careflowActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: FilterCareflowActivitiesParams): ActivitiesPayload!
   activity(id: String!): ActivityPayload!
   activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
@@ -16,7 +16,7 @@ type Query {
   calculationResults(pathway_id: String!, activity_id: String!): CalculationResultsPayload!
   checklist(id: String!): ChecklistPayload!
   clinicalNote(id: String!): ClinicalNotePayload!
-  pathwayElements(pathway_id: String!): ElementsPayload!
+  pathwayElements(pathway_id: String!, track_id: String): ElementsPayload!
   emrReport(id: String!): EmrReportPayload!
   extensionActivityRecord(id: String!): ExtensionActivityRecordPayload!
   form(pathway_id: String, id: String!): FormPayload!
@@ -37,6 +37,7 @@ type Query {
   patientByIdentifier(system: String!, value: String!): PatientPayload!
   publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
   getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
+  getPublishedCareflowVersions(careflow_definition_id: String): CareflowVersionsPayload!
   scheduledSteps(pathway_id: String!): ScheduledStepsPayload!
   searchPatientsByPatientCode(patient_code: String!): SearchPatientsPayload!
   searchPatientsByNationalRegistryNumber(national_registry_number: String!): SearchPatientsPayload!
@@ -367,6 +368,7 @@ type SubActivity {
   error_category: String
   object: ActivityObject
   text: TranslatedText
+  scheduled_date: String
 }
 
 type TranslatedText {
@@ -1273,6 +1275,22 @@ type PathwayDefinitionDetails {
   stopped_careflows: Float
   completed_careflows: Float
   total_patients: Float
+}
+
+type CareflowVersionsPayload {
+  careflowVersions: [CareflowVersions!]!
+}
+
+type CareflowVersions {
+  careflow_definition_id: String!
+  versions: [CareflowVersion!]
+}
+
+type CareflowVersion {
+  version: Float
+  release_id: String
+  release_date: String
+  live: Boolean
 }
 
 type ScheduledStepsPayload implements Payload {

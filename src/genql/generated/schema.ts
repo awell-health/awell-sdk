@@ -63,7 +63,7 @@ export interface Query {
     stakeholdersByDefinitionIds: StakeholdersPayload
     adHocTracksByPathway: TracksPayload
     adHocTracksByRelease: TracksPayload
-    whoami: CurrentUserPayload
+    tenant: TenantPayload
     webhookCall: WebhookCallPayload
     webhookCalls: WebhookCallsPayload
     webhookCallsForTenant: WebhookCallsPayload
@@ -84,7 +84,7 @@ export interface ScheduledTracksPayload {
     __typename: 'ScheduledTracksPayload'
 }
 
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | CurrentUserPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | TenantPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
 
 export interface ScheduledTrack {
     id: Scalars['ID']
@@ -259,7 +259,7 @@ export interface ActivityObject {
     __typename: 'ActivityObject'
 }
 
-export type ActivityObjectType = 'ACTION' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
+export type ActivityObjectType = 'ACTION' | 'AGENT' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
 
 export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
 
@@ -425,7 +425,7 @@ export interface DateConfig {
 export type AllowedDatesOptions = 'PAST' | 'FUTURE' | 'ALL'
 
 export interface FileStorageQuestionConfig {
-    file_storage_destination_id: (Scalars['String'] | null)
+    file_storage_config_slug: (Scalars['String'] | null)
     accepted_file_types: (Scalars['String'][] | null)
     __typename: 'FileStorageQuestionConfig'
 }
@@ -449,7 +449,7 @@ export interface Condition {
     __typename: 'Condition'
 }
 
-export type ConditionOperator = 'IS_EQUAL_TO' | 'IS_NOT_EQUAL_TO' | 'IS_GREATER_THAN' | 'IS_LESS_THAN' | 'IS_GREATER_THAN_OR_EQUAL_TO' | 'IS_LESS_THAN_OR_EQUAL_TO' | 'CONTAINS' | 'DOES_NOT_CONTAIN' | 'IS_TRUE' | 'IS_NOT_TRUE' | 'IS_IN_RANGE' | 'IS_ANY_OF' | 'IS_NONE_OF' | 'IS_EMPTY' | 'IS_NOT_EMPTY' | 'IS_TODAY' | 'IS_LESS_THAN_X_DAYS_AGO' | 'IS_MORE_THAN_X_DAYS_AGO'
+export type ConditionOperator = 'IS_EQUAL_TO' | 'IS_NOT_EQUAL_TO' | 'IS_GREATER_THAN' | 'IS_LESS_THAN' | 'IS_GREATER_THAN_OR_EQUAL_TO' | 'IS_LESS_THAN_OR_EQUAL_TO' | 'CONTAINS' | 'DOES_NOT_CONTAIN' | 'IS_TRUE' | 'IS_NOT_TRUE' | 'IS_IN_RANGE' | 'IS_ANY_OF' | 'IS_NONE_OF' | 'IS_EMPTY' | 'IS_NOT_EMPTY' | 'IS_TODAY' | 'IS_LESS_THAN_X_DAYS_AGO' | 'IS_MORE_THAN_X_DAYS_AGO' | 'HAS_FILE_UPLOADED' | 'HAS_NO_FILE_UPLOADED'
 
 export interface Operand {
     type: ConditionOperandType
@@ -1105,19 +1105,11 @@ export interface TracksPayload {
     __typename: 'TracksPayload'
 }
 
-export interface CurrentUserPayload {
+export interface TenantPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
-    user: CurrentUser
-    __typename: 'CurrentUserPayload'
-}
-
-export interface CurrentUser {
-    id: Scalars['ID']
-    tenant_id: Scalars['String']
-    profile: (UserProfile | null)
     tenant: Tenant
-    __typename: 'CurrentUser'
+    __typename: 'TenantPayload'
 }
 
 export interface Tenant {
@@ -1262,6 +1254,7 @@ export interface Mutation {
     deletePathway: EmptyPayload
     deletePatient: EmptyPayload
     evaluateFormRules: EvaluateFormRulesPayload
+    expireTimer: EmptyPayload
     markMessageAsRead: MarkMessageAsReadPayload
     /** Retrieve patient demographics from an external system */
     requestPatientDemographics: PatientDemographicsPayload
@@ -1577,7 +1570,7 @@ export interface QueryGenqlSelection{
     stakeholdersByDefinitionIds?: (StakeholdersPayloadGenqlSelection & { __args: {stakeholder_definition_ids: Scalars['String'][]} })
     adHocTracksByPathway?: (TracksPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     adHocTracksByRelease?: (TracksPayloadGenqlSelection & { __args: {release_id: Scalars['String']} })
-    whoami?: CurrentUserPayloadGenqlSelection
+    tenant?: TenantPayloadGenqlSelection
     webhookCall?: (WebhookCallPayloadGenqlSelection & { __args: {webhook_call_id: Scalars['String']} })
     webhookCalls?: (WebhookCallsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     webhookCallsForTenant?: WebhookCallsPayloadGenqlSelection
@@ -1587,7 +1580,7 @@ export interface QueryGenqlSelection{
     pathwayDataPoints?: (DataPointPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], activity_id?: (Scalars['String'] | null), data_point_definition_id?: (Scalars['String'] | null), data_point_key?: (Scalars['String'] | null)} })
     decisionOutputs?: (DecisionOutputsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     /** Generate a signed URL for file upload to GCS */
-    getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_id: Scalars['String']} })
+    getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_slug: Scalars['String']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1631,7 +1624,7 @@ export interface PayloadGenqlSelection{
     on_SearchPatientsPayload?: SearchPatientsPayloadGenqlSelection
     on_StakeholdersPayload?: StakeholdersPayloadGenqlSelection
     on_TracksPayload?: TracksPayloadGenqlSelection
-    on_CurrentUserPayload?: CurrentUserPayloadGenqlSelection
+    on_TenantPayload?: TenantPayloadGenqlSelection
     on_WebhookCallPayload?: WebhookCallPayloadGenqlSelection
     on_WebhookCallsPayload?: WebhookCallsPayloadGenqlSelection
     on_OrchestrationFactsPromptPayload?: OrchestrationFactsPromptPayloadGenqlSelection
@@ -2033,7 +2026,7 @@ export interface DateConfigGenqlSelection{
 }
 
 export interface FileStorageQuestionConfigGenqlSelection{
-    file_storage_destination_id?: boolean | number
+    file_storage_config_slug?: boolean | number
     accepted_file_types?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -2793,18 +2786,9 @@ export interface TracksPayloadGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface CurrentUserPayloadGenqlSelection{
+export interface TenantPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
-    user?: CurrentUserGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface CurrentUserGenqlSelection{
-    id?: boolean | number
-    tenant_id?: boolean | number
-    profile?: UserProfileGenqlSelection
     tenant?: TenantGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -2968,6 +2952,7 @@ export interface MutationGenqlSelection{
     deletePathway?: (EmptyPayloadGenqlSelection & { __args: {input: DeletePathwayInput} })
     deletePatient?: (EmptyPayloadGenqlSelection & { __args: {input: DeletePatientInput} })
     evaluateFormRules?: (EvaluateFormRulesPayloadGenqlSelection & { __args: {input: EvaluateFormRulesInput} })
+    expireTimer?: (EmptyPayloadGenqlSelection & { __args: {input: ExpireTimerInput} })
     markMessageAsRead?: (MarkMessageAsReadPayloadGenqlSelection & { __args: {input: MarkMessageAsReadInput} })
     /** Retrieve patient demographics from an external system */
     requestPatientDemographics?: (PatientDemographicsPayloadGenqlSelection & { __args: {input: PatientDemographicsInput} })
@@ -3110,6 +3095,8 @@ export interface QuestionRuleResultGenqlSelection{
 export interface EvaluateFormRulesInput {form_id: Scalars['String'],answers: AnswerInput[]}
 
 export interface AnswerInput {question_id: Scalars['String'],value: Scalars['String']}
+
+export interface ExpireTimerInput {activity_id: Scalars['String'],user_name: Scalars['String']}
 
 export interface MarkMessageAsReadPayloadGenqlSelection{
     code?: boolean | number
@@ -3412,7 +3399,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','CurrentUserPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','TenantPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -4316,18 +4303,10 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const CurrentUserPayload_possibleTypes: string[] = ['CurrentUserPayload']
-    export const isCurrentUserPayload = (obj?: { __typename?: any } | null): obj is CurrentUserPayload => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isCurrentUserPayload"')
-      return CurrentUserPayload_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const CurrentUser_possibleTypes: string[] = ['CurrentUser']
-    export const isCurrentUser = (obj?: { __typename?: any } | null): obj is CurrentUser => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isCurrentUser"')
-      return CurrentUser_possibleTypes.includes(obj.__typename)
+    const TenantPayload_possibleTypes: string[] = ['TenantPayload']
+    export const isTenantPayload = (obj?: { __typename?: any } | null): obj is TenantPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTenantPayload"')
+      return TenantPayload_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4772,6 +4751,7 @@ export const enumActivityAction = {
 
 export const enumActivityObjectType = {
    ACTION: 'ACTION' as const,
+   AGENT: 'AGENT' as const,
    API_CALL: 'API_CALL' as const,
    CALCULATION: 'CALCULATION' as const,
    CHECKLIST: 'CHECKLIST' as const,
@@ -4867,7 +4847,9 @@ export const enumConditionOperator = {
    IS_NOT_EMPTY: 'IS_NOT_EMPTY' as const,
    IS_TODAY: 'IS_TODAY' as const,
    IS_LESS_THAN_X_DAYS_AGO: 'IS_LESS_THAN_X_DAYS_AGO' as const,
-   IS_MORE_THAN_X_DAYS_AGO: 'IS_MORE_THAN_X_DAYS_AGO' as const
+   IS_MORE_THAN_X_DAYS_AGO: 'IS_MORE_THAN_X_DAYS_AGO' as const,
+   HAS_FILE_UPLOADED: 'HAS_FILE_UPLOADED' as const,
+   HAS_NO_FILE_UPLOADED: 'HAS_NO_FILE_UPLOADED' as const
 }
 
 export const enumConditionOperandType = {

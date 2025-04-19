@@ -47,7 +47,7 @@ type Query {
   stakeholdersByDefinitionIds(stakeholder_definition_ids: [String!]!): StakeholdersPayload!
   adHocTracksByPathway(pathway_id: String!): TracksPayload!
   adHocTracksByRelease(release_id: String!): TracksPayload!
-  whoami: CurrentUserPayload!
+  tenant: TenantPayload!
   webhookCall(webhook_call_id: String!): WebhookCallPayload!
   webhookCalls(pathway_id: String!): WebhookCallsPayload!
   webhookCallsForTenant: WebhookCallsPayload!
@@ -58,7 +58,7 @@ type Query {
   decisionOutputs(pathway_id: String!, activity_id: String!): DecisionOutputsPayload!
 
   """Generate a signed URL for file upload to GCS"""
-  getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_id: String!): FileUploadGCSPayload!
+  getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_slug: String!): FileUploadGCSPayload!
 }
 
 type ScheduledTracksPayload implements Payload {
@@ -312,6 +312,7 @@ type ActivityObject {
 
 enum ActivityObjectType {
   ACTION
+  AGENT
   API_CALL
   CALCULATION
   CHECKLIST
@@ -523,7 +524,7 @@ enum AllowedDatesOptions {
 }
 
 type FileStorageQuestionConfig {
-  file_storage_destination_id: String
+  file_storage_config_slug: String
   accepted_file_types: [String!]
 }
 
@@ -566,6 +567,8 @@ enum ConditionOperator {
   IS_TODAY
   IS_LESS_THAN_X_DAYS_AGO
   IS_MORE_THAN_X_DAYS_AGO
+  HAS_FILE_UPLOADED
+  HAS_NO_FILE_UPLOADED
 }
 
 type Operand {
@@ -1336,16 +1339,9 @@ type TracksPayload implements Payload {
   tracks: [Track!]!
 }
 
-type CurrentUserPayload implements Payload {
+type TenantPayload implements Payload {
   code: String!
   success: Boolean!
-  user: CurrentUser!
-}
-
-type CurrentUser {
-  id: ID!
-  tenant_id: String!
-  profile: UserProfile
   tenant: Tenant!
 }
 
@@ -1478,6 +1474,7 @@ type Mutation {
   deletePathway(input: DeletePathwayInput!): EmptyPayload!
   deletePatient(input: DeletePatientInput!): EmptyPayload!
   evaluateFormRules(input: EvaluateFormRulesInput!): EvaluateFormRulesPayload!
+  expireTimer(input: ExpireTimerInput!): EmptyPayload!
   markMessageAsRead(input: MarkMessageAsReadInput!): MarkMessageAsReadPayload!
 
   """Retrieve patient demographics from an external system"""
@@ -1658,6 +1655,11 @@ input EvaluateFormRulesInput {
 input AnswerInput {
   question_id: String!
   value: String!
+}
+
+input ExpireTimerInput {
+  activity_id: String!
+  user_name: String!
 }
 
 type MarkMessageAsReadPayload implements Payload {

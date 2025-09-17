@@ -1,3 +1,376 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+type FormActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  form: Form
+}
+
+interface ActivityInputs {
+  type: ActivityInputType!
+}
+
+enum ActivityInputType {
+  FORM
+  DYNAMIC_FORM
+  MESSAGE
+  CALCULATION
+  EXTENSION
+}
+
+type Form {
+  release_id: String!
+  key: String!
+  definition_id: String!
+  id: ID!
+  title: String!
+  trademark: String
+  metadata: String
+  questions: [Question!]!
+  previous_answers(pathway_id: String!): [PreviousAnswers!]
+}
+
+type Question {
+  key: String!
+  id: ID!
+  definition_id: String!
+  title: String!
+  dataPointValueType: DataPointValueType
+  options: [Option!]
+  questionType: QuestionType
+  userQuestionType: UserQuestionType
+  questionConfig: QuestionConfig
+  rule: Rule
+  metadata: String
+}
+
+enum DataPointValueType {
+  BOOLEAN
+  DATE
+  NUMBER
+  STRING
+  NUMBERS_ARRAY
+  STRINGS_ARRAY
+  TELEPHONE
+  JSON
+  ATTACHMENT
+  ATTACHMENTS_ARRAY
+}
+
+type Option {
+  id: ID!
+  value: Float!
+  value_string: String!
+  label: String!
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  INPUT
+  NO_INPUT
+}
+
+enum UserQuestionType {
+  MULTIPLE_SELECT
+  MULTIPLE_CHOICE
+  NUMBER
+  YES_NO
+  DATE
+  SHORT_TEXT
+  LONG_TEXT
+  SLIDER
+  DESCRIPTION
+  MULTIPLE_CHOICE_GRID
+  SIGNATURE
+  TELEPHONE
+  EMAIL
+  ICD10_CLASSIFICATION
+  FILE
+  IMAGE
+}
+
+type QuestionConfig {
+  recode_enabled: Boolean
+  mandatory: Boolean!
+  use_select: Boolean
+  slider: SliderConfig
+  phone: PhoneConfig
+  number: NumberConfig
+  multiple_select: MultipleSelectConfig
+  date: DateConfig
+  file_storage: FileStorageQuestionConfig
+  input_validation: InputValidationConfig
+}
+
+type SliderConfig {
+  min: Float!
+  max: Float!
+  step_value: Float!
+  min_label: String!
+  max_label: String!
+  is_value_tooltip_on: Boolean!
+  display_marks: Boolean!
+  show_min_max_values: Boolean!
+}
+
+type PhoneConfig {
+  default_country: String
+  available_countries: [String!]
+}
+
+type NumberConfig {
+  range: RangeConfig
+}
+
+type RangeConfig {
+  min: Float
+  max: Float
+  enabled: Boolean
+}
+
+type MultipleSelectConfig {
+  range: ChoiceRangeConfig
+  exclusive_option: ExclusiveOptionConfig
+}
+
+type ChoiceRangeConfig {
+  enabled: Boolean
+  min: Float
+  max: Float
+}
+
+type ExclusiveOptionConfig {
+  enabled: Boolean
+  option_id: String
+}
+
+type DateConfig {
+  allowed_dates: AllowedDatesOptions
+  include_date_of_response: Boolean
+}
+
+enum AllowedDatesOptions {
+  PAST
+  FUTURE
+  ALL
+}
+
+type FileStorageQuestionConfig {
+  file_storage_config_slug: String
+  accepted_file_types: [String!]
+}
+
+type InputValidationConfig {
+  mode: String
+  pattern: String
+  helper_text: String
+  simpleConfig: InputValidationSimpleConfig
+}
+
+type InputValidationSimpleConfig {
+  exactLength: Float
+  allowed: InputValidationAllowed
+}
+
+type InputValidationAllowed {
+  letters: Boolean
+  numbers: Boolean
+  whitespace: Boolean
+  special: Boolean
+}
+
+type Rule {
+  id: ID!
+  definition_id: String
+  boolean_operator: BooleanOperator!
+  conditions: [Condition!]!
+}
+
+enum BooleanOperator {
+  AND
+  OR
+}
+
+type Condition {
+  id: ID!
+  reference: String
+  reference_key: String
+  operator: ConditionOperator
+  operand: Operand
+}
+
+enum ConditionOperator {
+  IS_EQUAL_TO
+  IS_NOT_EQUAL_TO
+  IS_GREATER_THAN
+  IS_LESS_THAN
+  IS_GREATER_THAN_OR_EQUAL_TO
+  IS_LESS_THAN_OR_EQUAL_TO
+  CONTAINS
+  DOES_NOT_CONTAIN
+  IS_TRUE
+  IS_NOT_TRUE
+  IS_IN_RANGE
+  IS_ANY_OF
+  IS_NONE_OF
+  IS_EMPTY
+  IS_NOT_EMPTY
+  IS_TODAY
+  IS_LESS_THAN_X_DAYS_AGO
+  IS_MORE_THAN_X_DAYS_AGO
+  HAS_FILE_UPLOADED
+  HAS_NO_FILE_UPLOADED
+}
+
+type Operand {
+  type: ConditionOperandType!
+  value: String!
+}
+
+enum ConditionOperandType {
+  DATA_SOURCE
+  STRING
+  NUMBER
+  BOOLEAN
+  NUMBERS_ARRAY
+  STRINGS_ARRAY
+  DATA_POINT
+}
+
+type PreviousAnswers {
+  activity_id: ID!
+  date: String!
+  answers: [Answer!]!
+}
+
+type Answer {
+  question_id: String!
+  value: String!
+  label: String
+  value_type: DataPointValueType!
+}
+
+type DynamicFormActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  dynamicForm: DynamicFormGraphqlType
+}
+
+type DynamicFormGraphqlType {
+  key: String!
+  title: String!
+  trademark: String
+  questions: [DynamicQuestion!]!
+}
+
+type DynamicQuestion {
+  id: ID!
+  key: String!
+  title: String!
+  dataPointValueType: DataPointValueType
+  options: [Option!]
+  questionType: QuestionType!
+  userQuestionType: UserQuestionType
+  questionConfig: QuestionConfig
+}
+
+type MessageActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  message: ActivityMessage
+}
+
+type ActivityMessage {
+  message_id: String!
+  subject: String!
+  body: String!
+  format: MessageFormat
+  attachments: [MessageAttachment!]
+}
+
+enum MessageFormat {
+  SLATE
+  HTML
+}
+
+type MessageAttachment {
+  id: ID!
+  name: String!
+  url: String!
+  type: MessageAttachmentType!
+}
+
+enum MessageAttachmentType {
+  FILE
+  VIDEO
+  LINK
+}
+
+type CalculationActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  calculation_fields: [CalculationInput!]
+}
+
+type CalculationInput {
+  calculation_input_id: String!
+  data_point_value: JSON!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type ExtensionActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  extension_fields: JSON
+}
+
+type DynamicFormActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  answers: [QuestionResponseOutput!]
+}
+
+interface ActivityOutputs {
+  type: ActivityOutputType!
+}
+
+enum ActivityOutputType {
+  FORM
+  DYNAMIC_FORM
+  CALCULATION
+  EXTENSION
+}
+
+type QuestionResponseOutput {
+  question_id: String!
+  value: String
+}
+
+type FormActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  answers: [QuestionResponseOutput!]
+}
+
+type CalculationActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  calculation_results: [SingleCalculationResult!]
+}
+
+type SingleCalculationResult {
+  subresult_id: String!
+  value: String!
+  value_type: DataPointValueType
+  unit: String
+  status: String
+  label: String
+}
+
+type ExtensionActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  extension_results: JSON
+}
+
 type Query {
   scheduledTracksForPathway(pathway_id: String!): ScheduledTracksPayload!
   patientPathways(patient_id: String!, filters: FilterPatientPathways): PatientPathwaysPayload!
@@ -10,6 +383,7 @@ type Query {
   activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
   pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
   careflowActivityTypes(careflow_id: String!): ActivityTypesPayload!
+  agent(id: ID!): WorkerAgentConfigPayload!
   apiCall(id: String!): ApiCallPayload!
   apiCalls(pathway_id: String!): ApiCallsPayload!
   calculationAction(id: String!): ActionPayload!
@@ -59,6 +433,8 @@ type Query {
 
   """Generate a signed URL for file upload to GCS"""
   getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_slug: String!): FileUploadGCSPayload!
+  getAgentByThreadId(agent_thread_id: String): OrchestratedAgentPayload!
+  formActivityDataPoints(careflow_id: String!, activity_id: String!): FormActivityDataPointsPayload!
 }
 
 type ScheduledTracksPayload implements Payload {
@@ -109,6 +485,7 @@ type PatientPathway {
   latest_activity_date: String
   latest_activity_title: String
   latest_activity_type: String
+  created: AuditTrail
   baseline_info: [BaselineDataPoint!]
 }
 
@@ -119,6 +496,16 @@ enum PathwayStatus {
   completed
   missing_baseline_info
 }
+
+type AuditTrail {
+  user_id: String!
+  user_email: String
+  user_name: String
+  date: SafeDate!
+}
+
+"""Safe date scalar that can serialize string or date"""
+scalar SafeDate
 
 type BaselineDataPoint {
   definition: DataPointDefinition!
@@ -158,19 +545,8 @@ enum DataPointSourceType {
   EXTENSION_ACTION
   DATA_POINT
   DECISION
-}
-
-enum DataPointValueType {
-  BOOLEAN
-  DATE
-  NUMBER
-  STRING
-  NUMBERS_ARRAY
-  STRINGS_ARRAY
-  TELEPHONE
-  JSON
-  ATTACHMENT
-  ATTACHMENTS_ARRAY
+  AGENT
+  SYSTEM
 }
 
 type DataPointPossibleValue {
@@ -240,10 +616,13 @@ type Activity {
   status: ActivityStatus!
   resolution: ActivityResolution
   reference_id: String!
+  reference_type: ActivityReferenceType!
   container_name: String
   track: ActivityTrack
   label: ActivityLabel
   sub_activities: [SubActivity!]!
+  inputs: ActivityInputs
+  outputs: ActivityOutputs
   isUserActivity: Boolean!
   public: Boolean
   context: PathwayContext
@@ -274,6 +653,7 @@ enum ActivitySubjectType {
   USER
   PLUGIN
   API_CALL
+  AGENT
 }
 
 enum ActivityAction {
@@ -349,6 +729,13 @@ enum ActivityResolution {
   EXPIRED
 }
 
+enum ActivityReferenceType {
+  NAVIGATION
+  REMINDER
+  ORCHESTRATION
+  AGENT
+}
+
 type ActivityTrack {
   id: String
   title: String!
@@ -382,6 +769,10 @@ type PathwayContext {
   track_id: String
   step_id: String
   action_id: String
+  agent_thread_id: String
+  agent_id: String
+  agent_config_id: String
+  run_id: String
 }
 
 type ActionComponent {
@@ -390,213 +781,9 @@ type ActionComponent {
   title: String
 }
 
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
 enum FormDisplayMode {
   CONVERSATIONAL
   REGULAR
-}
-
-type Form {
-  release_id: String!
-  key: String!
-  definition_id: String!
-  id: ID!
-  title: String!
-  trademark: String
-  metadata: String
-  questions: [Question!]!
-  previous_answers(pathway_id: String!): [PreviousAnswers!]
-}
-
-type Question {
-  key: String!
-  id: ID!
-  definition_id: String!
-  title: String!
-  dataPointValueType: DataPointValueType
-  options: [Option!]
-  questionType: QuestionType
-  userQuestionType: UserQuestionType
-  questionConfig: QuestionConfig
-  rule: Rule
-  metadata: String
-}
-
-type Option {
-  id: ID!
-  value: Float!
-  value_string: String!
-  label: String!
-}
-
-enum QuestionType {
-  MULTIPLE_CHOICE
-  INPUT
-  NO_INPUT
-}
-
-enum UserQuestionType {
-  MULTIPLE_SELECT
-  MULTIPLE_CHOICE
-  NUMBER
-  YES_NO
-  DATE
-  SHORT_TEXT
-  LONG_TEXT
-  SLIDER
-  DESCRIPTION
-  MULTIPLE_CHOICE_GRID
-  SIGNATURE
-  TELEPHONE
-  EMAIL
-  ICD10_CLASSIFICATION
-  FILE
-  IMAGE
-}
-
-type QuestionConfig {
-  recode_enabled: Boolean
-  mandatory: Boolean!
-  use_select: Boolean
-  slider: SliderConfig
-  phone: PhoneConfig
-  number: NumberConfig
-  multiple_select: MultipleSelectConfig
-  date: DateConfig
-  file_storage: FileStorageQuestionConfig
-}
-
-type SliderConfig {
-  min: Float!
-  max: Float!
-  step_value: Float!
-  min_label: String!
-  max_label: String!
-  is_value_tooltip_on: Boolean!
-  display_marks: Boolean!
-  show_min_max_values: Boolean!
-}
-
-type PhoneConfig {
-  default_country: String
-  available_countries: [String!]
-}
-
-type NumberConfig {
-  range: RangeConfig
-}
-
-type RangeConfig {
-  min: Float
-  max: Float
-  enabled: Boolean
-}
-
-type MultipleSelectConfig {
-  range: ChoiceRangeConfig
-  exclusive_option: ExclusiveOptionConfig
-}
-
-type ChoiceRangeConfig {
-  enabled: Boolean
-  min: Float
-  max: Float
-}
-
-type ExclusiveOptionConfig {
-  enabled: Boolean
-  option_id: String
-}
-
-type DateConfig {
-  allowed_dates: AllowedDatesOptions
-  include_date_of_response: Boolean
-}
-
-enum AllowedDatesOptions {
-  PAST
-  FUTURE
-  ALL
-}
-
-type FileStorageQuestionConfig {
-  file_storage_config_slug: String
-  accepted_file_types: [String!]
-}
-
-type Rule {
-  id: ID!
-  definition_id: String
-  boolean_operator: BooleanOperator!
-  conditions: [Condition!]!
-}
-
-enum BooleanOperator {
-  AND
-  OR
-}
-
-type Condition {
-  id: ID!
-  reference: String
-  reference_key: String
-  operator: ConditionOperator
-  operand: Operand
-}
-
-enum ConditionOperator {
-  IS_EQUAL_TO
-  IS_NOT_EQUAL_TO
-  IS_GREATER_THAN
-  IS_LESS_THAN
-  IS_GREATER_THAN_OR_EQUAL_TO
-  IS_LESS_THAN_OR_EQUAL_TO
-  CONTAINS
-  DOES_NOT_CONTAIN
-  IS_TRUE
-  IS_NOT_TRUE
-  IS_IN_RANGE
-  IS_ANY_OF
-  IS_NONE_OF
-  IS_EMPTY
-  IS_NOT_EMPTY
-  IS_TODAY
-  IS_LESS_THAN_X_DAYS_AGO
-  IS_MORE_THAN_X_DAYS_AGO
-  HAS_FILE_UPLOADED
-  HAS_NO_FILE_UPLOADED
-}
-
-type Operand {
-  type: ConditionOperandType!
-  value: String!
-}
-
-enum ConditionOperandType {
-  DATA_SOURCE
-  STRING
-  NUMBER
-  BOOLEAN
-  NUMBERS_ARRAY
-  STRINGS_ARRAY
-  DATA_POINT
-}
-
-type PreviousAnswers {
-  activity_id: ID!
-  date: String!
-  answers: [Answer!]!
-}
-
-type Answer {
-  question_id: String!
-  value: String!
-  label: String
-  value_type: DataPointValueType!
 }
 
 type ActivityMetadata {
@@ -620,15 +807,13 @@ input FilterCareflowActivitiesParams {
   stakeholders: [String!]
   hide_system_activities: Boolean
   date_range: DateRangeInput
+  reference_id: String
 }
 
 input DateRangeInput {
   from: SafeDate!
   to: SafeDate!
 }
-
-"""Safe date scalar that can serialize string or date"""
-scalar SafeDate
 
 type ActivityPayload implements Payload {
   code: String!
@@ -644,6 +829,7 @@ input FilterActivitiesParams {
   activity_type: StringArrayFilter
   stakeholders: StringArrayFilter
   pathway_status: StringArrayFilter
+  reference_id: TextFilterEquals
 }
 
 input TextFilterEquals {
@@ -654,6 +840,71 @@ type ActivityTypesPayload implements Payload {
   code: String!
   success: Boolean!
   activityTypes: [String!]!
+}
+
+type WorkerAgentConfigPayload {
+  workerAgentConfig: WorkerAgentConfigGraphqlType
+}
+
+type WorkerAgentConfigGraphqlType {
+  id: String!
+  agent_uuid: String!
+  state: String!
+  name: String!
+  description: String!
+  agent_id: String!
+  organization_slug: String!
+  version: Float!
+  instructions: String
+  jobToBeDone: String
+  stakeholders: [StakeholderInfoGraphqlType!]!
+  input_specs: [FieldSpecGraphqlType!]!
+  output_specs: [FieldSpecGraphqlType!]!
+  tools: [ToolSpecGraphqlType!]!
+  guardrails: [String!]
+  created: AuditGraphqlType!
+  updated: AuditGraphqlType
+}
+
+type StakeholderInfoGraphqlType {
+  definition_id: String!
+  name: String!
+}
+
+type FieldSpecGraphqlType {
+  name: String!
+  description: String!
+  type: String!
+}
+
+type ToolSpecGraphqlType {
+  id: String!
+  name: String!
+  type: String!
+  description: String!
+  parameters: [ParameterSpecGraphqlType!]
+  hitl_required: Boolean
+}
+
+type ParameterSpecGraphqlType {
+  name: String!
+  description: String
+  value_source: String
+  value_type: String
+  required: Boolean
+  instructions: String
+  static_value: String
+  input_field_name: String
+}
+
+type AuditGraphqlType {
+  at: SafeDate!
+  by: ByGraphqlType!
+}
+
+type ByGraphqlType {
+  id: String!
+  name: String!
 }
 
 type ApiCallPayload implements Payload {
@@ -724,14 +975,6 @@ type CalculationResultsPayload implements Payload {
   result: [SingleCalculationResult!]!
 }
 
-type SingleCalculationResult {
-  subresult_id: String!
-  value: String!
-  value_type: DataPointValueType
-  unit: String
-  status: String
-}
-
 type ChecklistPayload implements Payload {
   code: String!
   success: Boolean!
@@ -793,6 +1036,7 @@ enum ElementType {
   STEP
   ACTION
   TRIGGER
+  AGENT
 }
 
 enum ActionType {
@@ -885,6 +1129,7 @@ type PluginActionSettingsProperty {
 type ExtensionDataPoint {
   label: String!
   value: String!
+  valueType: String!
 }
 
 type FormPayload implements Payload {
@@ -944,6 +1189,8 @@ type HostedSession {
   status: HostedSessionStatus!
   stakeholder: HostedSessionStakeholder!
   user_context: HostedSessionUserContext
+  created_at: String!
+  expires_at: String!
 }
 
 enum HostedSessionStatus {
@@ -998,26 +1245,8 @@ type Message {
   id: ID!
   subject: String
   body: String!
-  format: MessageFormat!
+  format: MessageFormat
   attachments: [MessageAttachment!]
-}
-
-enum MessageFormat {
-  SLATE
-  HTML
-}
-
-type MessageAttachment {
-  id: ID!
-  name: String!
-  url: String!
-  type: MessageAttachmentType!
-}
-
-enum MessageAttachmentType {
-  FILE
-  VIDEO
-  LINK
 }
 
 type OrchestrationFactsPayload implements PaginationAndSortingPayload {
@@ -1087,6 +1316,7 @@ type Pathway {
   status: PathwayStatus!
   status_explanation: String
   tracks: [Track!]!
+  created: AuditTrail
   patient: User!
 }
 
@@ -1264,12 +1494,6 @@ type PublishedPathwayDefinition {
 
   """Tracks for the pathway"""
   track_definitions: [Track!]
-}
-
-type AuditTrail {
-  user_id: String!
-  user_email: String
-  date: SafeDate!
 }
 
 type PathwayDefinitionDetails {
@@ -1464,10 +1688,55 @@ type FileUploadGCSPayload implements Payload {
   file_url: String!
 }
 
+type OrchestratedAgentPayload {
+  code: String!
+  success: Boolean!
+  agent: OrchestratedAgent!
+}
+
+type OrchestratedAgent {
+  tenant_id: String!
+  careflow_id: String!
+  agent_definition_id: String!
+  agent_version: Float!
+  agent_id: String!
+  agent_config_id: String!
+  agent_thread_id: String!
+  status: String!
+  execution: JSON!
+  context: JSON!
+  hosted_pages_links: [StakeholderHPLink!]
+  created_at: String!
+  updated_at: String!
+}
+
+type StakeholderHPLink {
+  stakeholder: AgentStakeholder!
+  url: String!
+}
+
+type AgentStakeholder {
+  definition_id: String!
+  name: String!
+}
+
+type FormActivityDataPointsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  data_points: [FormActivityDataPoint!]!
+}
+
+type FormActivityDataPoint {
+  key: String!
+  value: String!
+  valueType: DataPointValueType!
+}
+
 type Mutation {
   addActivityMetadata(input: AddActivityMetadataInput!): AddActivityMetadataPayload!
   addIdentifierToPatient(input: AddIdentifierToPatientInput!): AddIdentifierToPatientPayload!
   addTrack(input: AddTrackInput!): AddTrackPayload!
+  expireActivity(input: ExpireActivityInput!): EmptyPayload!
   unscheduleTracks(input: CancelScheduledTracksInput!): CancelScheduledTracksPayload!
   completeExtensionActivity(input: CompleteExtensionActivityInput!): CompleteExtensionActivityPayload!
   createPatient(input: CreatePatientInput): CreatePatientPayload!
@@ -1513,7 +1782,9 @@ type Mutation {
   """
   updatePatientDemographicsQuery(input: UpdatePatientDemographicsQueryInput!): UpdatePatientDemographicsQueryPayload!
   updatePatientLanguage(input: UpdatePatientLanguageInput!): UpdatePatientLanguagePayload!
+  upsertPatient(input: UpsertPatientInput!): UpsertPatientPayload!
   verify_identity(input: VerifyIdentityInput!): IdentityVerificationPayload!
+  completeSession(input: CompleteSessionInput!): CompleteSessionPayload!
 }
 
 type AddActivityMetadataPayload implements Payload {
@@ -1552,6 +1823,18 @@ type AddTrackPayload implements Payload {
 input AddTrackInput {
   pathway_id: String!
   track_id: String!
+}
+
+type EmptyPayload implements Payload {
+  code: String!
+  success: Boolean!
+}
+
+input ExpireActivityInput {
+  activity_id: String!
+  user_id: String!
+  user_email: String!
+  reason: String!
 }
 
 type CancelScheduledTracksPayload implements Payload {
@@ -1620,11 +1903,6 @@ input AddressInput {
   zip: String
   state: String
   country: String
-}
-
-type EmptyPayload implements Payload {
-  code: String!
-  success: Boolean!
 }
 
 input DeletePathwayInput {
@@ -2003,6 +2281,44 @@ input UpdatePatientLanguageInput {
   preferred_language: String!
 }
 
+type UpsertPatientPayload implements Payload {
+  code: String!
+  success: Boolean!
+  patient: User
+}
+
+input UpsertPatientInput {
+  patient_identifier: IdentifierInput!
+  profile: UpsertPatientProfileInput
+}
+
+input UpsertPatientProfileInput {
+  email: String
+  first_name: String!
+  last_name: String!
+  birth_date: String
+
+  """ISO 639-1 shortcode"""
+  preferred_language: String
+
+  """
+  Sex code as defined by ISO standard IEC_5218, 0 - NOT_KNOWN, 1 - MALE, 2 - FEMALE
+  """
+  sex: Sex
+  national_registry_number: String
+  patient_code: String
+
+  """Must be in valid E164 telephone number format"""
+  phone: String
+
+  """Must be in valid E164 telephone number format"""
+  mobile_phone: String
+  address: AddressInput
+
+  """Must be a valid IANA timezone"""
+  patient_timezone: String
+}
+
 type IdentityVerificationPayload implements Payload {
   code: String!
   success: Boolean!
@@ -2012,6 +2328,16 @@ type IdentityVerificationPayload implements Payload {
 input VerifyIdentityInput {
   dob: String
   pathway_id: String!
+}
+
+type CompleteSessionPayload implements Payload {
+  code: String!
+  success: Boolean!
+  session: HostedSession
+}
+
+input CompleteSessionInput {
+  session_id: String!
 }
 
 type Subscription {

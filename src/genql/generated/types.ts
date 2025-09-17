@@ -1,2127 +1,2682 @@
 export default {
     "scalars": [
-        3,
+        2,
         4,
-        6,
+        5,
+        7,
         9,
         10,
+        11,
         13,
-        14,
-        24,
+        22,
         28,
-        29,
-        31,
+        30,
         32,
-        33,
         40,
-        41,
+        42,
         45,
-        46,
-        56,
-        59,
+        49,
         61,
         63,
-        71,
-        79,
-        82,
-        95,
-        96,
-        97,
-        105,
+        66,
+        76,
+        80,
+        81,
+        83,
+        84,
+        85,
+        86,
+        93,
+        114,
         117,
-        119,
-        125,
-        127,
+        129,
+        130,
+        131,
         139,
-        165
+        151,
+        153,
+        170,
+        195
     ],
     "types": {
-        "Query": {
-            "scheduledTracksForPathway": [
-                1,
+        "FormActivityInputs": {
+            "type": [
+                2
+            ],
+            "form": [
+                3
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ActivityInputs": {
+            "type": [
+                2
+            ],
+            "on_FormActivityInputs": [
+                0
+            ],
+            "on_DynamicFormActivityInputs": [
+                35
+            ],
+            "on_MessageActivityInputs": [
+                38
+            ],
+            "on_CalculationActivityInputs": [
+                43
+            ],
+            "on_ExtensionActivityInputs": [
+                46
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ActivityInputType": {},
+        "Form": {
+            "release_id": [
+                4
+            ],
+            "key": [
+                4
+            ],
+            "definition_id": [
+                4
+            ],
+            "id": [
+                5
+            ],
+            "title": [
+                4
+            ],
+            "trademark": [
+                4
+            ],
+            "metadata": [
+                4
+            ],
+            "questions": [
+                6
+            ],
+            "previous_answers": [
+                33,
                 {
                     "pathway_id": [
-                        3,
+                        4,
+                        "String!"
+                    ]
+                }
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "String": {},
+        "ID": {},
+        "Question": {
+            "key": [
+                4
+            ],
+            "id": [
+                5
+            ],
+            "definition_id": [
+                4
+            ],
+            "title": [
+                4
+            ],
+            "dataPointValueType": [
+                7
+            ],
+            "options": [
+                8
+            ],
+            "questionType": [
+                10
+            ],
+            "userQuestionType": [
+                11
+            ],
+            "questionConfig": [
+                12
+            ],
+            "rule": [
+                27
+            ],
+            "metadata": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DataPointValueType": {},
+        "Option": {
+            "id": [
+                5
+            ],
+            "value": [
+                9
+            ],
+            "value_string": [
+                4
+            ],
+            "label": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "Float": {},
+        "QuestionType": {},
+        "UserQuestionType": {},
+        "QuestionConfig": {
+            "recode_enabled": [
+                13
+            ],
+            "mandatory": [
+                13
+            ],
+            "use_select": [
+                13
+            ],
+            "slider": [
+                14
+            ],
+            "phone": [
+                15
+            ],
+            "number": [
+                16
+            ],
+            "multiple_select": [
+                18
+            ],
+            "date": [
+                21
+            ],
+            "file_storage": [
+                23
+            ],
+            "input_validation": [
+                24
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "Boolean": {},
+        "SliderConfig": {
+            "min": [
+                9
+            ],
+            "max": [
+                9
+            ],
+            "step_value": [
+                9
+            ],
+            "min_label": [
+                4
+            ],
+            "max_label": [
+                4
+            ],
+            "is_value_tooltip_on": [
+                13
+            ],
+            "display_marks": [
+                13
+            ],
+            "show_min_max_values": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "PhoneConfig": {
+            "default_country": [
+                4
+            ],
+            "available_countries": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "NumberConfig": {
+            "range": [
+                17
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "RangeConfig": {
+            "min": [
+                9
+            ],
+            "max": [
+                9
+            ],
+            "enabled": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "MultipleSelectConfig": {
+            "range": [
+                19
+            ],
+            "exclusive_option": [
+                20
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ChoiceRangeConfig": {
+            "enabled": [
+                13
+            ],
+            "min": [
+                9
+            ],
+            "max": [
+                9
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ExclusiveOptionConfig": {
+            "enabled": [
+                13
+            ],
+            "option_id": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DateConfig": {
+            "allowed_dates": [
+                22
+            ],
+            "include_date_of_response": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "AllowedDatesOptions": {},
+        "FileStorageQuestionConfig": {
+            "file_storage_config_slug": [
+                4
+            ],
+            "accepted_file_types": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "InputValidationConfig": {
+            "mode": [
+                4
+            ],
+            "pattern": [
+                4
+            ],
+            "helper_text": [
+                4
+            ],
+            "simpleConfig": [
+                25
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "InputValidationSimpleConfig": {
+            "exactLength": [
+                9
+            ],
+            "allowed": [
+                26
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "InputValidationAllowed": {
+            "letters": [
+                13
+            ],
+            "numbers": [
+                13
+            ],
+            "whitespace": [
+                13
+            ],
+            "special": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "Rule": {
+            "id": [
+                5
+            ],
+            "definition_id": [
+                4
+            ],
+            "boolean_operator": [
+                28
+            ],
+            "conditions": [
+                29
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "BooleanOperator": {},
+        "Condition": {
+            "id": [
+                5
+            ],
+            "reference": [
+                4
+            ],
+            "reference_key": [
+                4
+            ],
+            "operator": [
+                30
+            ],
+            "operand": [
+                31
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ConditionOperator": {},
+        "Operand": {
+            "type": [
+                32
+            ],
+            "value": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ConditionOperandType": {},
+        "PreviousAnswers": {
+            "activity_id": [
+                5
+            ],
+            "date": [
+                4
+            ],
+            "answers": [
+                34
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "Answer": {
+            "question_id": [
+                4
+            ],
+            "value": [
+                4
+            ],
+            "label": [
+                4
+            ],
+            "value_type": [
+                7
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DynamicFormActivityInputs": {
+            "type": [
+                2
+            ],
+            "dynamicForm": [
+                36
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DynamicFormGraphqlType": {
+            "key": [
+                4
+            ],
+            "title": [
+                4
+            ],
+            "trademark": [
+                4
+            ],
+            "questions": [
+                37
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DynamicQuestion": {
+            "id": [
+                5
+            ],
+            "key": [
+                4
+            ],
+            "title": [
+                4
+            ],
+            "dataPointValueType": [
+                7
+            ],
+            "options": [
+                8
+            ],
+            "questionType": [
+                10
+            ],
+            "userQuestionType": [
+                11
+            ],
+            "questionConfig": [
+                12
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "MessageActivityInputs": {
+            "type": [
+                2
+            ],
+            "message": [
+                39
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ActivityMessage": {
+            "message_id": [
+                4
+            ],
+            "subject": [
+                4
+            ],
+            "body": [
+                4
+            ],
+            "format": [
+                40
+            ],
+            "attachments": [
+                41
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "MessageFormat": {},
+        "MessageAttachment": {
+            "id": [
+                5
+            ],
+            "name": [
+                4
+            ],
+            "url": [
+                4
+            ],
+            "type": [
+                42
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "MessageAttachmentType": {},
+        "CalculationActivityInputs": {
+            "type": [
+                2
+            ],
+            "calculation_fields": [
+                44
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CalculationInput": {
+            "calculation_input_id": [
+                4
+            ],
+            "data_point_value": [
+                45
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "JSON": {},
+        "ExtensionActivityInputs": {
+            "type": [
+                2
+            ],
+            "extension_fields": [
+                45
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "DynamicFormActivityOutputs": {
+            "type": [
+                49
+            ],
+            "answers": [
+                50
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ActivityOutputs": {
+            "type": [
+                49
+            ],
+            "on_DynamicFormActivityOutputs": [
+                47
+            ],
+            "on_FormActivityOutputs": [
+                51
+            ],
+            "on_CalculationActivityOutputs": [
+                52
+            ],
+            "on_ExtensionActivityOutputs": [
+                54
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ActivityOutputType": {},
+        "QuestionResponseOutput": {
+            "question_id": [
+                4
+            ],
+            "value": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "FormActivityOutputs": {
+            "type": [
+                49
+            ],
+            "answers": [
+                50
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CalculationActivityOutputs": {
+            "type": [
+                49
+            ],
+            "calculation_results": [
+                53
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "SingleCalculationResult": {
+            "subresult_id": [
+                4
+            ],
+            "value": [
+                4
+            ],
+            "value_type": [
+                7
+            ],
+            "unit": [
+                4
+            ],
+            "status": [
+                4
+            ],
+            "label": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ExtensionActivityOutputs": {
+            "type": [
+                49
+            ],
+            "extension_results": [
+                45
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "Query": {
+            "scheduledTracksForPathway": [
+                56,
+                {
+                    "pathway_id": [
+                        4,
                         "String!"
                     ]
                 }
             ],
             "patientPathways": [
-                7,
+                59,
                 {
                     "patient_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "filters": [
-                        18
+                        70
                     ]
                 }
             ],
             "baselineInfo": [
-                20,
+                72,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "myPendingActivities": [
-                21
+                73
             ],
             "myActivities": [
-                21,
+                73,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "track_id": [
-                        3
+                        4
                     ]
                 }
             ],
             "pathwayActivities": [
-                21,
+                73,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "track_id": [
-                        3
+                        4
                     ]
                 }
             ],
             "careflowActivities": [
-                21,
+                73,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "filters": [
-                        69
+                        97
                     ]
                 }
             ],
             "activity": [
-                72,
+                99,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "activities": [
-                21,
+                73,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "filters": [
-                        73
+                        100
                     ]
                 }
             ],
             "pathwayStepActivities": [
-                21,
+                73,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "step_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "careflowActivityTypes": [
-                75,
+                102,
                 {
                     "careflow_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
-            "apiCall": [
-                76,
+            "agent": [
+                103,
                 {
                     "id": [
-                        3,
+                        5,
+                        "ID!"
+                    ]
+                }
+            ],
+            "apiCall": [
+                111,
+                {
+                    "id": [
+                        4,
                         "String!"
                     ]
                 }
             ],
             "apiCalls": [
-                83,
+                118,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "calculationAction": [
-                84,
+                119,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "calculationResults": [
-                85,
+                120,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "activity_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "checklist": [
-                87,
+                121,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "clinicalNote": [
-                89,
+                123,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "pathwayElements": [
-                93,
+                127,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "track_id": [
-                        3
+                        4
                     ]
                 }
             ],
             "emrReport": [
-                99,
+                133,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "extensionActivityRecord": [
-                102,
+                136,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "form": [
-                108,
+                142,
                 {
                     "pathway_id": [
-                        3
+                        4
                     ],
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "forms": [
-                109,
+                143,
                 {
                     "pathway_definition_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "release_id": [
-                        3
+                        4
                     ]
                 }
             ],
             "formResponse": [
-                110,
+                144,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "activity_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "generateRetoolEmbedUrl": [
-                112,
+                146,
                 {
                     "landingPageUuid": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "groupIds": [
-                        3,
+                        4,
                         "[String!]!"
                     ],
                     "userInfo": [
-                        113,
+                        147,
                         "UserInfoParams!"
                     ],
                     "releaseVersion": [
-                        3
-                    ]
-                }
-            ],
-            "hostedSessionActivities": [
-                114,
-                {
-                    "only_stakeholder_activities": [
                         4
                     ]
                 }
             ],
+            "hostedSessionActivities": [
+                148,
+                {
+                    "only_stakeholder_activities": [
+                        13
+                    ]
+                }
+            ],
             "hostedSession": [
-                115
+                149
             ],
             "message": [
-                123,
+                157,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "pathwayFacts": [
-                128,
+                159,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "filters": [
-                        130,
+                        161,
                         "PathwayFactsFilters!"
                     ]
                 }
             ],
             "pathwayDataPointDefinitions": [
-                132,
+                163,
                 {
                     "pathway_definition_id": [
-                        3
+                        4
                     ],
                     "release_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "filters": [
-                        133
+                        164
                     ]
                 }
             ],
             "pathway": [
-                134,
+                165,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "myPathways": [
-                142
+                173
             ],
             "pathways": [
-                142,
+                173,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "filters": [
-                        144
+                        175
                     ]
                 }
             ],
             "patientDemographicsQueryConfiguration": [
-                147
+                178
             ],
             "patient": [
-                148,
+                179,
                 {
                     "id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "patients": [
-                149,
+                180,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "filters": [
-                        150
+                        181
                     ]
                 }
             ],
             "patientByIdentifier": [
-                148,
+                179,
                 {
                     "system": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "value": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "publishedPathwayDefinitions": [
-                153
+                184
             ],
             "getStatusForPublishedPathwayDefinitions": [
-                153
+                184
             ],
             "getPublishedCareflowVersions": [
-                157,
+                187,
                 {
                     "careflow_definition_id": [
-                        3
+                        4
                     ]
                 }
             ],
             "scheduledSteps": [
-                160,
+                190,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "searchPatientsByPatientCode": [
-                161,
+                191,
                 {
                     "patient_code": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "searchPatientsByNationalRegistryNumber": [
-                161,
+                191,
                 {
                     "national_registry_number": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "filterStakeholders": [
-                162,
+                192,
                 {
                     "pathway_definition_ids": [
-                        3,
+                        4,
                         "[String!]"
                     ],
                     "release_ids": [
-                        3,
+                        4,
                         "[String!]"
                     ],
                     "stakeholder_definition_ids": [
-                        3,
+                        4,
                         "[String!]"
                     ]
                 }
             ],
             "stakeholdersByPathwayDefinitionIds": [
-                162,
+                192,
                 {
                     "pathway_definition_ids": [
-                        3,
+                        4,
                         "[String!]!"
                     ]
                 }
             ],
             "stakeholdersByReleaseIds": [
-                162,
+                192,
                 {
                     "release_ids": [
-                        3,
+                        4,
                         "[String!]!"
                     ]
                 }
             ],
             "stakeholdersByDefinitionIds": [
-                162,
+                192,
                 {
                     "stakeholder_definition_ids": [
-                        3,
+                        4,
                         "[String!]!"
                     ]
                 }
             ],
             "adHocTracksByPathway": [
-                166,
+                196,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "adHocTracksByRelease": [
-                166,
+                196,
                 {
                     "release_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "tenant": [
-                167
+                197
             ],
             "webhookCall": [
-                170,
+                200,
                 {
                     "webhook_call_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "webhookCalls": [
-                176,
+                206,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "webhookCallsForTenant": [
-                176
+                206
             ],
             "webhookCallsForPathwayDefinition": [
-                176,
+                206,
                 {
                     "pathway_definition_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "getOrchestrationFactsFromPrompt": [
-                177,
+                207,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "prompt": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "hostedPagesLink": [
-                178,
+                208,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "stakeholder_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "pathwayDataPoints": [
-                180,
+                210,
                 {
                     "pagination": [
-                        67
+                        95
                     ],
                     "sorting": [
-                        68
+                        96
                     ],
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "activity_id": [
-                        3
+                        4
                     ],
                     "data_point_definition_id": [
-                        3
+                        4
                     ],
                     "data_point_key": [
-                        3
+                        4
                     ]
                 }
             ],
             "decisionOutputs": [
-                182,
+                212,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "activity_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "getSignedUrl": [
-                183,
+                213,
                 {
                     "file_name": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "content_type": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "expires_in": [
-                        10
+                        9
                     ],
                     "config_slug": [
-                        3,
+                        4,
+                        "String!"
+                    ]
+                }
+            ],
+            "getAgentByThreadId": [
+                214,
+                {
+                    "agent_thread_id": [
+                        4
+                    ]
+                }
+            ],
+            "formActivityDataPoints": [
+                218,
+                {
+                    "careflow_id": [
+                        4,
+                        "String!"
+                    ],
+                    "activity_id": [
+                        4,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ScheduledTracksPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "scheduled_tracks": [
-                5
+                58
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Payload": {
             "code": [
-                3
+                4
             ],
             "success": [
-                4
+                13
             ],
             "on_ScheduledTracksPayload": [
-                1
+                56
             ],
             "on_PatientPathwaysPayload": [
-                7
+                59
             ],
             "on_BaselineInfoPayload": [
-                20
-            ],
-            "on_ActivityPayload": [
                 72
             ],
-            "on_ActivityTypesPayload": [
-                75
-            ],
-            "on_ApiCallPayload": [
-                76
-            ],
-            "on_ApiCallsPayload": [
-                83
-            ],
-            "on_ActionPayload": [
-                84
-            ],
-            "on_CalculationResultsPayload": [
-                85
-            ],
-            "on_ChecklistPayload": [
-                87
-            ],
-            "on_ClinicalNotePayload": [
-                89
-            ],
-            "on_ElementsPayload": [
-                93
-            ],
-            "on_EmrReportPayload": [
+            "on_ActivityPayload": [
                 99
             ],
-            "on_ExtensionActivityRecordPayload": [
+            "on_ActivityTypesPayload": [
                 102
             ],
-            "on_FormPayload": [
-                108
+            "on_ApiCallPayload": [
+                111
             ],
-            "on_FormsPayload": [
-                109
+            "on_ApiCallsPayload": [
+                118
             ],
-            "on_FormResponsePayload": [
-                110
+            "on_ActionPayload": [
+                119
             ],
-            "on_GenerateRetoolEmbedUrlPayload": [
-                112
+            "on_CalculationResultsPayload": [
+                120
             ],
-            "on_HostedSessionActivitiesPayload": [
-                114
+            "on_ChecklistPayload": [
+                121
             ],
-            "on_HostedSessionPayload": [
-                115
-            ],
-            "on_MessagePayload": [
+            "on_ClinicalNotePayload": [
                 123
             ],
-            "on_PathwayDataPointDefinitionsPayload": [
-                132
+            "on_ElementsPayload": [
+                127
             ],
-            "on_PathwayPayload": [
-                134
+            "on_EmrReportPayload": [
+                133
             ],
-            "on_PatientPayload": [
+            "on_ExtensionActivityRecordPayload": [
+                136
+            ],
+            "on_FormPayload": [
+                142
+            ],
+            "on_FormsPayload": [
+                143
+            ],
+            "on_FormResponsePayload": [
+                144
+            ],
+            "on_GenerateRetoolEmbedUrlPayload": [
+                146
+            ],
+            "on_HostedSessionActivitiesPayload": [
                 148
             ],
+            "on_HostedSessionPayload": [
+                149
+            ],
+            "on_MessagePayload": [
+                157
+            ],
+            "on_PathwayDataPointDefinitionsPayload": [
+                163
+            ],
+            "on_PathwayPayload": [
+                165
+            ],
+            "on_PatientPayload": [
+                179
+            ],
             "on_ScheduledStepsPayload": [
-                160
-            ],
-            "on_SearchPatientsPayload": [
-                161
-            ],
-            "on_StakeholdersPayload": [
-                162
-            ],
-            "on_TracksPayload": [
-                166
-            ],
-            "on_TenantPayload": [
-                167
-            ],
-            "on_WebhookCallPayload": [
-                170
-            ],
-            "on_WebhookCallsPayload": [
-                176
-            ],
-            "on_OrchestrationFactsPromptPayload": [
-                177
-            ],
-            "on_HostedPagesLinkPayload": [
-                178
-            ],
-            "on_DecisionOutputsPayload": [
-                182
-            ],
-            "on_FileUploadGCSPayload": [
-                183
-            ],
-            "on_AddActivityMetadataPayload": [
-                185
-            ],
-            "on_AddIdentifierToPatientPayload": [
-                187
-            ],
-            "on_AddTrackPayload": [
                 190
             ],
-            "on_CancelScheduledTracksPayload": [
+            "on_SearchPatientsPayload": [
+                191
+            ],
+            "on_StakeholdersPayload": [
                 192
             ],
-            "on_CompleteExtensionActivityPayload": [
-                194
+            "on_TracksPayload": [
+                196
             ],
-            "on_CreatePatientPayload": [
+            "on_TenantPayload": [
                 197
             ],
-            "on_EmptyPayload": [
+            "on_WebhookCallPayload": [
                 200
             ],
-            "on_EvaluateFormRulesPayload": [
-                203
+            "on_WebhookCallsPayload": [
+                206
             ],
-            "on_MarkMessageAsReadPayload": [
+            "on_OrchestrationFactsPromptPayload": [
+                207
+            ],
+            "on_HostedPagesLinkPayload": [
                 208
             ],
-            "on_PatientDemographicsPayload": [
-                210
+            "on_DecisionOutputsPayload": [
+                212
             ],
-            "on_RetryApiCallPayload": [
+            "on_FileUploadGCSPayload": [
+                213
+            ],
+            "on_FormActivityDataPointsPayload": [
                 218
             ],
-            "on_RetryWebhookCallPayload": [
+            "on_AddActivityMetadataPayload": [
                 221
             ],
-            "on_ScheduleTrackPayload": [
-                225
+            "on_AddIdentifierToPatientPayload": [
+                223
             ],
-            "on_StartHostedActivitySessionPayload": [
-                227
+            "on_AddTrackPayload": [
+                226
             ],
-            "on_StartHostedPathwaySessionFromLinkPayload": [
+            "on_EmptyPayload": [
+                228
+            ],
+            "on_CancelScheduledTracksPayload": [
                 230
             ],
-            "on_StartHostedPathwaySessionPayload": [
-                233
+            "on_CompleteExtensionActivityPayload": [
+                232
             ],
-            "on_StartPathwayPayload": [
-                236
+            "on_CreatePatientPayload": [
+                235
             ],
-            "on_StartPathwayWithPatientIdentifierPayload": [
-                238
+            "on_EvaluateFormRulesPayload": [
+                240
             ],
-            "on_StopTrackPayload": [
-                241
-            ],
-            "on_SubmitChecklistPayload": [
-                243
-            ],
-            "on_SubmitFormResponsePayload": [
+            "on_MarkMessageAsReadPayload": [
                 245
             ],
-            "on_UpdateEmrReportStatusPayload": [
-                249
+            "on_PatientDemographicsPayload": [
+                247
             ],
-            "on_UpdatePatientPayload": [
-                252
-            ],
-            "on_UpdatePatientDemographicsQueryPayload": [
+            "on_RetryApiCallPayload": [
                 255
             ],
+            "on_RetryWebhookCallPayload": [
+                258
+            ],
+            "on_ScheduleTrackPayload": [
+                262
+            ],
+            "on_StartHostedActivitySessionPayload": [
+                264
+            ],
+            "on_StartHostedPathwaySessionFromLinkPayload": [
+                267
+            ],
+            "on_StartHostedPathwaySessionPayload": [
+                270
+            ],
+            "on_StartPathwayPayload": [
+                273
+            ],
+            "on_StartPathwayWithPatientIdentifierPayload": [
+                275
+            ],
+            "on_StopTrackPayload": [
+                278
+            ],
+            "on_SubmitChecklistPayload": [
+                280
+            ],
+            "on_SubmitFormResponsePayload": [
+                282
+            ],
+            "on_UpdateEmrReportStatusPayload": [
+                286
+            ],
+            "on_UpdatePatientPayload": [
+                289
+            ],
+            "on_UpdatePatientDemographicsQueryPayload": [
+                292
+            ],
             "on_UpdatePatientLanguagePayload": [
-                257
+                294
+            ],
+            "on_UpsertPatientPayload": [
+                296
             ],
             "on_IdentityVerificationPayload": [
-                259
+                299
+            ],
+            "on_CompleteSessionPayload": [
+                301
             ],
             "__typename": [
-                3
+                4
             ]
         },
-        "String": {},
-        "Boolean": {},
         "ScheduledTrack": {
             "id": [
-                6
+                5
             ],
             "pathway_id": [
-                3
-            ],
-            "track_definition_id": [
-                3
-            ],
-            "release_id": [
-                3
-            ],
-            "tenant_id": [
-                3
-            ],
-            "created_by_user_id": [
-                3
-            ],
-            "created_date": [
-                3
-            ],
-            "modified_date": [
-                3
-            ],
-            "scheduled_date": [
-                3
-            ],
-            "status": [
-                3
-            ],
-            "title": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ID": {},
-        "PatientPathwaysPayload": {
-            "code": [
-                3
-            ],
-            "success": [
                 4
             ],
-            "patientPathways": [
-                8
+            "track_definition_id": [
+                4
+            ],
+            "release_id": [
+                4
+            ],
+            "tenant_id": [
+                4
+            ],
+            "created_by_user_id": [
+                4
+            ],
+            "created_date": [
+                4
+            ],
+            "modified_date": [
+                4
+            ],
+            "scheduled_date": [
+                4
+            ],
+            "status": [
+                4
+            ],
+            "title": [
+                4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "PatientPathwaysPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "patientPathways": [
+                60
+            ],
+            "__typename": [
+                4
             ]
         },
         "PatientPathway": {
             "id": [
-                6
+                5
             ],
             "title": [
-                3
+                4
             ],
             "status": [
-                9
+                61
             ],
             "status_explanation": [
-                3
+                4
             ],
             "pathway_definition_id": [
-                3
+                4
             ],
             "complete_date": [
-                3
+                4
             ],
             "stop_date": [
-                3
+                4
             ],
             "start_date": [
-                3
+                4
             ],
             "release_id": [
-                3
+                4
             ],
             "version": [
-                10
+                9
             ],
             "total_activities": [
-                10
+                9
             ],
             "active_activities": [
-                10
+                9
             ],
             "failed_activities": [
-                10
+                9
             ],
             "latest_activity_date": [
-                3
+                4
             ],
             "latest_activity_title": [
-                3
+                4
             ],
             "latest_activity_type": [
-                3
+                4
+            ],
+            "created": [
+                62
             ],
             "baseline_info": [
-                11
+                64
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwayStatus": {},
-        "Float": {},
-        "BaselineDataPoint": {
-            "definition": [
-                12
+        "AuditTrail": {
+            "user_id": [
+                4
             ],
-            "value": [
-                3
+            "user_email": [
+                4
+            ],
+            "user_name": [
+                4
+            ],
+            "date": [
+                63
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "SafeDate": {},
+        "BaselineDataPoint": {
+            "definition": [
+                65
+            ],
+            "value": [
+                4
+            ],
+            "__typename": [
+                4
             ]
         },
         "DataPointDefinition": {
             "id": [
-                6
+                5
             ],
             "key": [
-                3
+                4
             ],
             "title": [
-                3
+                4
             ],
             "category": [
-                13
+                66
             ],
             "valueType": [
-                14
+                7
             ],
             "source_definition_id": [
-                3
+                4
             ],
             "possibleValues": [
-                15
+                67
             ],
             "range": [
-                16
+                68
             ],
             "unit": [
-                3
+                4
             ],
             "optional": [
-                4
+                13
             ],
             "pii": [
-                4
+                13
             ],
             "metadata": [
-                17
+                69
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DataPointSourceType": {},
-        "DataPointValueType": {},
         "DataPointPossibleValue": {
             "value": [
-                3
+                4
             ],
             "label": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Range": {
             "min": [
-                10
+                9
             ],
             "max": [
-                10
+                9
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DataPointMetaDataItem": {
             "value": [
-                3
+                4
             ],
             "key": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterPatientPathways": {
             "status": [
-                19
+                71
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StringArrayFilter": {
             "in": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "BaselineInfoPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "baselineDataPoints": [
-                11
+                64
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivitiesPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "activities": [
-                26
+                78
             ],
             "metadata": [
-                66
+                94
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PaginationAndSortingPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "on_ActivitiesPayload": [
-                21
+                73
             ],
             "on_OrchestrationFactsPayload": [
-                128
+                159
             ],
             "on_PathwaysPayload": [
-                142
+                173
             ],
             "on_PatientsPayload": [
-                149
-            ],
-            "on_PublishedPathwayDefinitionsPayload": [
-                153
-            ],
-            "on_DataPointPayload": [
                 180
             ],
+            "on_PublishedPathwayDefinitionsPayload": [
+                184
+            ],
+            "on_DataPointPayload": [
+                210
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "PaginationOutput": {
             "offset": [
-                24
+                76
             ],
             "count": [
-                24
+                76
             ],
             "total_count": [
-                24
+                76
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Int": {},
         "SortingOutput": {
             "field": [
-                3
+                4
             ],
             "direction": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Activity": {
             "id": [
-                6
+                5
             ],
             "stream_id": [
-                3
+                4
             ],
             "date": [
-                3
+                4
             ],
             "subject": [
-                27
+                79
             ],
             "action": [
-                29
+                81
             ],
             "object": [
-                30
+                82
             ],
             "indirect_object": [
-                30
+                82
             ],
             "status": [
-                32
+                84
             ],
             "resolution": [
-                33
+                85
             ],
             "reference_id": [
-                3
+                4
+            ],
+            "reference_type": [
+                86
             ],
             "container_name": [
-                3
+                4
             ],
             "track": [
-                34
+                87
             ],
             "label": [
-                35
+                88
             ],
             "sub_activities": [
-                36
+                89
+            ],
+            "inputs": [
+                1
+            ],
+            "outputs": [
+                48
             ],
             "isUserActivity": [
-                4
+                13
             ],
             "public": [
-                4
+                13
             ],
             "context": [
-                38
+                91
             ],
             "session_id": [
-                3
+                4
             ],
             "stakeholders": [
-                30
+                82
             ],
             "icon_url": [
-                3
+                4
             ],
             "action_component": [
-                39
+                92
             ],
             "metadata": [
-                40
+                45
             ],
             "form_display_mode": [
-                41
+                93
             ],
             "form": [
-                42
+                3
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivitySubject": {
             "id": [
-                3
+                4
             ],
             "type": [
-                28
+                80
             ],
             "name": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivitySubjectType": {},
         "ActivityAction": {},
         "ActivityObject": {
             "type": [
-                31
+                83
             ],
             "id": [
-                3
+                4
             ],
             "name": [
-                3
+                4
             ],
             "email": [
-                3
+                4
             ],
             "preferred_language": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivityObjectType": {},
         "ActivityStatus": {},
         "ActivityResolution": {},
+        "ActivityReferenceType": {},
         "ActivityTrack": {
             "id": [
-                3
+                4
             ],
             "title": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivityLabel": {
             "id": [
-                3
+                4
             ],
             "color": [
-                3
+                4
             ],
             "text": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SubActivity": {
             "id": [
-                3
+                4
             ],
             "date": [
-                3
+                4
             ],
             "subject": [
-                27
+                79
             ],
             "action": [
-                29
+                81
             ],
             "error": [
-                3
+                4
             ],
             "error_category": [
-                3
+                4
             ],
             "object": [
-                30
+                82
             ],
             "text": [
-                37
+                90
             ],
             "scheduled_date": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "TranslatedText": {
             "en": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwayContext": {
             "instance_id": [
-                3
+                4
             ],
             "pathway_id": [
-                3
+                4
             ],
             "track_id": [
-                3
+                4
             ],
             "step_id": [
-                3
+                4
             ],
             "action_id": [
-                3
+                4
+            ],
+            "agent_thread_id": [
+                4
+            ],
+            "agent_id": [
+                4
+            ],
+            "agent_config_id": [
+                4
+            ],
+            "run_id": [
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActionComponent": {
             "definition_id": [
-                3
+                4
             ],
             "release_id": [
-                3
+                4
             ],
             "title": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
-        "JSON": {},
         "FormDisplayMode": {},
-        "Form": {
-            "release_id": [
-                3
-            ],
-            "key": [
-                3
-            ],
-            "definition_id": [
-                3
-            ],
-            "id": [
-                6
-            ],
-            "title": [
-                3
-            ],
-            "trademark": [
-                3
-            ],
-            "metadata": [
-                3
-            ],
-            "questions": [
-                43
-            ],
-            "previous_answers": [
-                64,
-                {
-                    "pathway_id": [
-                        3,
-                        "String!"
-                    ]
-                }
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "Question": {
-            "key": [
-                3
-            ],
-            "id": [
-                6
-            ],
-            "definition_id": [
-                3
-            ],
-            "title": [
-                3
-            ],
-            "dataPointValueType": [
-                14
-            ],
-            "options": [
-                44
-            ],
-            "questionType": [
-                45
-            ],
-            "userQuestionType": [
-                46
-            ],
-            "questionConfig": [
-                47
-            ],
-            "rule": [
-                58
-            ],
-            "metadata": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "Option": {
-            "id": [
-                6
-            ],
-            "value": [
-                10
-            ],
-            "value_string": [
-                3
-            ],
-            "label": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "QuestionType": {},
-        "UserQuestionType": {},
-        "QuestionConfig": {
-            "recode_enabled": [
-                4
-            ],
-            "mandatory": [
-                4
-            ],
-            "use_select": [
-                4
-            ],
-            "slider": [
-                48
-            ],
-            "phone": [
-                49
-            ],
-            "number": [
-                50
-            ],
-            "multiple_select": [
-                52
-            ],
-            "date": [
-                55
-            ],
-            "file_storage": [
-                57
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "SliderConfig": {
-            "min": [
-                10
-            ],
-            "max": [
-                10
-            ],
-            "step_value": [
-                10
-            ],
-            "min_label": [
-                3
-            ],
-            "max_label": [
-                3
-            ],
-            "is_value_tooltip_on": [
-                4
-            ],
-            "display_marks": [
-                4
-            ],
-            "show_min_max_values": [
-                4
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "PhoneConfig": {
-            "default_country": [
-                3
-            ],
-            "available_countries": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "NumberConfig": {
-            "range": [
-                51
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "RangeConfig": {
-            "min": [
-                10
-            ],
-            "max": [
-                10
-            ],
-            "enabled": [
-                4
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "MultipleSelectConfig": {
-            "range": [
-                53
-            ],
-            "exclusive_option": [
-                54
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ChoiceRangeConfig": {
-            "enabled": [
-                4
-            ],
-            "min": [
-                10
-            ],
-            "max": [
-                10
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ExclusiveOptionConfig": {
-            "enabled": [
-                4
-            ],
-            "option_id": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "DateConfig": {
-            "allowed_dates": [
-                56
-            ],
-            "include_date_of_response": [
-                4
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "AllowedDatesOptions": {},
-        "FileStorageQuestionConfig": {
-            "file_storage_config_slug": [
-                3
-            ],
-            "accepted_file_types": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "Rule": {
-            "id": [
-                6
-            ],
-            "definition_id": [
-                3
-            ],
-            "boolean_operator": [
-                59
-            ],
-            "conditions": [
-                60
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "BooleanOperator": {},
-        "Condition": {
-            "id": [
-                6
-            ],
-            "reference": [
-                3
-            ],
-            "reference_key": [
-                3
-            ],
-            "operator": [
-                61
-            ],
-            "operand": [
-                62
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ConditionOperator": {},
-        "Operand": {
-            "type": [
-                63
-            ],
-            "value": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ConditionOperandType": {},
-        "PreviousAnswers": {
-            "activity_id": [
-                6
-            ],
-            "date": [
-                3
-            ],
-            "answers": [
-                65
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "Answer": {
-            "question_id": [
-                3
-            ],
-            "value": [
-                3
-            ],
-            "label": [
-                3
-            ],
-            "value_type": [
-                14
-            ],
-            "__typename": [
-                3
-            ]
-        },
         "ActivityMetadata": {
             "stakeholders": [
-                30
+                82
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PaginationParams": {
             "offset": [
-                24
+                76
             ],
             "count": [
-                24
+                76
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SortingParams": {
             "field": [
-                3
+                4
             ],
             "direction": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterCareflowActivitiesParams": {
             "action": [
-                3
-            ],
-            "activity_status": [
-                3
-            ],
-            "activity_type": [
-                3
-            ],
-            "stakeholders": [
-                3
-            ],
-            "hide_system_activities": [
                 4
             ],
+            "activity_status": [
+                4
+            ],
+            "activity_type": [
+                4
+            ],
+            "stakeholders": [
+                4
+            ],
+            "hide_system_activities": [
+                13
+            ],
             "date_range": [
-                70
+                98
+            ],
+            "reference_id": [
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DateRangeInput": {
             "from": [
-                71
+                63
             ],
             "to": [
-                71
+                63
             ],
             "__typename": [
-                3
+                4
             ]
         },
-        "SafeDate": {},
         "ActivityPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activity": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterActivitiesParams": {
             "action": [
-                19
+                71
             ],
             "activity_status": [
-                19
+                71
             ],
             "pathway_definition_id": [
-                19
+                71
             ],
             "patient_id": [
-                74
+                101
             ],
             "activity_type": [
-                19
+                71
             ],
             "stakeholders": [
-                19
+                71
             ],
             "pathway_status": [
-                19
+                71
+            ],
+            "reference_id": [
+                101
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "TextFilterEquals": {
             "eq": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActivityTypesPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activityTypes": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "WorkerAgentConfigPayload": {
+            "workerAgentConfig": [
+                104
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "WorkerAgentConfigGraphqlType": {
+            "id": [
+                4
+            ],
+            "agent_uuid": [
+                4
+            ],
+            "state": [
+                4
+            ],
+            "name": [
+                4
+            ],
+            "description": [
+                4
+            ],
+            "agent_id": [
+                4
+            ],
+            "organization_slug": [
+                4
+            ],
+            "version": [
+                9
+            ],
+            "instructions": [
+                4
+            ],
+            "jobToBeDone": [
+                4
+            ],
+            "stakeholders": [
+                105
+            ],
+            "input_specs": [
+                106
+            ],
+            "output_specs": [
+                106
+            ],
+            "tools": [
+                107
+            ],
+            "guardrails": [
+                4
+            ],
+            "created": [
+                109
+            ],
+            "updated": [
+                109
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "StakeholderInfoGraphqlType": {
+            "definition_id": [
+                4
+            ],
+            "name": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "FieldSpecGraphqlType": {
+            "name": [
+                4
+            ],
+            "description": [
+                4
+            ],
+            "type": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ToolSpecGraphqlType": {
+            "id": [
+                4
+            ],
+            "name": [
+                4
+            ],
+            "type": [
+                4
+            ],
+            "description": [
+                4
+            ],
+            "parameters": [
+                108
+            ],
+            "hitl_required": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ParameterSpecGraphqlType": {
+            "name": [
+                4
+            ],
+            "description": [
+                4
+            ],
+            "value_source": [
+                4
+            ],
+            "value_type": [
+                4
+            ],
+            "required": [
+                13
+            ],
+            "instructions": [
+                4
+            ],
+            "static_value": [
+                4
+            ],
+            "input_field_name": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "AuditGraphqlType": {
+            "at": [
+                63
+            ],
+            "by": [
+                110
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ByGraphqlType": {
+            "id": [
+                4
+            ],
+            "name": [
+                4
+            ],
+            "__typename": [
+                4
             ]
         },
         "ApiCallPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "api_call": [
-                77
+                112
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiCall": {
             "id": [
-                6
+                5
             ],
             "request": [
-                78
+                113
             ],
             "responses": [
-                81
+                116
             ],
             "created_at": [
-                3
+                4
             ],
             "status": [
-                82
+                117
             ],
             "title": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiCallRequest": {
             "method": [
-                79
+                114
             ],
             "endpoint": [
-                3
+                4
             ],
             "headers": [
-                80
+                115
             ],
             "body": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiCallRequestMethod": {},
         "ApiCallHeader": {
             "key": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiCallResponse": {
             "status": [
-                10
+                9
             ],
             "body": [
-                3
+                4
             ],
             "date": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiCallStatus": {},
         "ApiCallsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "api_calls": [
-                77
+                112
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ActionPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "calculationId": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "CalculationResultsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "result": [
-                86
+                53
             ],
             "__typename": [
-                3
-            ]
-        },
-        "SingleCalculationResult": {
-            "subresult_id": [
-                3
-            ],
-            "value": [
-                3
-            ],
-            "value_type": [
-                14
-            ],
-            "unit": [
-                3
-            ],
-            "status": [
-                3
-            ],
-            "__typename": [
-                3
+                4
             ]
         },
         "ChecklistPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "checklist": [
-                88
+                122
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Checklist": {
             "title": [
-                3
+                4
             ],
             "items": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ClinicalNotePayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "clinical_note": [
-                90
+                124
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "GeneratedClinicalNote": {
             "id": [
-                6
+                5
             ],
             "narratives": [
-                91
+                125
             ],
             "context": [
-                92
+                126
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "GeneratedClinicalNoteNarrative": {
             "id": [
-                6
+                5
             ],
             "key": [
-                3
+                4
             ],
             "title": [
-                3
+                4
             ],
             "body": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "GeneratedClinicalNoteContextField": {
             "key": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ElementsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "elements": [
-                94
+                128
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Element": {
             "id": [
-                6
+                5
             ],
             "parent_id": [
-                6
+                5
             ],
             "name": [
-                3
+                4
             ],
             "type": [
-                95
+                129
             ],
             "start_date": [
-                3
+                4
             ],
             "end_date": [
-                3
+                4
             ],
             "label": [
-                35
+                88
             ],
             "activity_type": [
-                96
+                130
             ],
             "status": [
-                97
+                131
             ],
             "context": [
-                38
+                91
             ],
             "stakeholders": [
-                98
+                132
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ElementType": {},
@@ -2129,2939 +2684,3158 @@ export default {
         "ElementStatus": {},
         "ElementStakeholder": {
             "id": [
-                6
+                5
             ],
             "name": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "EmrReportPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "report": [
-                100
+                134
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "EmrReport": {
             "id": [
-                6
+                5
             ],
             "message_html": [
-                3
+                4
             ],
             "metadata": [
-                101
+                135
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "EmrReportMetadataField": {
             "id": [
-                6
+                5
             ],
             "label": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExtensionActivityRecordPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "record": [
-                103
+                137
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExtensionActivityRecord": {
             "id": [
-                6
+                5
             ],
             "activity_id": [
-                3
+                4
             ],
             "pathway_id": [
-                3
+                4
             ],
             "plugin_key": [
-                3
+                4
             ],
             "plugin_action_key": [
-                3
+                4
             ],
             "fields": [
-                104
+                138
             ],
             "date": [
-                3
+                4
             ],
             "settings": [
-                106
+                140
             ],
             "data_points": [
-                107
+                141
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExtensionActionField": {
             "id": [
-                6
+                5
             ],
             "type": [
-                105
+                139
             ],
             "label": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExtensionActionFieldType": {},
         "PluginActionSettingsProperty": {
             "key": [
-                3
+                4
             ],
             "label": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExtensionDataPoint": {
             "label": [
-                3
+                4
             ],
             "value": [
-                3
+                4
+            ],
+            "valueType": [
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FormPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "form": [
-                42
+                3
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FormsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "forms": [
-                42
+                3
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FormResponsePayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "response": [
-                111
+                145
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FormResponse": {
             "answers": [
-                65
+                34
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "GenerateRetoolEmbedUrlPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "url": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UserInfoParams": {
             "firstName": [
-                3
+                4
             ],
             "lastName": [
-                3
+                4
             ],
             "email": [
-                3
+                4
             ],
             "id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSessionActivitiesPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activities": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSessionPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "session": [
-                116
+                150
             ],
             "branding": [
-                121
+                155
             ],
             "metadata": [
-                122
+                156
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSession": {
             "id": [
-                6
+                5
             ],
             "pathway_id": [
-                3
+                4
             ],
             "success_url": [
-                3
+                4
             ],
             "cancel_url": [
-                3
+                4
             ],
             "status": [
-                117
+                151
             ],
             "stakeholder": [
-                118
+                152
             ],
             "user_context": [
-                120
+                154
+            ],
+            "created_at": [
+                4
+            ],
+            "expires_at": [
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSessionStatus": {},
         "HostedSessionStakeholder": {
             "id": [
-                6
+                5
             ],
             "type": [
-                119
+                153
             ],
             "name": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSessionStakeholderType": {},
         "HostedSessionUserContext": {
             "stytch_member_id": [
-                3
+                4
             ],
             "stytch_member_email": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "BrandingSettings": {
             "accent_color": [
-                3
+                4
             ],
             "logo_url": [
-                3
+                4
             ],
             "hosted_page_title": [
-                3
+                4
             ],
             "hosted_page_auto_progress": [
-                4
+                13
             ],
             "hosted_page_autosave": [
-                4
+                13
             ],
             "custom_theme": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SessionMetadata": {
             "pathway_definition_id": [
-                3
+                4
             ],
             "tenant_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "MessagePayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "message": [
-                124
+                158
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Message": {
             "id": [
-                6
+                5
             ],
             "subject": [
-                3
-            ],
-            "body": [
-                3
-            ],
-            "format": [
-                125
-            ],
-            "attachments": [
-                126
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "MessageFormat": {},
-        "MessageAttachment": {
-            "id": [
-                6
-            ],
-            "name": [
-                3
-            ],
-            "url": [
-                3
-            ],
-            "type": [
-                127
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "MessageAttachmentType": {},
-        "OrchestrationFactsPayload": {
-            "code": [
-                3
-            ],
-            "success": [
                 4
             ],
-            "pagination": [
-                23
+            "body": [
+                4
             ],
-            "sorting": [
-                25
+            "format": [
+                40
             ],
-            "facts": [
-                129
+            "attachments": [
+                41
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "OrchestrationFactsPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "pagination": [
+                75
+            ],
+            "sorting": [
+                77
+            ],
+            "facts": [
+                160
+            ],
+            "__typename": [
+                4
             ]
         },
         "OrchestrationFact": {
             "date": [
-                3
+                4
             ],
             "level": [
-                3
+                4
             ],
             "pathway_id": [
-                3
+                4
             ],
             "content": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwayFactsFilters": {
             "pathway_id": [
-                3
+                4
             ],
             "date": [
-                131
+                162
             ],
             "keyword": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DateFilter": {
             "gte": [
-                3
+                4
             ],
             "lte": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwayDataPointDefinitionsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "data_point_definitions": [
-                12
+                65
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterPathwayDataPointDefinitionsParams": {
             "category": [
-                19
+                71
             ],
             "value_type": [
-                19
+                71
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwayPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pathway": [
-                135
+                166
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Pathway": {
             "pathway_definition_id": [
-                3
+                4
             ],
             "release_id": [
-                3
+                4
             ],
             "id": [
-                6
+                5
             ],
             "patient_id": [
-                3
+                4
             ],
             "version": [
-                10
-            ],
-            "title": [
-                3
-            ],
-            "start_date": [
-                71
-            ],
-            "stop_date": [
-                71
-            ],
-            "complete_date": [
-                71
-            ],
-            "activities": [
-                26
-            ],
-            "latestActivities": [
-                26
-            ],
-            "status": [
                 9
             ],
+            "title": [
+                4
+            ],
+            "start_date": [
+                63
+            ],
+            "stop_date": [
+                63
+            ],
+            "complete_date": [
+                63
+            ],
+            "activities": [
+                78
+            ],
+            "latestActivities": [
+                78
+            ],
+            "status": [
+                61
+            ],
             "status_explanation": [
-                3
+                4
             ],
             "tracks": [
-                136
+                167
+            ],
+            "created": [
+                62
             ],
             "patient": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Track": {
             "id": [
-                6
+                5
             ],
             "title": [
-                3
-            ],
-            "release_id": [
-                3
-            ],
-            "can_trigger_manually": [
                 4
             ],
+            "release_id": [
+                4
+            ],
+            "can_trigger_manually": [
+                13
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "User": {
             "id": [
-                6
+                5
             ],
             "tenant_id": [
-                3
+                4
             ],
             "profile": [
-                138
+                169
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UserProfile": {
             "email": [
-                3
+                4
             ],
             "first_name": [
-                3
+                4
             ],
             "last_name": [
-                3
+                4
             ],
             "name": [
-                3
+                4
             ],
             "birth_date": [
-                3
+                4
             ],
             "preferred_language": [
-                3
+                4
             ],
             "sex": [
-                139
+                170
             ],
             "national_registry_number": [
-                3
+                4
             ],
             "patient_code": [
-                3
+                4
             ],
             "phone": [
-                3
+                4
             ],
             "mobile_phone": [
-                3
+                4
             ],
             "address": [
-                140
+                171
             ],
             "identifier": [
-                141
+                172
             ],
             "patient_timezone": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Sex": {},
         "Address": {
             "street": [
-                3
+                4
             ],
             "city": [
-                3
+                4
             ],
             "zip": [
-                3
+                4
             ],
             "state": [
-                3
+                4
             ],
             "country": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Identifier": {
             "system": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwaysPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "pathways": [
-                143
+                174
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PathwaySummary": {
             "pathway_definition_id": [
-                3
+                4
             ],
             "id": [
-                6
+                5
             ],
             "title": [
-                3
+                4
             ],
             "status": [
-                9
+                61
             ],
             "status_explanation": [
-                3
+                4
             ],
             "patient_id": [
-                3
+                4
             ],
             "start_date": [
-                71
+                63
             ],
             "stop_date": [
-                71
+                63
             ],
             "complete_date": [
-                71
+                63
             ],
             "version": [
-                10
+                9
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterPathways": {
             "pathway_definition_id": [
-                145
+                176
             ],
             "status": [
-                19
+                71
             ],
             "patient_id": [
-                19
+                71
             ],
             "version": [
-                146
+                177
             ],
             "release_id": [
-                19
+                71
             ],
             "start_date": [
-                131
+                162
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "IdFilter": {
             "eq": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "NumberArrayFilter": {
             "in": [
-                10
+                9
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientDemographicsQueryConfigurationPayload": {
             "is_enabled": [
-                4
+                13
             ],
             "input_box_text": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "patient": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "patients": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FilterPatients": {
             "profile_id": [
-                19
+                71
             ],
             "patient_code": [
-                74
+                101
             ],
             "national_registry_number": [
-                74
+                101
             ],
             "name": [
-                151
+                182
             ],
             "search": [
-                152
+                183
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "TextFilter": {
             "eq": [
-                3
+                4
             ],
             "contains": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "TextFilterContains": {
             "contains": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PublishedPathwayDefinitionsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "publishedPathwayDefinitions": [
-                154
+                185
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PublishedPathwayDefinition": {
             "id": [
-                6
+                5
             ],
             "title": [
-                3
+                4
             ],
             "version": [
-                10
+                9
             ],
             "release_id": [
-                3
+                4
             ],
             "release_date": [
-                3
+                4
             ],
             "created": [
-                155
+                62
             ],
             "last_updated": [
-                155
+                62
             ],
             "latest": [
-                156
+                186
             ],
             "all": [
-                156
+                186
             ],
             "total_activities": [
-                10
+                9
             ],
             "active_activities": [
-                10
+                9
             ],
             "failed_activities": [
-                10
+                9
             ],
             "cancelled_activities": [
-                10
+                9
             ],
             "total_stakeholders": [
-                10
+                9
             ],
             "stakeholders_with_pending_activities_list": [
-                3
+                4
             ],
             "total_patients": [
-                10
+                9
             ],
             "patients_with_pending_activities": [
-                10
+                9
             ],
             "dataPointDefinitions": [
-                12
+                65
             ],
             "data_point_definitions": [
-                12
+                65
             ],
             "track_definitions": [
-                136
+                167
             ],
             "__typename": [
-                3
-            ]
-        },
-        "AuditTrail": {
-            "user_id": [
-                3
-            ],
-            "user_email": [
-                3
-            ],
-            "date": [
-                71
-            ],
-            "__typename": [
-                3
+                4
             ]
         },
         "PathwayDefinitionDetails": {
             "total_careflows": [
-                10
+                9
             ],
             "active_careflows": [
-                10
+                9
             ],
             "stopped_careflows": [
-                10
+                9
             ],
             "completed_careflows": [
-                10
+                9
             ],
             "total_patients": [
-                10
+                9
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "CareflowVersionsPayload": {
             "careflowVersions": [
-                158
+                188
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "CareflowVersions": {
             "careflow_definition_id": [
-                3
+                4
             ],
             "versions": [
-                159
+                189
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "CareflowVersion": {
             "version": [
-                10
+                9
             ],
             "release_id": [
-                3
-            ],
-            "release_date": [
-                3
-            ],
-            "live": [
                 4
             ],
+            "release_date": [
+                4
+            ],
+            "live": [
+                13
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "ScheduledStepsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "steps": [
-                94
+                128
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SearchPatientsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "patients": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StakeholdersPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "stakeholders": [
-                163
+                193
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Stakeholder": {
             "id": [
-                6
+                5
             ],
             "definition_id": [
-                3
+                4
             ],
             "label": [
-                164
+                194
             ],
             "clinical_app_role": [
-                165
+                195
             ],
             "release_id": [
-                3
+                4
             ],
             "version": [
-                10
+                9
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StakeholderLabel": {
             "en": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StakeholderClinicalAppRole": {},
         "TracksPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "tracks": [
-                136
+                167
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "TenantPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "tenant": [
-                168
+                198
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "Tenant": {
             "name": [
-                3
-            ],
-            "logo_path": [
-                3
-            ],
-            "accent_color": [
-                3
-            ],
-            "hosted_page_title": [
-                3
-            ],
-            "is_default": [
                 4
             ],
+            "logo_path": [
+                4
+            ],
+            "accent_color": [
+                4
+            ],
+            "hosted_page_title": [
+                4
+            ],
+            "is_default": [
+                13
+            ],
             "identifier_systems": [
-                169
+                199
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "IdentifierSystem": {
             "name": [
-                3
+                4
             ],
             "display_name": [
-                3
+                4
             ],
             "system": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCallPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "webhook_call": [
-                171
+                201
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCall": {
             "id": [
-                6
+                5
             ],
             "request": [
-                172
+                202
             ],
             "responses": [
-                174
+                204
             ],
             "status": [
-                3
+                4
             ],
             "webhook_id": [
-                3
+                4
             ],
             "webhook_name": [
-                3
+                4
             ],
             "event_type": [
-                3
+                4
             ],
             "created_at": [
-                3
+                4
             ],
             "pathway": [
-                175
+                205
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCallRequest": {
             "endpoint": [
-                3
+                4
             ],
             "headers": [
-                173
+                203
             ],
             "body": [
-                3
+                4
             ],
             "method": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCallHeader": {
             "key": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCallResponse": {
             "status": [
-                10
+                9
             ],
             "body": [
-                3
+                4
             ],
             "date": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ApiPathwayContext": {
             "id": [
-                3
+                4
             ],
             "start_date": [
-                3
+                4
             ],
             "pathway_definition_id": [
-                3
+                4
             ],
             "patient_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "WebhookCallsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "webhook_calls": [
-                171
+                201
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "OrchestrationFactsPromptPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "response": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedPagesLinkPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "hosted_pages_link": [
-                179
+                209
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedPagesLink": {
             "id": [
-                6
+                5
             ],
             "pathway_id": [
-                3
+                4
             ],
             "stakeholder_id": [
-                3
+                4
             ],
             "url": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DataPointPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pagination": [
-                23
+                75
             ],
             "sorting": [
-                25
+                77
             ],
             "dataPoints": [
-                181
+                211
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DataPoint": {
             "id": [
-                6
+                5
             ],
             "key": [
-                3
+                4
             ],
             "data_set_id": [
-                3
+                4
             ],
             "serialized_value": [
-                3
+                4
             ],
             "data_point_definition_id": [
-                3
+                4
             ],
             "date": [
-                3
+                4
             ],
             "valueType": [
-                14
+                7
             ],
             "activity_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DecisionOutputsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "outputs": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "FileUploadGCSPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "upload_url": [
-                3
+                4
             ],
             "file_url": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "OrchestratedAgentPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "agent": [
+                215
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "OrchestratedAgent": {
+            "tenant_id": [
+                4
+            ],
+            "careflow_id": [
+                4
+            ],
+            "agent_definition_id": [
+                4
+            ],
+            "agent_version": [
+                9
+            ],
+            "agent_id": [
+                4
+            ],
+            "agent_config_id": [
+                4
+            ],
+            "agent_thread_id": [
+                4
+            ],
+            "status": [
+                4
+            ],
+            "execution": [
+                45
+            ],
+            "context": [
+                45
+            ],
+            "hosted_pages_links": [
+                216
+            ],
+            "created_at": [
+                4
+            ],
+            "updated_at": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "StakeholderHPLink": {
+            "stakeholder": [
+                217
+            ],
+            "url": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "AgentStakeholder": {
+            "definition_id": [
+                4
+            ],
+            "name": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "FormActivityDataPointsPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "data_points": [
+                219
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "FormActivityDataPoint": {
+            "key": [
+                4
+            ],
+            "value": [
+                4
+            ],
+            "valueType": [
+                7
+            ],
+            "__typename": [
+                4
             ]
         },
         "Mutation": {
             "addActivityMetadata": [
-                185,
+                221,
                 {
                     "input": [
-                        186,
+                        222,
                         "AddActivityMetadataInput!"
                     ]
                 }
             ],
             "addIdentifierToPatient": [
-                187,
+                223,
                 {
                     "input": [
-                        188,
+                        224,
                         "AddIdentifierToPatientInput!"
                     ]
                 }
             ],
             "addTrack": [
-                190,
+                226,
                 {
                     "input": [
-                        191,
+                        227,
                         "AddTrackInput!"
                     ]
                 }
             ],
-            "unscheduleTracks": [
-                192,
+            "expireActivity": [
+                228,
                 {
                     "input": [
-                        193,
+                        229,
+                        "ExpireActivityInput!"
+                    ]
+                }
+            ],
+            "unscheduleTracks": [
+                230,
+                {
+                    "input": [
+                        231,
                         "CancelScheduledTracksInput!"
                     ]
                 }
             ],
             "completeExtensionActivity": [
-                194,
+                232,
                 {
                     "input": [
-                        195,
+                        233,
                         "CompleteExtensionActivityInput!"
                     ]
                 }
             ],
             "createPatient": [
-                197,
+                235,
                 {
                     "input": [
-                        198
+                        236
                     ]
                 }
             ],
             "deletePathway": [
-                200,
+                228,
                 {
                     "input": [
-                        201,
+                        238,
                         "DeletePathwayInput!"
                     ]
                 }
             ],
             "deletePatient": [
-                200,
+                228,
                 {
                     "input": [
-                        202,
+                        239,
                         "DeletePatientInput!"
                     ]
                 }
             ],
             "evaluateFormRules": [
-                203,
+                240,
                 {
                     "input": [
-                        205,
+                        242,
                         "EvaluateFormRulesInput!"
                     ]
                 }
             ],
             "expireTimer": [
-                200,
+                228,
                 {
                     "input": [
-                        207,
+                        244,
                         "ExpireTimerInput!"
                     ]
                 }
             ],
             "markMessageAsRead": [
-                208,
+                245,
                 {
                     "input": [
-                        209,
+                        246,
                         "MarkMessageAsReadInput!"
                     ]
                 }
             ],
             "requestPatientDemographics": [
-                210,
+                247,
                 {
                     "input": [
-                        211,
+                        248,
                         "PatientDemographicsInput!"
                     ]
                 }
             ],
             "retryActivity": [
-                200,
+                228,
                 {
                     "input": [
-                        212,
+                        249,
                         "RetryActivityInput!"
                     ]
                 }
             ],
             "retryAllApiCalls": [
-                200,
+                228,
                 {
                     "input": [
-                        213,
+                        250,
                         "RetryAllApiCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedApiCalls": [
-                200,
+                228,
                 {
                     "input": [
-                        214,
+                        251,
                         "RetryAllFailedApiCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedWebhookCalls": [
-                200,
+                228,
                 {
                     "input": [
-                        215,
+                        252,
                         "RetryAllFailedWebhookCallsInput!"
                     ]
                 }
             ],
             "retryAllFailedWebhookCallsForPathwayDefinition": [
-                200,
+                228,
                 {
                     "input": [
-                        216,
+                        253,
                         "RetryAllFailedWebhookCallsForPathwayDefinitionInput!"
                     ]
                 }
             ],
             "retryAllWebhookCalls": [
-                200,
+                228,
                 {
                     "input": [
-                        217,
+                        254,
                         "RetryAllWebhookCallsInput!"
                     ]
                 }
             ],
             "retryApiCall": [
-                218,
+                255,
                 {
                     "input": [
-                        219,
+                        256,
                         "RetryApiCallInput!"
                     ]
                 }
             ],
             "retryPushToEmr": [
-                200,
+                228,
                 {
                     "input": [
-                        220,
+                        257,
                         "RetryPushToEmrInput!"
                     ]
                 }
             ],
             "retryWebhookCall": [
-                221,
+                258,
                 {
                     "input": [
-                        222,
+                        259,
                         "RetryWebhookCallInput!"
                     ]
                 }
             ],
             "saveBaselineInfo": [
-                200,
+                228,
                 {
                     "input": [
-                        223,
+                        260,
                         "SaveBaselineInfoInput!"
                     ]
                 }
             ],
             "scheduleTrack": [
-                225,
+                262,
                 {
                     "input": [
-                        226,
+                        263,
                         "ScheduleTrackInput!"
                     ]
                 }
             ],
             "startHostedActivitySession": [
-                227,
+                264,
                 {
                     "input": [
-                        228,
+                        265,
                         "StartHostedActivitySessionInput!"
                     ]
                 }
             ],
             "startHostedPathwaySessionFromLink": [
-                230,
+                267,
                 {
                     "input": [
-                        231,
+                        268,
                         "StartHostedPathwaySessionFromLinkInput!"
                     ]
                 }
             ],
             "startHostedActivitySessionViaHostedPagesLink": [
-                227,
+                264,
                 {
                     "input": [
-                        232,
+                        269,
                         "StartHostedActivitySessionViaHostedPagesLinkInput!"
                     ]
                 }
             ],
             "startHostedPathwaySession": [
-                233,
+                270,
                 {
                     "input": [
-                        234,
+                        271,
                         "StartHostedPathwaySessionInput!"
                     ]
                 }
             ],
             "startPathway": [
-                236,
+                273,
                 {
                     "input": [
-                        237,
+                        274,
                         "StartPathwayInput!"
                     ]
                 }
             ],
             "startPathwayWithPatientIdentifier": [
-                238,
+                275,
                 {
                     "input": [
-                        239,
+                        276,
                         "StartPathwayWithPatientIdentifierInput!"
                     ]
                 }
             ],
             "stopPathway": [
-                200,
+                228,
                 {
                     "input": [
-                        240,
+                        277,
                         "StopPathwayInput!"
                     ]
                 }
             ],
             "stopTrack": [
-                241,
+                278,
                 {
                     "input": [
-                        242,
+                        279,
                         "StopTrackInput!"
                     ]
                 }
             ],
             "submitChecklist": [
-                243,
+                280,
                 {
                     "input": [
-                        244,
+                        281,
                         "SubmitChecklistInput!"
                     ]
                 }
             ],
             "submitFormResponse": [
-                245,
+                282,
                 {
                     "input": [
-                        246,
+                        283,
                         "SubmitFormResponseInput!"
                     ]
                 }
             ],
             "updateBaselineInfo": [
-                200,
+                228,
                 {
                     "input": [
-                        248,
+                        285,
                         "UpdateBaselineInfoInput!"
                     ]
                 }
             ],
             "updateEmrReportStatus": [
-                249,
+                286,
                 {
                     "input": [
-                        251,
+                        288,
                         "UpdateEmrReportStatusInput!"
                     ]
                 }
             ],
             "updatePatient": [
-                252,
+                289,
                 {
                     "input": [
-                        253,
+                        290,
                         "UpdatePatientInput!"
                     ]
                 }
             ],
             "updatePatientDemographicsQuery": [
-                255,
+                292,
                 {
                     "input": [
-                        256,
+                        293,
                         "UpdatePatientDemographicsQueryInput!"
                     ]
                 }
             ],
             "updatePatientLanguage": [
-                257,
+                294,
                 {
                     "input": [
-                        258,
+                        295,
                         "UpdatePatientLanguageInput!"
                     ]
                 }
             ],
-            "verify_identity": [
-                259,
+            "upsertPatient": [
+                296,
                 {
                     "input": [
-                        260,
+                        297,
+                        "UpsertPatientInput!"
+                    ]
+                }
+            ],
+            "verify_identity": [
+                299,
+                {
+                    "input": [
+                        300,
                         "VerifyIdentityInput!"
                     ]
                 }
             ],
+            "completeSession": [
+                301,
+                {
+                    "input": [
+                        302,
+                        "CompleteSessionInput!"
+                    ]
+                }
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddActivityMetadataPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activity": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddActivityMetadataInput": {
             "activity_id": [
-                3
+                4
             ],
             "note": [
-                3
+                4
             ],
             "metadata": [
-                40
+                45
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddIdentifierToPatientPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "patient": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddIdentifierToPatientInput": {
             "patient_id": [
-                3
+                4
             ],
             "identifier": [
-                189
+                225
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "IdentifierInput": {
             "system": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddTrackPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "AddTrackInput": {
             "pathway_id": [
-                3
+                4
             ],
             "track_id": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "CancelScheduledTracksPayload": {
-            "code": [
-                3
-            ],
-            "success": [
                 4
             ],
-            "unscheduled_ids": [
-                3
-            ],
             "__typename": [
-                3
-            ]
-        },
-        "CancelScheduledTracksInput": {
-            "ids": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "CompleteExtensionActivityPayload": {
-            "code": [
-                3
-            ],
-            "success": [
                 4
-            ],
-            "activity": [
-                26
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "CompleteExtensionActivityInput": {
-            "activity_id": [
-                3
-            ],
-            "data_points": [
-                196
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "ExtensionDataPointInput": {
-            "key": [
-                3
-            ],
-            "value": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "CreatePatientPayload": {
-            "code": [
-                3
-            ],
-            "success": [
-                4
-            ],
-            "patient": [
-                137
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "CreatePatientInput": {
-            "email": [
-                3
-            ],
-            "first_name": [
-                3
-            ],
-            "last_name": [
-                3
-            ],
-            "birth_date": [
-                3
-            ],
-            "preferred_language": [
-                3
-            ],
-            "sex": [
-                139
-            ],
-            "national_registry_number": [
-                3
-            ],
-            "patient_code": [
-                3
-            ],
-            "phone": [
-                3
-            ],
-            "mobile_phone": [
-                3
-            ],
-            "address": [
-                199
-            ],
-            "identifier": [
-                189
-            ],
-            "patient_timezone": [
-                3
-            ],
-            "__typename": [
-                3
-            ]
-        },
-        "AddressInput": {
-            "street": [
-                3
-            ],
-            "city": [
-                3
-            ],
-            "zip": [
-                3
-            ],
-            "state": [
-                3
-            ],
-            "country": [
-                3
-            ],
-            "__typename": [
-                3
             ]
         },
         "EmptyPayload": {
             "code": [
-                3
+                4
             ],
             "success": [
+                13
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ExpireActivityInput": {
+            "activity_id": [
+                4
+            ],
+            "user_id": [
+                4
+            ],
+            "user_email": [
+                4
+            ],
+            "reason": [
                 4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "CancelScheduledTracksPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "unscheduled_ids": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CancelScheduledTracksInput": {
+            "ids": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CompleteExtensionActivityPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "activity": [
+                78
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CompleteExtensionActivityInput": {
+            "activity_id": [
+                4
+            ],
+            "data_points": [
+                234
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "ExtensionDataPointInput": {
+            "key": [
+                4
+            ],
+            "value": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CreatePatientPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "patient": [
+                168
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CreatePatientInput": {
+            "email": [
+                4
+            ],
+            "first_name": [
+                4
+            ],
+            "last_name": [
+                4
+            ],
+            "birth_date": [
+                4
+            ],
+            "preferred_language": [
+                4
+            ],
+            "sex": [
+                170
+            ],
+            "national_registry_number": [
+                4
+            ],
+            "patient_code": [
+                4
+            ],
+            "phone": [
+                4
+            ],
+            "mobile_phone": [
+                4
+            ],
+            "address": [
+                237
+            ],
+            "identifier": [
+                225
+            ],
+            "patient_timezone": [
+                4
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "AddressInput": {
+            "street": [
+                4
+            ],
+            "city": [
+                4
+            ],
+            "zip": [
+                4
+            ],
+            "state": [
+                4
+            ],
+            "country": [
+                4
+            ],
+            "__typename": [
+                4
             ]
         },
         "DeletePathwayInput": {
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DeletePatientInput": {
             "patient_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "EvaluateFormRulesPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "results": [
-                204
+                241
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "QuestionRuleResult": {
             "question_id": [
-                3
-            ],
-            "rule_id": [
-                3
-            ],
-            "satisfied": [
                 4
             ],
+            "rule_id": [
+                4
+            ],
+            "satisfied": [
+                13
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "EvaluateFormRulesInput": {
             "form_id": [
-                3
+                4
             ],
             "answers": [
-                206
+                243
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "AnswerInput": {
             "question_id": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ExpireTimerInput": {
             "activity_id": [
-                3
+                4
             ],
             "user_name": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "MarkMessageAsReadPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activity": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "MarkMessageAsReadInput": {
             "activity_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientDemographicsPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "query_id": [
-                3
+                4
             ],
             "status": [
-                3
+                4
             ],
             "total": [
-                10
+                9
             ],
             "entry": [
-                138
+                169
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientDemographicsInput": {
             "patient_identifier": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryActivityInput": {
             "activity_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryAllApiCallsInput": {
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryAllFailedApiCallsInput": {
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryAllFailedWebhookCallsInput": {
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryAllFailedWebhookCallsForPathwayDefinitionInput": {
             "pathway_definition_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryAllWebhookCallsInput": {
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryApiCallPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "api_call": [
-                77
+                112
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryApiCallInput": {
             "api_call_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryPushToEmrInput": {
             "activity_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryWebhookCallPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "webhook_call": [
-                171
+                201
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "RetryWebhookCallInput": {
             "webhook_call_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SaveBaselineInfoInput": {
             "pathway_id": [
-                3
+                4
             ],
             "baseline_info": [
-                224
+                261
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "BaselineInfoInput": {
             "data_point_definition_id": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ScheduleTrackPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "ScheduleTrackInput": {
             "pathway_id": [
-                3
-            ],
-            "track_id": [
-                3
-            ],
-            "scheduled_date": [
-                3
-            ],
-            "cancel_any_scheduled": [
                 4
             ],
+            "track_id": [
+                4
+            ],
+            "scheduled_date": [
+                4
+            ],
+            "cancel_any_scheduled": [
+                13
+            ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedActivitySessionPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "session_id": [
-                3
+                4
             ],
             "session_url": [
-                3
+                4
             ],
             "language": [
-                3
+                4
             ],
             "user_context": [
-                120
+                154
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedActivitySessionInput": {
             "pathway_id": [
-                3
+                4
             ],
             "success_url": [
-                3
+                4
             ],
             "cancel_url": [
-                3
+                4
             ],
             "stakeholder_id": [
-                3
+                4
             ],
             "language": [
-                3
+                4
             ],
             "user_context": [
-                229
+                266
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "HostedSessionUserContextInput": {
             "stytch_member_id": [
-                3
+                4
             ],
             "stytch_member_email": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedPathwaySessionFromLinkPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "session_url": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedPathwaySessionFromLinkInput": {
             "id": [
-                3
+                4
             ],
             "patient_identifier": [
-                189
+                225
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedActivitySessionViaHostedPagesLinkInput": {
             "hosted_pages_link_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedPathwaySessionPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "session_id": [
-                3
+                4
             ],
             "session_url": [
-                3
+                4
             ],
             "pathway_id": [
-                3
+                4
             ],
             "stakeholder": [
-                118
+                152
             ],
             "user_context": [
-                120
+                154
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartHostedPathwaySessionInput": {
             "pathway_definition_id": [
-                3
+                4
             ],
             "success_url": [
-                3
+                4
             ],
             "cancel_url": [
-                3
+                4
             ],
             "patient_id": [
-                3
+                4
             ],
             "data_points": [
-                235
+                272
             ],
             "language": [
-                3
+                4
             ],
             "patient_identifier": [
-                189
+                225
             ],
             "ttl": [
-                10
+                9
             ],
             "stakeholder_definition_id": [
-                3
+                4
             ],
             "user_context": [
-                229
+                266
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "DataPointInput": {
             "data_point_definition_id": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartPathwayPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pathway_id": [
-                3
+                4
             ],
             "stakeholders": [
-                163
+                193
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartPathwayInput": {
             "patient_id": [
-                3
+                4
             ],
             "pathway_definition_id": [
-                3
+                4
             ],
             "data_points": [
-                235
+                272
             ],
             "release_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartPathwayWithPatientIdentifierPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "pathway_id": [
-                3
+                4
             ],
             "patient_id": [
-                3
+                4
             ],
             "stakeholders": [
-                163
+                193
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StartPathwayWithPatientIdentifierInput": {
             "patient_identifier": [
-                189
+                225
             ],
             "pathway_definition_id": [
-                3
+                4
             ],
             "data_points": [
-                235
+                272
             ],
             "release_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StopPathwayInput": {
             "pathway_id": [
-                3
+                4
             ],
             "reason": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StopTrackPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "track": [
-                94
+                128
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "StopTrackInput": {
             "pathway_id": [
-                3
+                4
             ],
             "track_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SubmitChecklistPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activity": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SubmitChecklistInput": {
             "activity_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SubmitFormResponsePayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "activity": [
-                26
+                78
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "SubmitFormResponseInput": {
             "activity_id": [
-                3
+                4
             ],
             "response": [
-                247
+                284
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "QuestionResponseInput": {
             "question_id": [
-                3
+                4
             ],
             "value": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdateBaselineInfoInput": {
             "pathway_id": [
-                3
+                4
             ],
             "baseline_info": [
-                224
+                261
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdateEmrReportStatusPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "request": [
-                250
+                287
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "EMRRequest": {
             "id": [
-                3
+                4
             ],
             "status": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdateEmrReportStatusInput": {
             "request_id": [
-                3
+                4
             ],
             "status": [
-                3
+                4
             ],
             "reason": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "patient": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientInput": {
             "patient_id": [
-                3
+                4
             ],
             "profile": [
-                254
+                291
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "PatientProfileInput": {
             "first_name": [
-                3
+                4
             ],
             "last_name": [
-                3
+                4
             ],
             "birth_date": [
-                3
+                4
             ],
             "preferred_language": [
-                3
+                4
             ],
             "sex": [
-                139
+                170
             ],
             "national_registry_number": [
-                3
+                4
             ],
             "patient_code": [
-                3
+                4
             ],
             "email": [
-                3
+                4
             ],
             "phone": [
-                3
+                4
             ],
             "mobile_phone": [
-                3
+                4
             ],
             "address": [
-                199
+                237
             ],
             "identifier": [
-                189
+                225
             ],
             "patient_timezone": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientDemographicsQueryPayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "created_patient_entry_index": [
-                10
+                9
             ],
             "created_patient_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientDemographicsQueryInput": {
             "created_patient_id": [
-                3
+                4
             ],
             "created_patient_entry_index": [
-                10
+                9
             ],
             "query_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientLanguagePayload": {
             "code": [
-                3
-            ],
-            "success": [
                 4
             ],
+            "success": [
+                13
+            ],
             "user": [
-                137
+                168
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "UpdatePatientLanguageInput": {
             "preferred_language": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "UpsertPatientPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "patient": [
+                168
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "UpsertPatientInput": {
+            "patient_identifier": [
+                225
+            ],
+            "profile": [
+                298
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "UpsertPatientProfileInput": {
+            "email": [
+                4
+            ],
+            "first_name": [
+                4
+            ],
+            "last_name": [
+                4
+            ],
+            "birth_date": [
+                4
+            ],
+            "preferred_language": [
+                4
+            ],
+            "sex": [
+                170
+            ],
+            "national_registry_number": [
+                4
+            ],
+            "patient_code": [
+                4
+            ],
+            "phone": [
+                4
+            ],
+            "mobile_phone": [
+                4
+            ],
+            "address": [
+                237
+            ],
+            "patient_timezone": [
+                4
+            ],
+            "__typename": [
+                4
             ]
         },
         "IdentityVerificationPayload": {
             "code": [
-                3
+                4
             ],
             "success": [
-                4
+                13
             ],
             "is_verified": [
-                4
+                13
             ],
             "__typename": [
-                3
+                4
             ]
         },
         "VerifyIdentityInput": {
             "dob": [
-                3
+                4
             ],
             "pathway_id": [
-                3
+                4
             ],
             "__typename": [
-                3
+                4
+            ]
+        },
+        "CompleteSessionPayload": {
+            "code": [
+                4
+            ],
+            "success": [
+                13
+            ],
+            "session": [
+                150
+            ],
+            "__typename": [
+                4
+            ]
+        },
+        "CompleteSessionInput": {
+            "session_id": [
+                4
+            ],
+            "__typename": [
+                4
             ]
         },
         "Subscription": {
             "activityCreated": [
-                26,
+                78,
                 {
                     "pathway_id": [
-                        3
+                        4
                     ],
                     "only_patient_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "activityUpdated": [
-                26,
+                78,
                 {
                     "pathway_id": [
-                        3
+                        4
                     ],
                     "only_patient_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "activityCompleted": [
-                26,
+                78,
                 {
                     "pathway_id": [
-                        3
+                        4
                     ],
                     "only_patient_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "activityExpired": [
-                26,
+                78,
                 {
                     "pathway_id": [
-                        3
+                        4
                     ],
                     "only_patient_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "apiCallCreated": [
-                77,
+                112,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "apiCallUpdated": [
-                77,
+                112,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "elementCreated": [
-                94,
+                128,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "element_type": [
-                        95
+                        129
                     ]
                 }
             ],
             "elementCompleted": [
-                94,
+                128,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "element_type": [
-                        95
+                        129
                     ]
                 }
             ],
             "elementUpdated": [
-                94,
+                128,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ],
                     "element_type": [
-                        95
+                        129
                     ]
                 }
             ],
             "sessionActivityCreated": [
-                26,
+                78,
                 {
                     "only_stakeholder_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "sessionActivityUpdated": [
-                26,
+                78,
                 {
                     "only_stakeholder_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "sessionActivityCompleted": [
-                26,
+                78,
                 {
                     "only_stakeholder_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "sessionActivityExpired": [
-                26,
+                78,
                 {
                     "only_stakeholder_activities": [
-                        4
+                        13
                     ]
                 }
             ],
             "sessionExpired": [
-                116
+                150
             ],
             "sessionCompleted": [
-                116
+                150
             ],
             "pathwayUpdated": [
-                135,
+                166,
                 {
                     "id": [
-                        6,
+                        5,
                         "ID!"
                     ]
                 }
             ],
             "webhookCallCreated": [
-                171,
+                201,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "webhookCallUpdated": [
-                171,
+                201,
                 {
                     "pathway_id": [
-                        3,
+                        4,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                3
+                4
             ]
         }
     }

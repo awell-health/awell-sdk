@@ -5,314 +5,23 @@
 
 export type Scalars = {
     String: string,
-    Boolean: boolean,
     ID: string,
     Float: number,
-    Int: number,
+    Boolean: boolean,
     JSON: any,
     SafeDate: any,
+    Int: number,
 }
 
-export interface Query {
-    scheduledTracksForPathway: ScheduledTracksPayload
-    patientPathways: PatientPathwaysPayload
-    baselineInfo: BaselineInfoPayload
-    myPendingActivities: ActivitiesPayload
-    myActivities: ActivitiesPayload
-    pathwayActivities: ActivitiesPayload
-    careflowActivities: ActivitiesPayload
-    activity: ActivityPayload
-    activities: ActivitiesPayload
-    pathwayStepActivities: ActivitiesPayload
-    careflowActivityTypes: ActivityTypesPayload
-    apiCall: ApiCallPayload
-    apiCalls: ApiCallsPayload
-    calculationAction: ActionPayload
-    calculationResults: CalculationResultsPayload
-    checklist: ChecklistPayload
-    clinicalNote: ClinicalNotePayload
-    pathwayElements: ElementsPayload
-    emrReport: EmrReportPayload
-    extensionActivityRecord: ExtensionActivityRecordPayload
-    form: FormPayload
-    forms: FormsPayload
-    formResponse: FormResponsePayload
-    generateRetoolEmbedUrl: GenerateRetoolEmbedUrlPayload
-    hostedSessionActivities: HostedSessionActivitiesPayload
-    hostedSession: HostedSessionPayload
-    message: MessagePayload
-    pathwayFacts: OrchestrationFactsPayload
-    pathwayDataPointDefinitions: PathwayDataPointDefinitionsPayload
-    pathway: PathwayPayload
-    /** @deprecated Use the `pathways` query instead. */
-    myPathways: PathwaysPayload
-    pathways: PathwaysPayload
-    patientDemographicsQueryConfiguration: PatientDemographicsQueryConfigurationPayload
-    patient: PatientPayload
-    patients: PatientsPayload
-    patientByIdentifier: PatientPayload
-    publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
-    getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
-    getPublishedCareflowVersions: CareflowVersionsPayload
-    scheduledSteps: ScheduledStepsPayload
-    searchPatientsByPatientCode: SearchPatientsPayload
-    searchPatientsByNationalRegistryNumber: SearchPatientsPayload
-    filterStakeholders: StakeholdersPayload
-    stakeholdersByPathwayDefinitionIds: StakeholdersPayload
-    stakeholdersByReleaseIds: StakeholdersPayload
-    stakeholdersByDefinitionIds: StakeholdersPayload
-    adHocTracksByPathway: TracksPayload
-    adHocTracksByRelease: TracksPayload
-    tenant: TenantPayload
-    webhookCall: WebhookCallPayload
-    webhookCalls: WebhookCallsPayload
-    webhookCallsForTenant: WebhookCallsPayload
-    webhookCallsForPathwayDefinition: WebhookCallsPayload
-    getOrchestrationFactsFromPrompt: OrchestrationFactsPromptPayload
-    hostedPagesLink: HostedPagesLinkPayload
-    pathwayDataPoints: DataPointPayload
-    decisionOutputs: DecisionOutputsPayload
-    /** Generate a signed URL for file upload to GCS */
-    getSignedUrl: FileUploadGCSPayload
-    __typename: 'Query'
-}
-
-export interface ScheduledTracksPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    scheduled_tracks: ScheduledTrack[]
-    __typename: 'ScheduledTracksPayload'
-}
-
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | TenantPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EmptyPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | IdentityVerificationPayload) & { __isUnion?: true }
-
-export interface ScheduledTrack {
-    id: Scalars['ID']
-    pathway_id: Scalars['String']
-    track_definition_id: Scalars['String']
-    release_id: Scalars['String']
-    tenant_id: Scalars['String']
-    created_by_user_id: Scalars['String']
-    created_date: Scalars['String']
-    modified_date: (Scalars['String'] | null)
-    scheduled_date: Scalars['String']
-    status: Scalars['String']
-    title: Scalars['String']
-    __typename: 'ScheduledTrack'
-}
-
-export interface PatientPathwaysPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    patientPathways: PatientPathway[]
-    __typename: 'PatientPathwaysPayload'
-}
-
-export interface PatientPathway {
-    id: Scalars['ID']
-    title: Scalars['String']
-    status: PathwayStatus
-    status_explanation: (Scalars['String'] | null)
-    pathway_definition_id: Scalars['String']
-    complete_date: (Scalars['String'] | null)
-    stop_date: (Scalars['String'] | null)
-    start_date: Scalars['String']
-    release_id: Scalars['String']
-    version: (Scalars['Float'] | null)
-    total_activities: (Scalars['Float'] | null)
-    active_activities: (Scalars['Float'] | null)
-    failed_activities: (Scalars['Float'] | null)
-    latest_activity_date: (Scalars['String'] | null)
-    latest_activity_title: (Scalars['String'] | null)
-    latest_activity_type: (Scalars['String'] | null)
-    baseline_info: (BaselineDataPoint[] | null)
-    __typename: 'PatientPathway'
-}
-
-export type PathwayStatus = 'starting' | 'active' | 'stopped' | 'completed' | 'missing_baseline_info'
-
-export interface BaselineDataPoint {
-    definition: DataPointDefinition
-    value: (Scalars['String'] | null)
-    __typename: 'BaselineDataPoint'
-}
-
-export interface DataPointDefinition {
-    id: Scalars['ID']
-    key: Scalars['String']
-    title: Scalars['String']
-    category: DataPointSourceType
-    valueType: DataPointValueType
-    source_definition_id: Scalars['String']
-    possibleValues: (DataPointPossibleValue[] | null)
-    range: (Range | null)
-    unit: (Scalars['String'] | null)
-    optional: (Scalars['Boolean'] | null)
-    /** Personally identifiable information */
-    pii: (Scalars['Boolean'] | null)
-    /** Additional context on data point */
-    metadata: (DataPointMetaDataItem[] | null)
-    __typename: 'DataPointDefinition'
-}
-
-export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT' | 'DECISION'
-
-export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON' | 'ATTACHMENT' | 'ATTACHMENTS_ARRAY'
-
-export interface DataPointPossibleValue {
-    value: Scalars['String']
-    label: (Scalars['String'] | null)
-    __typename: 'DataPointPossibleValue'
-}
-
-export interface Range {
-    min: (Scalars['Float'] | null)
-    max: (Scalars['Float'] | null)
-    __typename: 'Range'
-}
-
-export interface DataPointMetaDataItem {
-    value: Scalars['String']
-    key: Scalars['String']
-    __typename: 'DataPointMetaDataItem'
-}
-
-export interface BaselineInfoPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    baselineDataPoints: BaselineDataPoint[]
-    __typename: 'BaselineInfoPayload'
-}
-
-export interface ActivitiesPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    pagination: (PaginationOutput | null)
-    sorting: (SortingOutput | null)
-    activities: Activity[]
-    metadata: (ActivityMetadata | null)
-    __typename: 'ActivitiesPayload'
-}
-
-export type PaginationAndSortingPayload = (ActivitiesPayload | OrchestrationFactsPayload | PathwaysPayload | PatientsPayload | PublishedPathwayDefinitionsPayload | DataPointPayload) & { __isUnion?: true }
-
-export interface PaginationOutput {
-    offset: (Scalars['Int'] | null)
-    count: (Scalars['Int'] | null)
-    total_count: (Scalars['Int'] | null)
-    __typename: 'PaginationOutput'
-}
-
-export interface SortingOutput {
-    field: Scalars['String']
-    direction: Scalars['String']
-    __typename: 'SortingOutput'
-}
-
-export interface Activity {
-    id: Scalars['ID']
-    stream_id: Scalars['String']
-    date: Scalars['String']
-    subject: ActivitySubject
-    action: ActivityAction
-    object: ActivityObject
-    indirect_object: (ActivityObject | null)
-    status: ActivityStatus
-    resolution: (ActivityResolution | null)
-    reference_id: Scalars['String']
-    container_name: (Scalars['String'] | null)
-    track: (ActivityTrack | null)
-    label: (ActivityLabel | null)
-    sub_activities: SubActivity[]
-    isUserActivity: Scalars['Boolean']
-    public: (Scalars['Boolean'] | null)
-    context: (PathwayContext | null)
-    session_id: (Scalars['String'] | null)
-    stakeholders: (ActivityObject[] | null)
-    /** Url for icon, only used by extensions custom actions */
-    icon_url: (Scalars['String'] | null)
-    action_component: (ActionComponent | null)
-    metadata: (Scalars['JSON'] | null)
-    /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
-    form_display_mode: (FormDisplayMode | null)
+export interface FormActivityInputs {
+    type: ActivityInputType
     form: (Form | null)
-    __typename: 'Activity'
+    __typename: 'FormActivityInputs'
 }
 
-export interface ActivitySubject {
-    id: (Scalars['String'] | null)
-    type: ActivitySubjectType
-    name: Scalars['String']
-    __typename: 'ActivitySubject'
-}
+export type ActivityInputs = (FormActivityInputs | DynamicFormActivityInputs | MessageActivityInputs | CalculationActivityInputs | ExtensionActivityInputs) & { __isUnion?: true }
 
-export type ActivitySubjectType = 'AWELL' | 'STAKEHOLDER' | 'USER' | 'PLUGIN' | 'API_CALL'
-
-export type ActivityAction = 'ADDED' | 'ACTIVATE' | 'COMPLETE' | 'DISCARDED' | 'SEND' | 'REMIND' | 'DELIVER' | 'COMPUTED' | 'FAILED' | 'FAILED_TO_SEND' | 'SUBMITTED' | 'ASSIGNED' | 'READ' | 'STOPPED' | 'PROCESSED' | 'SCHEDULED' | 'IS_WAITING_ON' | 'POSTPONED' | 'DELEGATED' | 'GENERATED' | 'SKIPPED' | 'REPORTED' | 'EXPIRED'
-
-export interface ActivityObject {
-    type: ActivityObjectType
-    id: Scalars['String']
-    name: Scalars['String']
-    email: (Scalars['String'] | null)
-    preferred_language: (Scalars['String'] | null)
-    __typename: 'ActivityObject'
-}
-
-export type ActivityObjectType = 'ACTION' | 'AGENT' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
-
-export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
-
-export type ActivityResolution = 'FAILURE' | 'SUCCESS' | 'EXPIRED'
-
-export interface ActivityTrack {
-    id: (Scalars['String'] | null)
-    title: Scalars['String']
-    __typename: 'ActivityTrack'
-}
-
-export interface ActivityLabel {
-    id: (Scalars['String'] | null)
-    color: Scalars['String']
-    text: Scalars['String']
-    __typename: 'ActivityLabel'
-}
-
-export interface SubActivity {
-    id: Scalars['String']
-    date: Scalars['String']
-    subject: ActivitySubject
-    action: ActivityAction
-    error: (Scalars['String'] | null)
-    error_category: (Scalars['String'] | null)
-    object: (ActivityObject | null)
-    text: (TranslatedText | null)
-    scheduled_date: (Scalars['String'] | null)
-    __typename: 'SubActivity'
-}
-
-export interface TranslatedText {
-    en: (Scalars['String'] | null)
-    __typename: 'TranslatedText'
-}
-
-export interface PathwayContext {
-    instance_id: Scalars['String']
-    pathway_id: Scalars['String']
-    track_id: (Scalars['String'] | null)
-    step_id: (Scalars['String'] | null)
-    action_id: (Scalars['String'] | null)
-    __typename: 'PathwayContext'
-}
-
-export interface ActionComponent {
-    definition_id: (Scalars['String'] | null)
-    release_id: (Scalars['String'] | null)
-    title: (Scalars['String'] | null)
-    __typename: 'ActionComponent'
-}
-
-export type FormDisplayMode = 'CONVERSATIONAL' | 'REGULAR'
+export type ActivityInputType = 'FORM' | 'DYNAMIC_FORM' | 'MESSAGE' | 'CALCULATION' | 'EXTENSION'
 
 export interface Form {
     release_id: Scalars['String']
@@ -342,6 +51,8 @@ export interface Question {
     __typename: 'Question'
 }
 
+export type DataPointValueType = 'BOOLEAN' | 'DATE' | 'NUMBER' | 'STRING' | 'NUMBERS_ARRAY' | 'STRINGS_ARRAY' | 'TELEPHONE' | 'JSON' | 'ATTACHMENT' | 'ATTACHMENTS_ARRAY'
+
 export interface Option {
     id: Scalars['ID']
     value: Scalars['Float']
@@ -364,6 +75,7 @@ export interface QuestionConfig {
     multiple_select: (MultipleSelectConfig | null)
     date: (DateConfig | null)
     file_storage: (FileStorageQuestionConfig | null)
+    input_validation: (InputValidationConfig | null)
     __typename: 'QuestionConfig'
 }
 
@@ -430,6 +142,28 @@ export interface FileStorageQuestionConfig {
     __typename: 'FileStorageQuestionConfig'
 }
 
+export interface InputValidationConfig {
+    mode: (Scalars['String'] | null)
+    pattern: (Scalars['String'] | null)
+    helper_text: (Scalars['String'] | null)
+    simpleConfig: (InputValidationSimpleConfig | null)
+    __typename: 'InputValidationConfig'
+}
+
+export interface InputValidationSimpleConfig {
+    exactLength: (Scalars['Float'] | null)
+    allowed: (InputValidationAllowed | null)
+    __typename: 'InputValidationSimpleConfig'
+}
+
+export interface InputValidationAllowed {
+    letters: (Scalars['Boolean'] | null)
+    numbers: (Scalars['Boolean'] | null)
+    whitespace: (Scalars['Boolean'] | null)
+    special: (Scalars['Boolean'] | null)
+    __typename: 'InputValidationAllowed'
+}
+
 export interface Rule {
     id: Scalars['ID']
     definition_id: (Scalars['String'] | null)
@@ -474,6 +208,441 @@ export interface Answer {
     __typename: 'Answer'
 }
 
+export interface DynamicFormActivityInputs {
+    type: ActivityInputType
+    dynamicForm: (DynamicFormGraphqlType | null)
+    __typename: 'DynamicFormActivityInputs'
+}
+
+export interface DynamicFormGraphqlType {
+    key: Scalars['String']
+    title: Scalars['String']
+    trademark: (Scalars['String'] | null)
+    questions: DynamicQuestion[]
+    __typename: 'DynamicFormGraphqlType'
+}
+
+export interface DynamicQuestion {
+    id: Scalars['ID']
+    key: Scalars['String']
+    title: Scalars['String']
+    dataPointValueType: (DataPointValueType | null)
+    options: (Option[] | null)
+    questionType: QuestionType
+    userQuestionType: (UserQuestionType | null)
+    questionConfig: (QuestionConfig | null)
+    __typename: 'DynamicQuestion'
+}
+
+export interface MessageActivityInputs {
+    type: ActivityInputType
+    message: (ActivityMessage | null)
+    __typename: 'MessageActivityInputs'
+}
+
+export interface ActivityMessage {
+    message_id: Scalars['String']
+    subject: Scalars['String']
+    body: Scalars['String']
+    format: (MessageFormat | null)
+    attachments: (MessageAttachment[] | null)
+    __typename: 'ActivityMessage'
+}
+
+export type MessageFormat = 'SLATE' | 'HTML'
+
+export interface MessageAttachment {
+    id: Scalars['ID']
+    name: Scalars['String']
+    url: Scalars['String']
+    type: MessageAttachmentType
+    __typename: 'MessageAttachment'
+}
+
+export type MessageAttachmentType = 'FILE' | 'VIDEO' | 'LINK'
+
+export interface CalculationActivityInputs {
+    type: ActivityInputType
+    calculation_fields: (CalculationInput[] | null)
+    __typename: 'CalculationActivityInputs'
+}
+
+export interface CalculationInput {
+    calculation_input_id: Scalars['String']
+    data_point_value: Scalars['JSON']
+    __typename: 'CalculationInput'
+}
+
+export interface ExtensionActivityInputs {
+    type: ActivityInputType
+    extension_fields: (Scalars['JSON'] | null)
+    __typename: 'ExtensionActivityInputs'
+}
+
+export interface DynamicFormActivityOutputs {
+    type: ActivityOutputType
+    answers: (QuestionResponseOutput[] | null)
+    __typename: 'DynamicFormActivityOutputs'
+}
+
+export type ActivityOutputs = (DynamicFormActivityOutputs | FormActivityOutputs | CalculationActivityOutputs | ExtensionActivityOutputs) & { __isUnion?: true }
+
+export type ActivityOutputType = 'FORM' | 'DYNAMIC_FORM' | 'CALCULATION' | 'EXTENSION'
+
+export interface QuestionResponseOutput {
+    question_id: Scalars['String']
+    value: (Scalars['String'] | null)
+    __typename: 'QuestionResponseOutput'
+}
+
+export interface FormActivityOutputs {
+    type: ActivityOutputType
+    answers: (QuestionResponseOutput[] | null)
+    __typename: 'FormActivityOutputs'
+}
+
+export interface CalculationActivityOutputs {
+    type: ActivityOutputType
+    calculation_results: (SingleCalculationResult[] | null)
+    __typename: 'CalculationActivityOutputs'
+}
+
+export interface SingleCalculationResult {
+    subresult_id: Scalars['String']
+    value: Scalars['String']
+    value_type: (DataPointValueType | null)
+    unit: (Scalars['String'] | null)
+    status: (Scalars['String'] | null)
+    label: (Scalars['String'] | null)
+    __typename: 'SingleCalculationResult'
+}
+
+export interface ExtensionActivityOutputs {
+    type: ActivityOutputType
+    extension_results: (Scalars['JSON'] | null)
+    __typename: 'ExtensionActivityOutputs'
+}
+
+export interface Query {
+    scheduledTracksForPathway: ScheduledTracksPayload
+    patientPathways: PatientPathwaysPayload
+    baselineInfo: BaselineInfoPayload
+    myPendingActivities: ActivitiesPayload
+    myActivities: ActivitiesPayload
+    pathwayActivities: ActivitiesPayload
+    careflowActivities: ActivitiesPayload
+    activity: ActivityPayload
+    activities: ActivitiesPayload
+    pathwayStepActivities: ActivitiesPayload
+    careflowActivityTypes: ActivityTypesPayload
+    agent: WorkerAgentConfigPayload
+    apiCall: ApiCallPayload
+    apiCalls: ApiCallsPayload
+    calculationAction: ActionPayload
+    calculationResults: CalculationResultsPayload
+    checklist: ChecklistPayload
+    clinicalNote: ClinicalNotePayload
+    pathwayElements: ElementsPayload
+    emrReport: EmrReportPayload
+    extensionActivityRecord: ExtensionActivityRecordPayload
+    form: FormPayload
+    forms: FormsPayload
+    formResponse: FormResponsePayload
+    generateRetoolEmbedUrl: GenerateRetoolEmbedUrlPayload
+    hostedSessionActivities: HostedSessionActivitiesPayload
+    hostedSession: HostedSessionPayload
+    message: MessagePayload
+    pathwayFacts: OrchestrationFactsPayload
+    pathwayDataPointDefinitions: PathwayDataPointDefinitionsPayload
+    pathway: PathwayPayload
+    /** @deprecated Use the `pathways` query instead. */
+    myPathways: PathwaysPayload
+    pathways: PathwaysPayload
+    patientDemographicsQueryConfiguration: PatientDemographicsQueryConfigurationPayload
+    patient: PatientPayload
+    patients: PatientsPayload
+    patientByIdentifier: PatientPayload
+    publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
+    getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
+    getPublishedCareflowVersions: CareflowVersionsPayload
+    scheduledSteps: ScheduledStepsPayload
+    searchPatientsByPatientCode: SearchPatientsPayload
+    searchPatientsByNationalRegistryNumber: SearchPatientsPayload
+    filterStakeholders: StakeholdersPayload
+    stakeholdersByPathwayDefinitionIds: StakeholdersPayload
+    stakeholdersByReleaseIds: StakeholdersPayload
+    stakeholdersByDefinitionIds: StakeholdersPayload
+    adHocTracksByPathway: TracksPayload
+    adHocTracksByRelease: TracksPayload
+    tenant: TenantPayload
+    webhookCall: WebhookCallPayload
+    webhookCalls: WebhookCallsPayload
+    webhookCallsForTenant: WebhookCallsPayload
+    webhookCallsForPathwayDefinition: WebhookCallsPayload
+    getOrchestrationFactsFromPrompt: OrchestrationFactsPromptPayload
+    hostedPagesLink: HostedPagesLinkPayload
+    pathwayDataPoints: DataPointPayload
+    decisionOutputs: DecisionOutputsPayload
+    /** Generate a signed URL for file upload to GCS */
+    getSignedUrl: FileUploadGCSPayload
+    getAgentByThreadId: OrchestratedAgentPayload
+    formActivityDataPoints: FormActivityDataPointsPayload
+    __typename: 'Query'
+}
+
+export interface ScheduledTracksPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    scheduled_tracks: ScheduledTrack[]
+    __typename: 'ScheduledTracksPayload'
+}
+
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | TenantPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | FormActivityDataPointsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | EmptyPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | UpsertPatientPayload | IdentityVerificationPayload | CompleteSessionPayload) & { __isUnion?: true }
+
+export interface ScheduledTrack {
+    id: Scalars['ID']
+    pathway_id: Scalars['String']
+    track_definition_id: Scalars['String']
+    release_id: Scalars['String']
+    tenant_id: Scalars['String']
+    created_by_user_id: Scalars['String']
+    created_date: Scalars['String']
+    modified_date: (Scalars['String'] | null)
+    scheduled_date: Scalars['String']
+    status: Scalars['String']
+    title: Scalars['String']
+    __typename: 'ScheduledTrack'
+}
+
+export interface PatientPathwaysPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    patientPathways: PatientPathway[]
+    __typename: 'PatientPathwaysPayload'
+}
+
+export interface PatientPathway {
+    id: Scalars['ID']
+    title: Scalars['String']
+    status: PathwayStatus
+    status_explanation: (Scalars['String'] | null)
+    pathway_definition_id: Scalars['String']
+    complete_date: (Scalars['String'] | null)
+    stop_date: (Scalars['String'] | null)
+    start_date: Scalars['String']
+    release_id: Scalars['String']
+    version: (Scalars['Float'] | null)
+    total_activities: (Scalars['Float'] | null)
+    active_activities: (Scalars['Float'] | null)
+    failed_activities: (Scalars['Float'] | null)
+    latest_activity_date: (Scalars['String'] | null)
+    latest_activity_title: (Scalars['String'] | null)
+    latest_activity_type: (Scalars['String'] | null)
+    created: (AuditTrail | null)
+    baseline_info: (BaselineDataPoint[] | null)
+    __typename: 'PatientPathway'
+}
+
+export type PathwayStatus = 'starting' | 'active' | 'stopped' | 'completed' | 'missing_baseline_info'
+
+export interface AuditTrail {
+    user_id: Scalars['String']
+    user_email: (Scalars['String'] | null)
+    user_name: (Scalars['String'] | null)
+    date: Scalars['SafeDate']
+    __typename: 'AuditTrail'
+}
+
+export interface BaselineDataPoint {
+    definition: DataPointDefinition
+    value: (Scalars['String'] | null)
+    __typename: 'BaselineDataPoint'
+}
+
+export interface DataPointDefinition {
+    id: Scalars['ID']
+    key: Scalars['String']
+    title: Scalars['String']
+    category: DataPointSourceType
+    valueType: DataPointValueType
+    source_definition_id: Scalars['String']
+    possibleValues: (DataPointPossibleValue[] | null)
+    range: (Range | null)
+    unit: (Scalars['String'] | null)
+    optional: (Scalars['Boolean'] | null)
+    /** Personally identifiable information */
+    pii: (Scalars['Boolean'] | null)
+    /** Additional context on data point */
+    metadata: (DataPointMetaDataItem[] | null)
+    __typename: 'DataPointDefinition'
+}
+
+export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT' | 'DECISION' | 'AGENT' | 'SYSTEM'
+
+export interface DataPointPossibleValue {
+    value: Scalars['String']
+    label: (Scalars['String'] | null)
+    __typename: 'DataPointPossibleValue'
+}
+
+export interface Range {
+    min: (Scalars['Float'] | null)
+    max: (Scalars['Float'] | null)
+    __typename: 'Range'
+}
+
+export interface DataPointMetaDataItem {
+    value: Scalars['String']
+    key: Scalars['String']
+    __typename: 'DataPointMetaDataItem'
+}
+
+export interface BaselineInfoPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    baselineDataPoints: BaselineDataPoint[]
+    __typename: 'BaselineInfoPayload'
+}
+
+export interface ActivitiesPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    pagination: (PaginationOutput | null)
+    sorting: (SortingOutput | null)
+    activities: Activity[]
+    metadata: (ActivityMetadata | null)
+    __typename: 'ActivitiesPayload'
+}
+
+export type PaginationAndSortingPayload = (ActivitiesPayload | OrchestrationFactsPayload | PathwaysPayload | PatientsPayload | PublishedPathwayDefinitionsPayload | DataPointPayload) & { __isUnion?: true }
+
+export interface PaginationOutput {
+    offset: (Scalars['Int'] | null)
+    count: (Scalars['Int'] | null)
+    total_count: (Scalars['Int'] | null)
+    __typename: 'PaginationOutput'
+}
+
+export interface SortingOutput {
+    field: Scalars['String']
+    direction: Scalars['String']
+    __typename: 'SortingOutput'
+}
+
+export interface Activity {
+    id: Scalars['ID']
+    stream_id: Scalars['String']
+    date: Scalars['String']
+    subject: ActivitySubject
+    action: ActivityAction
+    object: ActivityObject
+    indirect_object: (ActivityObject | null)
+    status: ActivityStatus
+    resolution: (ActivityResolution | null)
+    reference_id: Scalars['String']
+    reference_type: ActivityReferenceType
+    container_name: (Scalars['String'] | null)
+    track: (ActivityTrack | null)
+    label: (ActivityLabel | null)
+    sub_activities: SubActivity[]
+    inputs: (ActivityInputs | null)
+    outputs: (ActivityOutputs | null)
+    isUserActivity: Scalars['Boolean']
+    public: (Scalars['Boolean'] | null)
+    context: (PathwayContext | null)
+    session_id: (Scalars['String'] | null)
+    stakeholders: (ActivityObject[] | null)
+    /** Url for icon, only used by extensions custom actions */
+    icon_url: (Scalars['String'] | null)
+    action_component: (ActionComponent | null)
+    metadata: (Scalars['JSON'] | null)
+    /** Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now. */
+    form_display_mode: (FormDisplayMode | null)
+    form: (Form | null)
+    __typename: 'Activity'
+}
+
+export interface ActivitySubject {
+    id: (Scalars['String'] | null)
+    type: ActivitySubjectType
+    name: Scalars['String']
+    __typename: 'ActivitySubject'
+}
+
+export type ActivitySubjectType = 'AWELL' | 'STAKEHOLDER' | 'USER' | 'PLUGIN' | 'API_CALL' | 'AGENT'
+
+export type ActivityAction = 'ADDED' | 'ACTIVATE' | 'COMPLETE' | 'DISCARDED' | 'SEND' | 'REMIND' | 'DELIVER' | 'COMPUTED' | 'FAILED' | 'FAILED_TO_SEND' | 'SUBMITTED' | 'ASSIGNED' | 'READ' | 'STOPPED' | 'PROCESSED' | 'SCHEDULED' | 'IS_WAITING_ON' | 'POSTPONED' | 'DELEGATED' | 'GENERATED' | 'SKIPPED' | 'REPORTED' | 'EXPIRED'
+
+export interface ActivityObject {
+    type: ActivityObjectType
+    id: Scalars['String']
+    name: Scalars['String']
+    email: (Scalars['String'] | null)
+    preferred_language: (Scalars['String'] | null)
+    __typename: 'ActivityObject'
+}
+
+export type ActivityObjectType = 'ACTION' | 'AGENT' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
+
+export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
+
+export type ActivityResolution = 'FAILURE' | 'SUCCESS' | 'EXPIRED'
+
+export type ActivityReferenceType = 'NAVIGATION' | 'REMINDER' | 'ORCHESTRATION' | 'AGENT'
+
+export interface ActivityTrack {
+    id: (Scalars['String'] | null)
+    title: Scalars['String']
+    __typename: 'ActivityTrack'
+}
+
+export interface ActivityLabel {
+    id: (Scalars['String'] | null)
+    color: Scalars['String']
+    text: Scalars['String']
+    __typename: 'ActivityLabel'
+}
+
+export interface SubActivity {
+    id: Scalars['String']
+    date: Scalars['String']
+    subject: ActivitySubject
+    action: ActivityAction
+    error: (Scalars['String'] | null)
+    error_category: (Scalars['String'] | null)
+    object: (ActivityObject | null)
+    text: (TranslatedText | null)
+    scheduled_date: (Scalars['String'] | null)
+    __typename: 'SubActivity'
+}
+
+export interface TranslatedText {
+    en: (Scalars['String'] | null)
+    __typename: 'TranslatedText'
+}
+
+export interface PathwayContext {
+    instance_id: Scalars['String']
+    pathway_id: Scalars['String']
+    track_id: (Scalars['String'] | null)
+    step_id: (Scalars['String'] | null)
+    action_id: (Scalars['String'] | null)
+    agent_thread_id: (Scalars['String'] | null)
+    agent_id: (Scalars['String'] | null)
+    agent_config_id: (Scalars['String'] | null)
+    run_id: (Scalars['String'] | null)
+    __typename: 'PathwayContext'
+}
+
+export interface ActionComponent {
+    definition_id: (Scalars['String'] | null)
+    release_id: (Scalars['String'] | null)
+    title: (Scalars['String'] | null)
+    __typename: 'ActionComponent'
+}
+
+export type FormDisplayMode = 'CONVERSATIONAL' | 'REGULAR'
+
 export interface ActivityMetadata {
     stakeholders: (ActivityObject[] | null)
     __typename: 'ActivityMetadata'
@@ -491,6 +660,79 @@ export interface ActivityTypesPayload {
     success: Scalars['Boolean']
     activityTypes: Scalars['String'][]
     __typename: 'ActivityTypesPayload'
+}
+
+export interface WorkerAgentConfigPayload {
+    workerAgentConfig: (WorkerAgentConfigGraphqlType | null)
+    __typename: 'WorkerAgentConfigPayload'
+}
+
+export interface WorkerAgentConfigGraphqlType {
+    id: Scalars['String']
+    agent_uuid: Scalars['String']
+    state: Scalars['String']
+    name: Scalars['String']
+    description: Scalars['String']
+    agent_id: Scalars['String']
+    organization_slug: Scalars['String']
+    version: Scalars['Float']
+    instructions: (Scalars['String'] | null)
+    jobToBeDone: (Scalars['String'] | null)
+    stakeholders: StakeholderInfoGraphqlType[]
+    input_specs: FieldSpecGraphqlType[]
+    output_specs: FieldSpecGraphqlType[]
+    tools: ToolSpecGraphqlType[]
+    guardrails: (Scalars['String'][] | null)
+    created: AuditGraphqlType
+    updated: (AuditGraphqlType | null)
+    __typename: 'WorkerAgentConfigGraphqlType'
+}
+
+export interface StakeholderInfoGraphqlType {
+    definition_id: Scalars['String']
+    name: Scalars['String']
+    __typename: 'StakeholderInfoGraphqlType'
+}
+
+export interface FieldSpecGraphqlType {
+    name: Scalars['String']
+    description: Scalars['String']
+    type: Scalars['String']
+    __typename: 'FieldSpecGraphqlType'
+}
+
+export interface ToolSpecGraphqlType {
+    id: Scalars['String']
+    name: Scalars['String']
+    type: Scalars['String']
+    description: Scalars['String']
+    parameters: (ParameterSpecGraphqlType[] | null)
+    hitl_required: (Scalars['Boolean'] | null)
+    __typename: 'ToolSpecGraphqlType'
+}
+
+export interface ParameterSpecGraphqlType {
+    name: Scalars['String']
+    description: (Scalars['String'] | null)
+    value_source: (Scalars['String'] | null)
+    value_type: (Scalars['String'] | null)
+    required: (Scalars['Boolean'] | null)
+    instructions: (Scalars['String'] | null)
+    static_value: (Scalars['String'] | null)
+    input_field_name: (Scalars['String'] | null)
+    __typename: 'ParameterSpecGraphqlType'
+}
+
+export interface AuditGraphqlType {
+    at: Scalars['SafeDate']
+    by: ByGraphqlType
+    __typename: 'AuditGraphqlType'
+}
+
+export interface ByGraphqlType {
+    id: Scalars['String']
+    name: Scalars['String']
+    __typename: 'ByGraphqlType'
 }
 
 export interface ApiCallPayload {
@@ -556,15 +798,6 @@ export interface CalculationResultsPayload {
     __typename: 'CalculationResultsPayload'
 }
 
-export interface SingleCalculationResult {
-    subresult_id: Scalars['String']
-    value: Scalars['String']
-    value_type: (DataPointValueType | null)
-    unit: (Scalars['String'] | null)
-    status: (Scalars['String'] | null)
-    __typename: 'SingleCalculationResult'
-}
-
 export interface ChecklistPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
@@ -628,7 +861,7 @@ export interface Element {
     __typename: 'Element'
 }
 
-export type ElementType = 'PATHWAY' | 'TRACK' | 'STEP' | 'ACTION' | 'TRIGGER'
+export type ElementType = 'PATHWAY' | 'TRACK' | 'STEP' | 'ACTION' | 'TRIGGER' | 'AGENT'
 
 export type ActionType = 'API_CALL' | 'API_CALL_GRAPHQL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'FORM' | 'MESSAGE' | 'PUSH_TO_EMR' | 'PLUGIN'
 
@@ -701,6 +934,7 @@ export interface PluginActionSettingsProperty {
 export interface ExtensionDataPoint {
     label: Scalars['String']
     value: Scalars['String']
+    valueType: Scalars['String']
     __typename: 'ExtensionDataPoint'
 }
 
@@ -761,6 +995,8 @@ export interface HostedSession {
     status: HostedSessionStatus
     stakeholder: HostedSessionStakeholder
     user_context: (HostedSessionUserContext | null)
+    created_at: Scalars['String']
+    expires_at: Scalars['String']
     __typename: 'HostedSession'
 }
 
@@ -810,22 +1046,10 @@ export interface Message {
     id: Scalars['ID']
     subject: (Scalars['String'] | null)
     body: Scalars['String']
-    format: MessageFormat
+    format: (MessageFormat | null)
     attachments: (MessageAttachment[] | null)
     __typename: 'Message'
 }
-
-export type MessageFormat = 'SLATE' | 'HTML'
-
-export interface MessageAttachment {
-    id: Scalars['ID']
-    name: Scalars['String']
-    url: Scalars['String']
-    type: MessageAttachmentType
-    __typename: 'MessageAttachment'
-}
-
-export type MessageAttachmentType = 'FILE' | 'VIDEO' | 'LINK'
 
 export interface OrchestrationFactsPayload {
     code: Scalars['String']
@@ -880,6 +1104,7 @@ export interface Pathway {
     status: PathwayStatus
     status_explanation: (Scalars['String'] | null)
     tracks: Track[]
+    created: (AuditTrail | null)
     patient: User
     __typename: 'Pathway'
 }
@@ -1023,13 +1248,6 @@ export interface PublishedPathwayDefinition {
     /** Tracks for the pathway */
     track_definitions: (Track[] | null)
     __typename: 'PublishedPathwayDefinition'
-}
-
-export interface AuditTrail {
-    user_id: Scalars['String']
-    user_email: (Scalars['String'] | null)
-    date: Scalars['SafeDate']
-    __typename: 'AuditTrail'
 }
 
 export interface PathwayDefinitionDetails {
@@ -1244,10 +1462,61 @@ export interface FileUploadGCSPayload {
     __typename: 'FileUploadGCSPayload'
 }
 
+export interface OrchestratedAgentPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    agent: OrchestratedAgent
+    __typename: 'OrchestratedAgentPayload'
+}
+
+export interface OrchestratedAgent {
+    tenant_id: Scalars['String']
+    careflow_id: Scalars['String']
+    agent_definition_id: Scalars['String']
+    agent_version: Scalars['Float']
+    agent_id: Scalars['String']
+    agent_config_id: Scalars['String']
+    agent_thread_id: Scalars['String']
+    status: Scalars['String']
+    execution: Scalars['JSON']
+    context: Scalars['JSON']
+    hosted_pages_links: (StakeholderHPLink[] | null)
+    created_at: Scalars['String']
+    updated_at: Scalars['String']
+    __typename: 'OrchestratedAgent'
+}
+
+export interface StakeholderHPLink {
+    stakeholder: AgentStakeholder
+    url: Scalars['String']
+    __typename: 'StakeholderHPLink'
+}
+
+export interface AgentStakeholder {
+    definition_id: Scalars['String']
+    name: Scalars['String']
+    __typename: 'AgentStakeholder'
+}
+
+export interface FormActivityDataPointsPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    data_points: FormActivityDataPoint[]
+    __typename: 'FormActivityDataPointsPayload'
+}
+
+export interface FormActivityDataPoint {
+    key: Scalars['String']
+    value: Scalars['String']
+    valueType: DataPointValueType
+    __typename: 'FormActivityDataPoint'
+}
+
 export interface Mutation {
     addActivityMetadata: AddActivityMetadataPayload
     addIdentifierToPatient: AddIdentifierToPatientPayload
     addTrack: AddTrackPayload
+    expireActivity: EmptyPayload
     unscheduleTracks: CancelScheduledTracksPayload
     completeExtensionActivity: CompleteExtensionActivityPayload
     createPatient: CreatePatientPayload
@@ -1287,7 +1556,9 @@ export interface Mutation {
     /** Update which patient was created after import request for logging purposes */
     updatePatientDemographicsQuery: UpdatePatientDemographicsQueryPayload
     updatePatientLanguage: UpdatePatientLanguagePayload
+    upsertPatient: UpsertPatientPayload
     verify_identity: IdentityVerificationPayload
+    completeSession: CompleteSessionPayload
     __typename: 'Mutation'
 }
 
@@ -1311,6 +1582,12 @@ export interface AddTrackPayload {
     __typename: 'AddTrackPayload'
 }
 
+export interface EmptyPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    __typename: 'EmptyPayload'
+}
+
 export interface CancelScheduledTracksPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
@@ -1330,12 +1607,6 @@ export interface CreatePatientPayload {
     success: Scalars['Boolean']
     patient: (User | null)
     __typename: 'CreatePatientPayload'
-}
-
-export interface EmptyPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    __typename: 'EmptyPayload'
 }
 
 export interface EvaluateFormRulesPayload {
@@ -1491,11 +1762,25 @@ export interface UpdatePatientLanguagePayload {
     __typename: 'UpdatePatientLanguagePayload'
 }
 
+export interface UpsertPatientPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    patient: (User | null)
+    __typename: 'UpsertPatientPayload'
+}
+
 export interface IdentityVerificationPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
     is_verified: Scalars['Boolean']
     __typename: 'IdentityVerificationPayload'
+}
+
+export interface CompleteSessionPayload {
+    code: Scalars['String']
+    success: Scalars['Boolean']
+    session: (HostedSession | null)
+    __typename: 'CompleteSessionPayload'
 }
 
 export interface Subscription {
@@ -1520,6 +1805,348 @@ export interface Subscription {
     __typename: 'Subscription'
 }
 
+export interface FormActivityInputsGenqlSelection{
+    type?: boolean | number
+    form?: FormGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ActivityInputsGenqlSelection{
+    type?: boolean | number
+    on_FormActivityInputs?: FormActivityInputsGenqlSelection
+    on_DynamicFormActivityInputs?: DynamicFormActivityInputsGenqlSelection
+    on_MessageActivityInputs?: MessageActivityInputsGenqlSelection
+    on_CalculationActivityInputs?: CalculationActivityInputsGenqlSelection
+    on_ExtensionActivityInputs?: ExtensionActivityInputsGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FormGenqlSelection{
+    release_id?: boolean | number
+    key?: boolean | number
+    definition_id?: boolean | number
+    id?: boolean | number
+    title?: boolean | number
+    trademark?: boolean | number
+    metadata?: boolean | number
+    questions?: QuestionGenqlSelection
+    previous_answers?: (PreviousAnswersGenqlSelection & { __args: {pathway_id: Scalars['String']} })
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface QuestionGenqlSelection{
+    key?: boolean | number
+    id?: boolean | number
+    definition_id?: boolean | number
+    title?: boolean | number
+    dataPointValueType?: boolean | number
+    options?: OptionGenqlSelection
+    questionType?: boolean | number
+    userQuestionType?: boolean | number
+    questionConfig?: QuestionConfigGenqlSelection
+    rule?: RuleGenqlSelection
+    metadata?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface OptionGenqlSelection{
+    id?: boolean | number
+    value?: boolean | number
+    value_string?: boolean | number
+    label?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface QuestionConfigGenqlSelection{
+    recode_enabled?: boolean | number
+    mandatory?: boolean | number
+    use_select?: boolean | number
+    slider?: SliderConfigGenqlSelection
+    phone?: PhoneConfigGenqlSelection
+    number?: NumberConfigGenqlSelection
+    multiple_select?: MultipleSelectConfigGenqlSelection
+    date?: DateConfigGenqlSelection
+    file_storage?: FileStorageQuestionConfigGenqlSelection
+    input_validation?: InputValidationConfigGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface SliderConfigGenqlSelection{
+    min?: boolean | number
+    max?: boolean | number
+    step_value?: boolean | number
+    min_label?: boolean | number
+    max_label?: boolean | number
+    is_value_tooltip_on?: boolean | number
+    display_marks?: boolean | number
+    show_min_max_values?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface PhoneConfigGenqlSelection{
+    default_country?: boolean | number
+    available_countries?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface NumberConfigGenqlSelection{
+    range?: RangeConfigGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface RangeConfigGenqlSelection{
+    min?: boolean | number
+    max?: boolean | number
+    enabled?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface MultipleSelectConfigGenqlSelection{
+    range?: ChoiceRangeConfigGenqlSelection
+    exclusive_option?: ExclusiveOptionConfigGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ChoiceRangeConfigGenqlSelection{
+    enabled?: boolean | number
+    min?: boolean | number
+    max?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ExclusiveOptionConfigGenqlSelection{
+    enabled?: boolean | number
+    option_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DateConfigGenqlSelection{
+    allowed_dates?: boolean | number
+    include_date_of_response?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FileStorageQuestionConfigGenqlSelection{
+    file_storage_config_slug?: boolean | number
+    accepted_file_types?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface InputValidationConfigGenqlSelection{
+    mode?: boolean | number
+    pattern?: boolean | number
+    helper_text?: boolean | number
+    simpleConfig?: InputValidationSimpleConfigGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface InputValidationSimpleConfigGenqlSelection{
+    exactLength?: boolean | number
+    allowed?: InputValidationAllowedGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface InputValidationAllowedGenqlSelection{
+    letters?: boolean | number
+    numbers?: boolean | number
+    whitespace?: boolean | number
+    special?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface RuleGenqlSelection{
+    id?: boolean | number
+    definition_id?: boolean | number
+    boolean_operator?: boolean | number
+    conditions?: ConditionGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ConditionGenqlSelection{
+    id?: boolean | number
+    reference?: boolean | number
+    reference_key?: boolean | number
+    operator?: boolean | number
+    operand?: OperandGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface OperandGenqlSelection{
+    type?: boolean | number
+    value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface PreviousAnswersGenqlSelection{
+    activity_id?: boolean | number
+    date?: boolean | number
+    answers?: AnswerGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AnswerGenqlSelection{
+    question_id?: boolean | number
+    value?: boolean | number
+    label?: boolean | number
+    value_type?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DynamicFormActivityInputsGenqlSelection{
+    type?: boolean | number
+    dynamicForm?: DynamicFormGraphqlTypeGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DynamicFormGraphqlTypeGenqlSelection{
+    key?: boolean | number
+    title?: boolean | number
+    trademark?: boolean | number
+    questions?: DynamicQuestionGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DynamicQuestionGenqlSelection{
+    id?: boolean | number
+    key?: boolean | number
+    title?: boolean | number
+    dataPointValueType?: boolean | number
+    options?: OptionGenqlSelection
+    questionType?: boolean | number
+    userQuestionType?: boolean | number
+    questionConfig?: QuestionConfigGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface MessageActivityInputsGenqlSelection{
+    type?: boolean | number
+    message?: ActivityMessageGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ActivityMessageGenqlSelection{
+    message_id?: boolean | number
+    subject?: boolean | number
+    body?: boolean | number
+    format?: boolean | number
+    attachments?: MessageAttachmentGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface MessageAttachmentGenqlSelection{
+    id?: boolean | number
+    name?: boolean | number
+    url?: boolean | number
+    type?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CalculationActivityInputsGenqlSelection{
+    type?: boolean | number
+    calculation_fields?: CalculationInputGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CalculationInputGenqlSelection{
+    calculation_input_id?: boolean | number
+    data_point_value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ExtensionActivityInputsGenqlSelection{
+    type?: boolean | number
+    extension_fields?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DynamicFormActivityOutputsGenqlSelection{
+    type?: boolean | number
+    answers?: QuestionResponseOutputGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ActivityOutputsGenqlSelection{
+    type?: boolean | number
+    on_DynamicFormActivityOutputs?: DynamicFormActivityOutputsGenqlSelection
+    on_FormActivityOutputs?: FormActivityOutputsGenqlSelection
+    on_CalculationActivityOutputs?: CalculationActivityOutputsGenqlSelection
+    on_ExtensionActivityOutputs?: ExtensionActivityOutputsGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface QuestionResponseOutputGenqlSelection{
+    question_id?: boolean | number
+    value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FormActivityOutputsGenqlSelection{
+    type?: boolean | number
+    answers?: QuestionResponseOutputGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CalculationActivityOutputsGenqlSelection{
+    type?: boolean | number
+    calculation_results?: SingleCalculationResultGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface SingleCalculationResultGenqlSelection{
+    subresult_id?: boolean | number
+    value?: boolean | number
+    value_type?: boolean | number
+    unit?: boolean | number
+    status?: boolean | number
+    label?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ExtensionActivityOutputsGenqlSelection{
+    type?: boolean | number
+    extension_results?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface QueryGenqlSelection{
     scheduledTracksForPathway?: (ScheduledTracksPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     patientPathways?: (PatientPathwaysPayloadGenqlSelection & { __args: {patient_id: Scalars['String'], filters?: (FilterPatientPathways | null)} })
@@ -1532,6 +2159,7 @@ export interface QueryGenqlSelection{
     activities?: (ActivitiesPayloadGenqlSelection & { __args?: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), filters?: (FilterActivitiesParams | null)} })
     pathwayStepActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], step_id: Scalars['String']} })
     careflowActivityTypes?: (ActivityTypesPayloadGenqlSelection & { __args: {careflow_id: Scalars['String']} })
+    agent?: (WorkerAgentConfigPayloadGenqlSelection & { __args: {id: Scalars['ID']} })
     apiCall?: (ApiCallPayloadGenqlSelection & { __args: {id: Scalars['String']} })
     apiCalls?: (ApiCallsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     calculationAction?: (ActionPayloadGenqlSelection & { __args: {id: Scalars['String']} })
@@ -1581,6 +2209,8 @@ export interface QueryGenqlSelection{
     decisionOutputs?: (DecisionOutputsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     /** Generate a signed URL for file upload to GCS */
     getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_slug: Scalars['String']} })
+    getAgentByThreadId?: (OrchestratedAgentPayloadGenqlSelection & { __args?: {agent_thread_id?: (Scalars['String'] | null)} })
+    formActivityDataPoints?: (FormActivityDataPointsPayloadGenqlSelection & { __args: {careflow_id: Scalars['String'], activity_id: Scalars['String']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1631,13 +2261,14 @@ export interface PayloadGenqlSelection{
     on_HostedPagesLinkPayload?: HostedPagesLinkPayloadGenqlSelection
     on_DecisionOutputsPayload?: DecisionOutputsPayloadGenqlSelection
     on_FileUploadGCSPayload?: FileUploadGCSPayloadGenqlSelection
+    on_FormActivityDataPointsPayload?: FormActivityDataPointsPayloadGenqlSelection
     on_AddActivityMetadataPayload?: AddActivityMetadataPayloadGenqlSelection
     on_AddIdentifierToPatientPayload?: AddIdentifierToPatientPayloadGenqlSelection
     on_AddTrackPayload?: AddTrackPayloadGenqlSelection
+    on_EmptyPayload?: EmptyPayloadGenqlSelection
     on_CancelScheduledTracksPayload?: CancelScheduledTracksPayloadGenqlSelection
     on_CompleteExtensionActivityPayload?: CompleteExtensionActivityPayloadGenqlSelection
     on_CreatePatientPayload?: CreatePatientPayloadGenqlSelection
-    on_EmptyPayload?: EmptyPayloadGenqlSelection
     on_EvaluateFormRulesPayload?: EvaluateFormRulesPayloadGenqlSelection
     on_MarkMessageAsReadPayload?: MarkMessageAsReadPayloadGenqlSelection
     on_PatientDemographicsPayload?: PatientDemographicsPayloadGenqlSelection
@@ -1656,7 +2287,9 @@ export interface PayloadGenqlSelection{
     on_UpdatePatientPayload?: UpdatePatientPayloadGenqlSelection
     on_UpdatePatientDemographicsQueryPayload?: UpdatePatientDemographicsQueryPayloadGenqlSelection
     on_UpdatePatientLanguagePayload?: UpdatePatientLanguagePayloadGenqlSelection
+    on_UpsertPatientPayload?: UpsertPatientPayloadGenqlSelection
     on_IdentityVerificationPayload?: IdentityVerificationPayloadGenqlSelection
+    on_CompleteSessionPayload?: CompleteSessionPayloadGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1702,7 +2335,17 @@ export interface PatientPathwayGenqlSelection{
     latest_activity_date?: boolean | number
     latest_activity_title?: boolean | number
     latest_activity_type?: boolean | number
+    created?: AuditTrailGenqlSelection
     baseline_info?: BaselineDataPointGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AuditTrailGenqlSelection{
+    user_id?: boolean | number
+    user_email?: boolean | number
+    user_name?: boolean | number
+    date?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1818,10 +2461,13 @@ export interface ActivityGenqlSelection{
     status?: boolean | number
     resolution?: boolean | number
     reference_id?: boolean | number
+    reference_type?: boolean | number
     container_name?: boolean | number
     track?: ActivityTrackGenqlSelection
     label?: ActivityLabelGenqlSelection
     sub_activities?: SubActivityGenqlSelection
+    inputs?: ActivityInputsGenqlSelection
+    outputs?: ActivityOutputsGenqlSelection
     isUserActivity?: boolean | number
     public?: boolean | number
     context?: PathwayContextGenqlSelection
@@ -1897,6 +2543,10 @@ export interface PathwayContextGenqlSelection{
     track_id?: boolean | number
     step_id?: boolean | number
     action_id?: boolean | number
+    agent_thread_id?: boolean | number
+    agent_id?: boolean | number
+    agent_config_id?: boolean | number
+    run_id?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1905,172 +2555,6 @@ export interface ActionComponentGenqlSelection{
     definition_id?: boolean | number
     release_id?: boolean | number
     title?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface FormGenqlSelection{
-    release_id?: boolean | number
-    key?: boolean | number
-    definition_id?: boolean | number
-    id?: boolean | number
-    title?: boolean | number
-    trademark?: boolean | number
-    metadata?: boolean | number
-    questions?: QuestionGenqlSelection
-    previous_answers?: (PreviousAnswersGenqlSelection & { __args: {pathway_id: Scalars['String']} })
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface QuestionGenqlSelection{
-    key?: boolean | number
-    id?: boolean | number
-    definition_id?: boolean | number
-    title?: boolean | number
-    dataPointValueType?: boolean | number
-    options?: OptionGenqlSelection
-    questionType?: boolean | number
-    userQuestionType?: boolean | number
-    questionConfig?: QuestionConfigGenqlSelection
-    rule?: RuleGenqlSelection
-    metadata?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface OptionGenqlSelection{
-    id?: boolean | number
-    value?: boolean | number
-    value_string?: boolean | number
-    label?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface QuestionConfigGenqlSelection{
-    recode_enabled?: boolean | number
-    mandatory?: boolean | number
-    use_select?: boolean | number
-    slider?: SliderConfigGenqlSelection
-    phone?: PhoneConfigGenqlSelection
-    number?: NumberConfigGenqlSelection
-    multiple_select?: MultipleSelectConfigGenqlSelection
-    date?: DateConfigGenqlSelection
-    file_storage?: FileStorageQuestionConfigGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface SliderConfigGenqlSelection{
-    min?: boolean | number
-    max?: boolean | number
-    step_value?: boolean | number
-    min_label?: boolean | number
-    max_label?: boolean | number
-    is_value_tooltip_on?: boolean | number
-    display_marks?: boolean | number
-    show_min_max_values?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface PhoneConfigGenqlSelection{
-    default_country?: boolean | number
-    available_countries?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface NumberConfigGenqlSelection{
-    range?: RangeConfigGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface RangeConfigGenqlSelection{
-    min?: boolean | number
-    max?: boolean | number
-    enabled?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface MultipleSelectConfigGenqlSelection{
-    range?: ChoiceRangeConfigGenqlSelection
-    exclusive_option?: ExclusiveOptionConfigGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface ChoiceRangeConfigGenqlSelection{
-    enabled?: boolean | number
-    min?: boolean | number
-    max?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface ExclusiveOptionConfigGenqlSelection{
-    enabled?: boolean | number
-    option_id?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface DateConfigGenqlSelection{
-    allowed_dates?: boolean | number
-    include_date_of_response?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface FileStorageQuestionConfigGenqlSelection{
-    file_storage_config_slug?: boolean | number
-    accepted_file_types?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface RuleGenqlSelection{
-    id?: boolean | number
-    definition_id?: boolean | number
-    boolean_operator?: boolean | number
-    conditions?: ConditionGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface ConditionGenqlSelection{
-    id?: boolean | number
-    reference?: boolean | number
-    reference_key?: boolean | number
-    operator?: boolean | number
-    operand?: OperandGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface OperandGenqlSelection{
-    type?: boolean | number
-    value?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface PreviousAnswersGenqlSelection{
-    activity_id?: boolean | number
-    date?: boolean | number
-    answers?: AnswerGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface AnswerGenqlSelection{
-    question_id?: boolean | number
-    value?: boolean | number
-    label?: boolean | number
-    value_type?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2085,7 +2569,7 @@ export interface PaginationParams {offset: Scalars['Int'],count: Scalars['Int']}
 
 export interface SortingParams {field: Scalars['String'],direction: Scalars['String']}
 
-export interface FilterCareflowActivitiesParams {action?: (Scalars['String'][] | null),activity_status?: (Scalars['String'][] | null),activity_type?: (Scalars['String'][] | null),stakeholders?: (Scalars['String'][] | null),hide_system_activities?: (Scalars['Boolean'] | null),date_range?: (DateRangeInput | null)}
+export interface FilterCareflowActivitiesParams {action?: (Scalars['String'][] | null),activity_status?: (Scalars['String'][] | null),activity_type?: (Scalars['String'][] | null),stakeholders?: (Scalars['String'][] | null),hide_system_activities?: (Scalars['Boolean'] | null),date_range?: (DateRangeInput | null),reference_id?: (Scalars['String'] | null)}
 
 export interface DateRangeInput {from: Scalars['SafeDate'],to: Scalars['SafeDate']}
 
@@ -2097,7 +2581,7 @@ export interface ActivityPayloadGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface FilterActivitiesParams {action?: (StringArrayFilter | null),activity_status?: (StringArrayFilter | null),pathway_definition_id?: (StringArrayFilter | null),patient_id?: (TextFilterEquals | null),activity_type?: (StringArrayFilter | null),stakeholders?: (StringArrayFilter | null),pathway_status?: (StringArrayFilter | null)}
+export interface FilterActivitiesParams {action?: (StringArrayFilter | null),activity_status?: (StringArrayFilter | null),pathway_definition_id?: (StringArrayFilter | null),patient_id?: (TextFilterEquals | null),activity_type?: (StringArrayFilter | null),stakeholders?: (StringArrayFilter | null),pathway_status?: (StringArrayFilter | null),reference_id?: (TextFilterEquals | null)}
 
 export interface TextFilterEquals {eq?: (Scalars['String'] | null)}
 
@@ -2105,6 +2589,87 @@ export interface ActivityTypesPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
     activityTypes?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface WorkerAgentConfigPayloadGenqlSelection{
+    workerAgentConfig?: WorkerAgentConfigGraphqlTypeGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface WorkerAgentConfigGraphqlTypeGenqlSelection{
+    id?: boolean | number
+    agent_uuid?: boolean | number
+    state?: boolean | number
+    name?: boolean | number
+    description?: boolean | number
+    agent_id?: boolean | number
+    organization_slug?: boolean | number
+    version?: boolean | number
+    instructions?: boolean | number
+    jobToBeDone?: boolean | number
+    stakeholders?: StakeholderInfoGraphqlTypeGenqlSelection
+    input_specs?: FieldSpecGraphqlTypeGenqlSelection
+    output_specs?: FieldSpecGraphqlTypeGenqlSelection
+    tools?: ToolSpecGraphqlTypeGenqlSelection
+    guardrails?: boolean | number
+    created?: AuditGraphqlTypeGenqlSelection
+    updated?: AuditGraphqlTypeGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface StakeholderInfoGraphqlTypeGenqlSelection{
+    definition_id?: boolean | number
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FieldSpecGraphqlTypeGenqlSelection{
+    name?: boolean | number
+    description?: boolean | number
+    type?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ToolSpecGraphqlTypeGenqlSelection{
+    id?: boolean | number
+    name?: boolean | number
+    type?: boolean | number
+    description?: boolean | number
+    parameters?: ParameterSpecGraphqlTypeGenqlSelection
+    hitl_required?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ParameterSpecGraphqlTypeGenqlSelection{
+    name?: boolean | number
+    description?: boolean | number
+    value_source?: boolean | number
+    value_type?: boolean | number
+    required?: boolean | number
+    instructions?: boolean | number
+    static_value?: boolean | number
+    input_field_name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AuditGraphqlTypeGenqlSelection{
+    at?: boolean | number
+    by?: ByGraphqlTypeGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ByGraphqlTypeGenqlSelection{
+    id?: boolean | number
+    name?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2172,16 +2737,6 @@ export interface CalculationResultsPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
     result?: SingleCalculationResultGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface SingleCalculationResultGenqlSelection{
-    subresult_id?: boolean | number
-    value?: boolean | number
-    value_type?: boolean | number
-    unit?: boolean | number
-    status?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2330,6 +2885,7 @@ export interface PluginActionSettingsPropertyGenqlSelection{
 export interface ExtensionDataPointGenqlSelection{
     label?: boolean | number
     value?: boolean | number
+    valueType?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2400,6 +2956,8 @@ export interface HostedSessionGenqlSelection{
     status?: boolean | number
     stakeholder?: HostedSessionStakeholderGenqlSelection
     user_context?: HostedSessionUserContextGenqlSelection
+    created_at?: boolean | number
+    expires_at?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2453,15 +3011,6 @@ export interface MessageGenqlSelection{
     body?: boolean | number
     format?: boolean | number
     attachments?: MessageAttachmentGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface MessageAttachmentGenqlSelection{
-    id?: boolean | number
-    name?: boolean | number
-    url?: boolean | number
-    type?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2529,6 +3078,7 @@ export interface PathwayGenqlSelection{
     status?: boolean | number
     status_explanation?: boolean | number
     tracks?: TrackGenqlSelection
+    created?: AuditTrailGenqlSelection
     patient?: UserGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -2693,14 +3243,6 @@ export interface PublishedPathwayDefinitionGenqlSelection{
     data_point_definitions?: DataPointDefinitionGenqlSelection
     /** Tracks for the pathway */
     track_definitions?: TrackGenqlSelection
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
-export interface AuditTrailGenqlSelection{
-    user_id?: boolean | number
-    user_email?: boolean | number
-    date?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2942,10 +3484,67 @@ export interface FileUploadGCSPayloadGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface OrchestratedAgentPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    agent?: OrchestratedAgentGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface OrchestratedAgentGenqlSelection{
+    tenant_id?: boolean | number
+    careflow_id?: boolean | number
+    agent_definition_id?: boolean | number
+    agent_version?: boolean | number
+    agent_id?: boolean | number
+    agent_config_id?: boolean | number
+    agent_thread_id?: boolean | number
+    status?: boolean | number
+    execution?: boolean | number
+    context?: boolean | number
+    hosted_pages_links?: StakeholderHPLinkGenqlSelection
+    created_at?: boolean | number
+    updated_at?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface StakeholderHPLinkGenqlSelection{
+    stakeholder?: AgentStakeholderGenqlSelection
+    url?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AgentStakeholderGenqlSelection{
+    definition_id?: boolean | number
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FormActivityDataPointsPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    data_points?: FormActivityDataPointGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface FormActivityDataPointGenqlSelection{
+    key?: boolean | number
+    value?: boolean | number
+    valueType?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface MutationGenqlSelection{
     addActivityMetadata?: (AddActivityMetadataPayloadGenqlSelection & { __args: {input: AddActivityMetadataInput} })
     addIdentifierToPatient?: (AddIdentifierToPatientPayloadGenqlSelection & { __args: {input: AddIdentifierToPatientInput} })
     addTrack?: (AddTrackPayloadGenqlSelection & { __args: {input: AddTrackInput} })
+    expireActivity?: (EmptyPayloadGenqlSelection & { __args: {input: ExpireActivityInput} })
     unscheduleTracks?: (CancelScheduledTracksPayloadGenqlSelection & { __args: {input: CancelScheduledTracksInput} })
     completeExtensionActivity?: (CompleteExtensionActivityPayloadGenqlSelection & { __args: {input: CompleteExtensionActivityInput} })
     createPatient?: (CreatePatientPayloadGenqlSelection & { __args?: {input?: (CreatePatientInput | null)} })
@@ -2985,7 +3584,9 @@ export interface MutationGenqlSelection{
     /** Update which patient was created after import request for logging purposes */
     updatePatientDemographicsQuery?: (UpdatePatientDemographicsQueryPayloadGenqlSelection & { __args: {input: UpdatePatientDemographicsQueryInput} })
     updatePatientLanguage?: (UpdatePatientLanguagePayloadGenqlSelection & { __args: {input: UpdatePatientLanguageInput} })
+    upsertPatient?: (UpsertPatientPayloadGenqlSelection & { __args: {input: UpsertPatientInput} })
     verify_identity?: (IdentityVerificationPayloadGenqlSelection & { __args: {input: VerifyIdentityInput} })
+    completeSession?: (CompleteSessionPayloadGenqlSelection & { __args: {input: CompleteSessionInput} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3020,6 +3621,15 @@ export interface AddTrackPayloadGenqlSelection{
 }
 
 export interface AddTrackInput {pathway_id: Scalars['String'],track_id: Scalars['String']}
+
+export interface EmptyPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ExpireActivityInput {activity_id: Scalars['String'],user_id: Scalars['String'],user_email: Scalars['String'],reason: Scalars['String']}
 
 export interface CancelScheduledTracksPayloadGenqlSelection{
     code?: boolean | number
@@ -3064,13 +3674,6 @@ mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),identi
 patient_timezone?: (Scalars['String'] | null)}
 
 export interface AddressInput {street?: (Scalars['String'] | null),city?: (Scalars['String'] | null),zip?: (Scalars['String'] | null),state?: (Scalars['String'] | null),country?: (Scalars['String'] | null)}
-
-export interface EmptyPayloadGenqlSelection{
-    code?: boolean | number
-    success?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
 
 export interface DeletePathwayInput {pathway_id: Scalars['String']}
 
@@ -3349,6 +3952,28 @@ export interface UpdatePatientLanguageInput {
 /** ISO 639-1 shortcode */
 preferred_language: Scalars['String']}
 
+export interface UpsertPatientPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    patient?: UserGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface UpsertPatientInput {patient_identifier: IdentifierInput,profile?: (UpsertPatientProfileInput | null)}
+
+export interface UpsertPatientProfileInput {email?: (Scalars['String'] | null),first_name: Scalars['String'],last_name: Scalars['String'],birth_date?: (Scalars['String'] | null),
+/** ISO 639-1 shortcode */
+preferred_language?: (Scalars['String'] | null),
+/** Sex code as defined by ISO standard IEC_5218, 0 - NOT_KNOWN, 1 - MALE, 2 - FEMALE */
+sex?: (Sex | null),national_registry_number?: (Scalars['String'] | null),patient_code?: (Scalars['String'] | null),
+/** Must be in valid E164 telephone number format */
+phone?: (Scalars['String'] | null),
+/** Must be in valid E164 telephone number format */
+mobile_phone?: (Scalars['String'] | null),address?: (AddressInput | null),
+/** Must be a valid IANA timezone */
+patient_timezone?: (Scalars['String'] | null)}
+
 export interface IdentityVerificationPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
@@ -3358,6 +3983,16 @@ export interface IdentityVerificationPayloadGenqlSelection{
 }
 
 export interface VerifyIdentityInput {dob?: (Scalars['String'] | null),pathway_id: Scalars['String']}
+
+export interface CompleteSessionPayloadGenqlSelection{
+    code?: boolean | number
+    success?: boolean | number
+    session?: HostedSessionGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CompleteSessionInput {session_id: Scalars['String']}
 
 export interface SubscriptionGenqlSelection{
     activityCreated?: (ActivityGenqlSelection & { __args?: {pathway_id?: (Scalars['String'] | null), only_patient_activities?: (Scalars['Boolean'] | null)} })
@@ -3383,6 +4018,318 @@ export interface SubscriptionGenqlSelection{
 }
 
 
+    const FormActivityInputs_possibleTypes: string[] = ['FormActivityInputs']
+    export const isFormActivityInputs = (obj?: { __typename?: any } | null): obj is FormActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFormActivityInputs"')
+      return FormActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ActivityInputs_possibleTypes: string[] = ['FormActivityInputs','DynamicFormActivityInputs','MessageActivityInputs','CalculationActivityInputs','ExtensionActivityInputs']
+    export const isActivityInputs = (obj?: { __typename?: any } | null): obj is ActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActivityInputs"')
+      return ActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Form_possibleTypes: string[] = ['Form']
+    export const isForm = (obj?: { __typename?: any } | null): obj is Form => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isForm"')
+      return Form_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Question_possibleTypes: string[] = ['Question']
+    export const isQuestion = (obj?: { __typename?: any } | null): obj is Question => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isQuestion"')
+      return Question_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Option_possibleTypes: string[] = ['Option']
+    export const isOption = (obj?: { __typename?: any } | null): obj is Option => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isOption"')
+      return Option_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const QuestionConfig_possibleTypes: string[] = ['QuestionConfig']
+    export const isQuestionConfig = (obj?: { __typename?: any } | null): obj is QuestionConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isQuestionConfig"')
+      return QuestionConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const SliderConfig_possibleTypes: string[] = ['SliderConfig']
+    export const isSliderConfig = (obj?: { __typename?: any } | null): obj is SliderConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isSliderConfig"')
+      return SliderConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const PhoneConfig_possibleTypes: string[] = ['PhoneConfig']
+    export const isPhoneConfig = (obj?: { __typename?: any } | null): obj is PhoneConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isPhoneConfig"')
+      return PhoneConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const NumberConfig_possibleTypes: string[] = ['NumberConfig']
+    export const isNumberConfig = (obj?: { __typename?: any } | null): obj is NumberConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isNumberConfig"')
+      return NumberConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const RangeConfig_possibleTypes: string[] = ['RangeConfig']
+    export const isRangeConfig = (obj?: { __typename?: any } | null): obj is RangeConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isRangeConfig"')
+      return RangeConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const MultipleSelectConfig_possibleTypes: string[] = ['MultipleSelectConfig']
+    export const isMultipleSelectConfig = (obj?: { __typename?: any } | null): obj is MultipleSelectConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isMultipleSelectConfig"')
+      return MultipleSelectConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ChoiceRangeConfig_possibleTypes: string[] = ['ChoiceRangeConfig']
+    export const isChoiceRangeConfig = (obj?: { __typename?: any } | null): obj is ChoiceRangeConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isChoiceRangeConfig"')
+      return ChoiceRangeConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ExclusiveOptionConfig_possibleTypes: string[] = ['ExclusiveOptionConfig']
+    export const isExclusiveOptionConfig = (obj?: { __typename?: any } | null): obj is ExclusiveOptionConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isExclusiveOptionConfig"')
+      return ExclusiveOptionConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const DateConfig_possibleTypes: string[] = ['DateConfig']
+    export const isDateConfig = (obj?: { __typename?: any } | null): obj is DateConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDateConfig"')
+      return DateConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FileStorageQuestionConfig_possibleTypes: string[] = ['FileStorageQuestionConfig']
+    export const isFileStorageQuestionConfig = (obj?: { __typename?: any } | null): obj is FileStorageQuestionConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFileStorageQuestionConfig"')
+      return FileStorageQuestionConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const InputValidationConfig_possibleTypes: string[] = ['InputValidationConfig']
+    export const isInputValidationConfig = (obj?: { __typename?: any } | null): obj is InputValidationConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isInputValidationConfig"')
+      return InputValidationConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const InputValidationSimpleConfig_possibleTypes: string[] = ['InputValidationSimpleConfig']
+    export const isInputValidationSimpleConfig = (obj?: { __typename?: any } | null): obj is InputValidationSimpleConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isInputValidationSimpleConfig"')
+      return InputValidationSimpleConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const InputValidationAllowed_possibleTypes: string[] = ['InputValidationAllowed']
+    export const isInputValidationAllowed = (obj?: { __typename?: any } | null): obj is InputValidationAllowed => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isInputValidationAllowed"')
+      return InputValidationAllowed_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Rule_possibleTypes: string[] = ['Rule']
+    export const isRule = (obj?: { __typename?: any } | null): obj is Rule => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isRule"')
+      return Rule_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Condition_possibleTypes: string[] = ['Condition']
+    export const isCondition = (obj?: { __typename?: any } | null): obj is Condition => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCondition"')
+      return Condition_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Operand_possibleTypes: string[] = ['Operand']
+    export const isOperand = (obj?: { __typename?: any } | null): obj is Operand => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isOperand"')
+      return Operand_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const PreviousAnswers_possibleTypes: string[] = ['PreviousAnswers']
+    export const isPreviousAnswers = (obj?: { __typename?: any } | null): obj is PreviousAnswers => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isPreviousAnswers"')
+      return PreviousAnswers_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const Answer_possibleTypes: string[] = ['Answer']
+    export const isAnswer = (obj?: { __typename?: any } | null): obj is Answer => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAnswer"')
+      return Answer_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const DynamicFormActivityInputs_possibleTypes: string[] = ['DynamicFormActivityInputs']
+    export const isDynamicFormActivityInputs = (obj?: { __typename?: any } | null): obj is DynamicFormActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDynamicFormActivityInputs"')
+      return DynamicFormActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const DynamicFormGraphqlType_possibleTypes: string[] = ['DynamicFormGraphqlType']
+    export const isDynamicFormGraphqlType = (obj?: { __typename?: any } | null): obj is DynamicFormGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDynamicFormGraphqlType"')
+      return DynamicFormGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const DynamicQuestion_possibleTypes: string[] = ['DynamicQuestion']
+    export const isDynamicQuestion = (obj?: { __typename?: any } | null): obj is DynamicQuestion => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDynamicQuestion"')
+      return DynamicQuestion_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const MessageActivityInputs_possibleTypes: string[] = ['MessageActivityInputs']
+    export const isMessageActivityInputs = (obj?: { __typename?: any } | null): obj is MessageActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isMessageActivityInputs"')
+      return MessageActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ActivityMessage_possibleTypes: string[] = ['ActivityMessage']
+    export const isActivityMessage = (obj?: { __typename?: any } | null): obj is ActivityMessage => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActivityMessage"')
+      return ActivityMessage_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const MessageAttachment_possibleTypes: string[] = ['MessageAttachment']
+    export const isMessageAttachment = (obj?: { __typename?: any } | null): obj is MessageAttachment => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isMessageAttachment"')
+      return MessageAttachment_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CalculationActivityInputs_possibleTypes: string[] = ['CalculationActivityInputs']
+    export const isCalculationActivityInputs = (obj?: { __typename?: any } | null): obj is CalculationActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCalculationActivityInputs"')
+      return CalculationActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CalculationInput_possibleTypes: string[] = ['CalculationInput']
+    export const isCalculationInput = (obj?: { __typename?: any } | null): obj is CalculationInput => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCalculationInput"')
+      return CalculationInput_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ExtensionActivityInputs_possibleTypes: string[] = ['ExtensionActivityInputs']
+    export const isExtensionActivityInputs = (obj?: { __typename?: any } | null): obj is ExtensionActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isExtensionActivityInputs"')
+      return ExtensionActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const DynamicFormActivityOutputs_possibleTypes: string[] = ['DynamicFormActivityOutputs']
+    export const isDynamicFormActivityOutputs = (obj?: { __typename?: any } | null): obj is DynamicFormActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDynamicFormActivityOutputs"')
+      return DynamicFormActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ActivityOutputs_possibleTypes: string[] = ['DynamicFormActivityOutputs','FormActivityOutputs','CalculationActivityOutputs','ExtensionActivityOutputs']
+    export const isActivityOutputs = (obj?: { __typename?: any } | null): obj is ActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActivityOutputs"')
+      return ActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const QuestionResponseOutput_possibleTypes: string[] = ['QuestionResponseOutput']
+    export const isQuestionResponseOutput = (obj?: { __typename?: any } | null): obj is QuestionResponseOutput => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isQuestionResponseOutput"')
+      return QuestionResponseOutput_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FormActivityOutputs_possibleTypes: string[] = ['FormActivityOutputs']
+    export const isFormActivityOutputs = (obj?: { __typename?: any } | null): obj is FormActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFormActivityOutputs"')
+      return FormActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CalculationActivityOutputs_possibleTypes: string[] = ['CalculationActivityOutputs']
+    export const isCalculationActivityOutputs = (obj?: { __typename?: any } | null): obj is CalculationActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCalculationActivityOutputs"')
+      return CalculationActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const SingleCalculationResult_possibleTypes: string[] = ['SingleCalculationResult']
+    export const isSingleCalculationResult = (obj?: { __typename?: any } | null): obj is SingleCalculationResult => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isSingleCalculationResult"')
+      return SingleCalculationResult_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ExtensionActivityOutputs_possibleTypes: string[] = ['ExtensionActivityOutputs']
+    export const isExtensionActivityOutputs = (obj?: { __typename?: any } | null): obj is ExtensionActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isExtensionActivityOutputs"')
+      return ExtensionActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Query_possibleTypes: string[] = ['Query']
     export const isQuery = (obj?: { __typename?: any } | null): obj is Query => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isQuery"')
@@ -3399,7 +4346,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','TenantPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EmptyPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','IdentityVerificationPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','TenantPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','FormActivityDataPointsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','EmptyPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','UpsertPatientPayload','IdentityVerificationPayload','CompleteSessionPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -3427,6 +4374,14 @@ export interface SubscriptionGenqlSelection{
     export const isPatientPathway = (obj?: { __typename?: any } | null): obj is PatientPathway => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPatientPathway"')
       return PatientPathway_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AuditTrail_possibleTypes: string[] = ['AuditTrail']
+    export const isAuditTrail = (obj?: { __typename?: any } | null): obj is AuditTrail => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAuditTrail"')
+      return AuditTrail_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -3583,150 +4538,6 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Form_possibleTypes: string[] = ['Form']
-    export const isForm = (obj?: { __typename?: any } | null): obj is Form => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isForm"')
-      return Form_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Question_possibleTypes: string[] = ['Question']
-    export const isQuestion = (obj?: { __typename?: any } | null): obj is Question => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isQuestion"')
-      return Question_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Option_possibleTypes: string[] = ['Option']
-    export const isOption = (obj?: { __typename?: any } | null): obj is Option => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isOption"')
-      return Option_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const QuestionConfig_possibleTypes: string[] = ['QuestionConfig']
-    export const isQuestionConfig = (obj?: { __typename?: any } | null): obj is QuestionConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isQuestionConfig"')
-      return QuestionConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const SliderConfig_possibleTypes: string[] = ['SliderConfig']
-    export const isSliderConfig = (obj?: { __typename?: any } | null): obj is SliderConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isSliderConfig"')
-      return SliderConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const PhoneConfig_possibleTypes: string[] = ['PhoneConfig']
-    export const isPhoneConfig = (obj?: { __typename?: any } | null): obj is PhoneConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isPhoneConfig"')
-      return PhoneConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const NumberConfig_possibleTypes: string[] = ['NumberConfig']
-    export const isNumberConfig = (obj?: { __typename?: any } | null): obj is NumberConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isNumberConfig"')
-      return NumberConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const RangeConfig_possibleTypes: string[] = ['RangeConfig']
-    export const isRangeConfig = (obj?: { __typename?: any } | null): obj is RangeConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isRangeConfig"')
-      return RangeConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const MultipleSelectConfig_possibleTypes: string[] = ['MultipleSelectConfig']
-    export const isMultipleSelectConfig = (obj?: { __typename?: any } | null): obj is MultipleSelectConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isMultipleSelectConfig"')
-      return MultipleSelectConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const ChoiceRangeConfig_possibleTypes: string[] = ['ChoiceRangeConfig']
-    export const isChoiceRangeConfig = (obj?: { __typename?: any } | null): obj is ChoiceRangeConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isChoiceRangeConfig"')
-      return ChoiceRangeConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const ExclusiveOptionConfig_possibleTypes: string[] = ['ExclusiveOptionConfig']
-    export const isExclusiveOptionConfig = (obj?: { __typename?: any } | null): obj is ExclusiveOptionConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isExclusiveOptionConfig"')
-      return ExclusiveOptionConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const DateConfig_possibleTypes: string[] = ['DateConfig']
-    export const isDateConfig = (obj?: { __typename?: any } | null): obj is DateConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isDateConfig"')
-      return DateConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const FileStorageQuestionConfig_possibleTypes: string[] = ['FileStorageQuestionConfig']
-    export const isFileStorageQuestionConfig = (obj?: { __typename?: any } | null): obj is FileStorageQuestionConfig => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isFileStorageQuestionConfig"')
-      return FileStorageQuestionConfig_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Rule_possibleTypes: string[] = ['Rule']
-    export const isRule = (obj?: { __typename?: any } | null): obj is Rule => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isRule"')
-      return Rule_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Condition_possibleTypes: string[] = ['Condition']
-    export const isCondition = (obj?: { __typename?: any } | null): obj is Condition => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isCondition"')
-      return Condition_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Operand_possibleTypes: string[] = ['Operand']
-    export const isOperand = (obj?: { __typename?: any } | null): obj is Operand => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isOperand"')
-      return Operand_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const PreviousAnswers_possibleTypes: string[] = ['PreviousAnswers']
-    export const isPreviousAnswers = (obj?: { __typename?: any } | null): obj is PreviousAnswers => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isPreviousAnswers"')
-      return PreviousAnswers_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const Answer_possibleTypes: string[] = ['Answer']
-    export const isAnswer = (obj?: { __typename?: any } | null): obj is Answer => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isAnswer"')
-      return Answer_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
     const ActivityMetadata_possibleTypes: string[] = ['ActivityMetadata']
     export const isActivityMetadata = (obj?: { __typename?: any } | null): obj is ActivityMetadata => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isActivityMetadata"')
@@ -3747,6 +4558,70 @@ export interface SubscriptionGenqlSelection{
     export const isActivityTypesPayload = (obj?: { __typename?: any } | null): obj is ActivityTypesPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isActivityTypesPayload"')
       return ActivityTypesPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const WorkerAgentConfigPayload_possibleTypes: string[] = ['WorkerAgentConfigPayload']
+    export const isWorkerAgentConfigPayload = (obj?: { __typename?: any } | null): obj is WorkerAgentConfigPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isWorkerAgentConfigPayload"')
+      return WorkerAgentConfigPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const WorkerAgentConfigGraphqlType_possibleTypes: string[] = ['WorkerAgentConfigGraphqlType']
+    export const isWorkerAgentConfigGraphqlType = (obj?: { __typename?: any } | null): obj is WorkerAgentConfigGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isWorkerAgentConfigGraphqlType"')
+      return WorkerAgentConfigGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const StakeholderInfoGraphqlType_possibleTypes: string[] = ['StakeholderInfoGraphqlType']
+    export const isStakeholderInfoGraphqlType = (obj?: { __typename?: any } | null): obj is StakeholderInfoGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isStakeholderInfoGraphqlType"')
+      return StakeholderInfoGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FieldSpecGraphqlType_possibleTypes: string[] = ['FieldSpecGraphqlType']
+    export const isFieldSpecGraphqlType = (obj?: { __typename?: any } | null): obj is FieldSpecGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFieldSpecGraphqlType"')
+      return FieldSpecGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ToolSpecGraphqlType_possibleTypes: string[] = ['ToolSpecGraphqlType']
+    export const isToolSpecGraphqlType = (obj?: { __typename?: any } | null): obj is ToolSpecGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isToolSpecGraphqlType"')
+      return ToolSpecGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ParameterSpecGraphqlType_possibleTypes: string[] = ['ParameterSpecGraphqlType']
+    export const isParameterSpecGraphqlType = (obj?: { __typename?: any } | null): obj is ParameterSpecGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isParameterSpecGraphqlType"')
+      return ParameterSpecGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AuditGraphqlType_possibleTypes: string[] = ['AuditGraphqlType']
+    export const isAuditGraphqlType = (obj?: { __typename?: any } | null): obj is AuditGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAuditGraphqlType"')
+      return AuditGraphqlType_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ByGraphqlType_possibleTypes: string[] = ['ByGraphqlType']
+    export const isByGraphqlType = (obj?: { __typename?: any } | null): obj is ByGraphqlType => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isByGraphqlType"')
+      return ByGraphqlType_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -3811,14 +4686,6 @@ export interface SubscriptionGenqlSelection{
     export const isCalculationResultsPayload = (obj?: { __typename?: any } | null): obj is CalculationResultsPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isCalculationResultsPayload"')
       return CalculationResultsPayload_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const SingleCalculationResult_possibleTypes: string[] = ['SingleCalculationResult']
-    export const isSingleCalculationResult = (obj?: { __typename?: any } | null): obj is SingleCalculationResult => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isSingleCalculationResult"')
-      return SingleCalculationResult_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4071,14 +4938,6 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const MessageAttachment_possibleTypes: string[] = ['MessageAttachment']
-    export const isMessageAttachment = (obj?: { __typename?: any } | null): obj is MessageAttachment => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isMessageAttachment"')
-      return MessageAttachment_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
     const OrchestrationFactsPayload_possibleTypes: string[] = ['OrchestrationFactsPayload']
     export const isOrchestrationFactsPayload = (obj?: { __typename?: any } | null): obj is OrchestrationFactsPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isOrchestrationFactsPayload"')
@@ -4211,14 +5070,6 @@ export interface SubscriptionGenqlSelection{
     export const isPublishedPathwayDefinition = (obj?: { __typename?: any } | null): obj is PublishedPathwayDefinition => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPublishedPathwayDefinition"')
       return PublishedPathwayDefinition_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const AuditTrail_possibleTypes: string[] = ['AuditTrail']
-    export const isAuditTrail = (obj?: { __typename?: any } | null): obj is AuditTrail => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isAuditTrail"')
-      return AuditTrail_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4439,6 +5290,54 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const OrchestratedAgentPayload_possibleTypes: string[] = ['OrchestratedAgentPayload']
+    export const isOrchestratedAgentPayload = (obj?: { __typename?: any } | null): obj is OrchestratedAgentPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isOrchestratedAgentPayload"')
+      return OrchestratedAgentPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const OrchestratedAgent_possibleTypes: string[] = ['OrchestratedAgent']
+    export const isOrchestratedAgent = (obj?: { __typename?: any } | null): obj is OrchestratedAgent => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isOrchestratedAgent"')
+      return OrchestratedAgent_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const StakeholderHPLink_possibleTypes: string[] = ['StakeholderHPLink']
+    export const isStakeholderHPLink = (obj?: { __typename?: any } | null): obj is StakeholderHPLink => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isStakeholderHPLink"')
+      return StakeholderHPLink_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AgentStakeholder_possibleTypes: string[] = ['AgentStakeholder']
+    export const isAgentStakeholder = (obj?: { __typename?: any } | null): obj is AgentStakeholder => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAgentStakeholder"')
+      return AgentStakeholder_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FormActivityDataPointsPayload_possibleTypes: string[] = ['FormActivityDataPointsPayload']
+    export const isFormActivityDataPointsPayload = (obj?: { __typename?: any } | null): obj is FormActivityDataPointsPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFormActivityDataPointsPayload"')
+      return FormActivityDataPointsPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const FormActivityDataPoint_possibleTypes: string[] = ['FormActivityDataPoint']
+    export const isFormActivityDataPoint = (obj?: { __typename?: any } | null): obj is FormActivityDataPoint => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isFormActivityDataPoint"')
+      return FormActivityDataPoint_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Mutation_possibleTypes: string[] = ['Mutation']
     export const isMutation = (obj?: { __typename?: any } | null): obj is Mutation => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isMutation"')
@@ -4471,6 +5370,14 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const EmptyPayload_possibleTypes: string[] = ['EmptyPayload']
+    export const isEmptyPayload = (obj?: { __typename?: any } | null): obj is EmptyPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isEmptyPayload"')
+      return EmptyPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const CancelScheduledTracksPayload_possibleTypes: string[] = ['CancelScheduledTracksPayload']
     export const isCancelScheduledTracksPayload = (obj?: { __typename?: any } | null): obj is CancelScheduledTracksPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isCancelScheduledTracksPayload"')
@@ -4491,14 +5398,6 @@ export interface SubscriptionGenqlSelection{
     export const isCreatePatientPayload = (obj?: { __typename?: any } | null): obj is CreatePatientPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isCreatePatientPayload"')
       return CreatePatientPayload_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
-    const EmptyPayload_possibleTypes: string[] = ['EmptyPayload']
-    export const isEmptyPayload = (obj?: { __typename?: any } | null): obj is EmptyPayload => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isEmptyPayload"')
-      return EmptyPayload_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4663,10 +5562,26 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const UpsertPatientPayload_possibleTypes: string[] = ['UpsertPatientPayload']
+    export const isUpsertPatientPayload = (obj?: { __typename?: any } | null): obj is UpsertPatientPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isUpsertPatientPayload"')
+      return UpsertPatientPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const IdentityVerificationPayload_possibleTypes: string[] = ['IdentityVerificationPayload']
     export const isIdentityVerificationPayload = (obj?: { __typename?: any } | null): obj is IdentityVerificationPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isIdentityVerificationPayload"')
       return IdentityVerificationPayload_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CompleteSessionPayload_possibleTypes: string[] = ['CompleteSessionPayload']
+    export const isCompleteSessionPayload = (obj?: { __typename?: any } | null): obj is CompleteSessionPayload => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCompleteSessionPayload"')
+      return CompleteSessionPayload_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -4678,28 +5593,12 @@ export interface SubscriptionGenqlSelection{
     }
     
 
-export const enumPathwayStatus = {
-   starting: 'starting' as const,
-   active: 'active' as const,
-   stopped: 'stopped' as const,
-   completed: 'completed' as const,
-   missing_baseline_info: 'missing_baseline_info' as const
-}
-
-export const enumDataPointSourceType = {
-   PATHWAY: 'PATHWAY' as const,
-   STEP: 'STEP' as const,
-   TRACK: 'TRACK' as const,
+export const enumActivityInputType = {
    FORM: 'FORM' as const,
+   DYNAMIC_FORM: 'DYNAMIC_FORM' as const,
+   MESSAGE: 'MESSAGE' as const,
    CALCULATION: 'CALCULATION' as const,
-   PATIENT_PROFILE: 'PATIENT_PROFILE' as const,
-   PATIENT_IDENTIFIER: 'PATIENT_IDENTIFIER' as const,
-   API_CALL: 'API_CALL' as const,
-   API_CALL_STATUS: 'API_CALL_STATUS' as const,
-   EXTENSION_WEBHOOK: 'EXTENSION_WEBHOOK' as const,
-   EXTENSION_ACTION: 'EXTENSION_ACTION' as const,
-   DATA_POINT: 'DATA_POINT' as const,
-   DECISION: 'DECISION' as const
+   EXTENSION: 'EXTENSION' as const
 }
 
 export const enumDataPointValueType = {
@@ -4713,84 +5612,6 @@ export const enumDataPointValueType = {
    JSON: 'JSON' as const,
    ATTACHMENT: 'ATTACHMENT' as const,
    ATTACHMENTS_ARRAY: 'ATTACHMENTS_ARRAY' as const
-}
-
-export const enumActivitySubjectType = {
-   AWELL: 'AWELL' as const,
-   STAKEHOLDER: 'STAKEHOLDER' as const,
-   USER: 'USER' as const,
-   PLUGIN: 'PLUGIN' as const,
-   API_CALL: 'API_CALL' as const
-}
-
-export const enumActivityAction = {
-   ADDED: 'ADDED' as const,
-   ACTIVATE: 'ACTIVATE' as const,
-   COMPLETE: 'COMPLETE' as const,
-   DISCARDED: 'DISCARDED' as const,
-   SEND: 'SEND' as const,
-   REMIND: 'REMIND' as const,
-   DELIVER: 'DELIVER' as const,
-   COMPUTED: 'COMPUTED' as const,
-   FAILED: 'FAILED' as const,
-   FAILED_TO_SEND: 'FAILED_TO_SEND' as const,
-   SUBMITTED: 'SUBMITTED' as const,
-   ASSIGNED: 'ASSIGNED' as const,
-   READ: 'READ' as const,
-   STOPPED: 'STOPPED' as const,
-   PROCESSED: 'PROCESSED' as const,
-   SCHEDULED: 'SCHEDULED' as const,
-   IS_WAITING_ON: 'IS_WAITING_ON' as const,
-   POSTPONED: 'POSTPONED' as const,
-   DELEGATED: 'DELEGATED' as const,
-   GENERATED: 'GENERATED' as const,
-   SKIPPED: 'SKIPPED' as const,
-   REPORTED: 'REPORTED' as const,
-   EXPIRED: 'EXPIRED' as const
-}
-
-export const enumActivityObjectType = {
-   ACTION: 'ACTION' as const,
-   AGENT: 'AGENT' as const,
-   API_CALL: 'API_CALL' as const,
-   CALCULATION: 'CALCULATION' as const,
-   CHECKLIST: 'CHECKLIST' as const,
-   CLINICAL_NOTE: 'CLINICAL_NOTE' as const,
-   DECISION: 'DECISION' as const,
-   EVALUATED_RULE: 'EVALUATED_RULE' as const,
-   EMR_REPORT: 'EMR_REPORT' as const,
-   FORM: 'FORM' as const,
-   MESSAGE: 'MESSAGE' as const,
-   PATHWAY: 'PATHWAY' as const,
-   PATIENT: 'PATIENT' as const,
-   REMINDER: 'REMINDER' as const,
-   STAKEHOLDER: 'STAKEHOLDER' as const,
-   STEP: 'STEP' as const,
-   USER: 'USER' as const,
-   EMR_REQUEST: 'EMR_REQUEST' as const,
-   TRACK: 'TRACK' as const,
-   TIMER: 'TIMER' as const,
-   PLUGIN: 'PLUGIN' as const,
-   PLUGIN_ACTION: 'PLUGIN_ACTION' as const
-}
-
-export const enumActivityStatus = {
-   ACTIVE: 'ACTIVE' as const,
-   DONE: 'DONE' as const,
-   FAILED: 'FAILED' as const,
-   CANCELED: 'CANCELED' as const,
-   EXPIRED: 'EXPIRED' as const
-}
-
-export const enumActivityResolution = {
-   FAILURE: 'FAILURE' as const,
-   SUCCESS: 'SUCCESS' as const,
-   EXPIRED: 'EXPIRED' as const
-}
-
-export const enumFormDisplayMode = {
-   CONVERSATIONAL: 'CONVERSATIONAL' as const,
-   REGULAR: 'REGULAR' as const
 }
 
 export const enumQuestionType = {
@@ -4862,6 +5683,136 @@ export const enumConditionOperandType = {
    DATA_POINT: 'DATA_POINT' as const
 }
 
+export const enumMessageFormat = {
+   SLATE: 'SLATE' as const,
+   HTML: 'HTML' as const
+}
+
+export const enumMessageAttachmentType = {
+   FILE: 'FILE' as const,
+   VIDEO: 'VIDEO' as const,
+   LINK: 'LINK' as const
+}
+
+export const enumActivityOutputType = {
+   FORM: 'FORM' as const,
+   DYNAMIC_FORM: 'DYNAMIC_FORM' as const,
+   CALCULATION: 'CALCULATION' as const,
+   EXTENSION: 'EXTENSION' as const
+}
+
+export const enumPathwayStatus = {
+   starting: 'starting' as const,
+   active: 'active' as const,
+   stopped: 'stopped' as const,
+   completed: 'completed' as const,
+   missing_baseline_info: 'missing_baseline_info' as const
+}
+
+export const enumDataPointSourceType = {
+   PATHWAY: 'PATHWAY' as const,
+   STEP: 'STEP' as const,
+   TRACK: 'TRACK' as const,
+   FORM: 'FORM' as const,
+   CALCULATION: 'CALCULATION' as const,
+   PATIENT_PROFILE: 'PATIENT_PROFILE' as const,
+   PATIENT_IDENTIFIER: 'PATIENT_IDENTIFIER' as const,
+   API_CALL: 'API_CALL' as const,
+   API_CALL_STATUS: 'API_CALL_STATUS' as const,
+   EXTENSION_WEBHOOK: 'EXTENSION_WEBHOOK' as const,
+   EXTENSION_ACTION: 'EXTENSION_ACTION' as const,
+   DATA_POINT: 'DATA_POINT' as const,
+   DECISION: 'DECISION' as const,
+   AGENT: 'AGENT' as const,
+   SYSTEM: 'SYSTEM' as const
+}
+
+export const enumActivitySubjectType = {
+   AWELL: 'AWELL' as const,
+   STAKEHOLDER: 'STAKEHOLDER' as const,
+   USER: 'USER' as const,
+   PLUGIN: 'PLUGIN' as const,
+   API_CALL: 'API_CALL' as const,
+   AGENT: 'AGENT' as const
+}
+
+export const enumActivityAction = {
+   ADDED: 'ADDED' as const,
+   ACTIVATE: 'ACTIVATE' as const,
+   COMPLETE: 'COMPLETE' as const,
+   DISCARDED: 'DISCARDED' as const,
+   SEND: 'SEND' as const,
+   REMIND: 'REMIND' as const,
+   DELIVER: 'DELIVER' as const,
+   COMPUTED: 'COMPUTED' as const,
+   FAILED: 'FAILED' as const,
+   FAILED_TO_SEND: 'FAILED_TO_SEND' as const,
+   SUBMITTED: 'SUBMITTED' as const,
+   ASSIGNED: 'ASSIGNED' as const,
+   READ: 'READ' as const,
+   STOPPED: 'STOPPED' as const,
+   PROCESSED: 'PROCESSED' as const,
+   SCHEDULED: 'SCHEDULED' as const,
+   IS_WAITING_ON: 'IS_WAITING_ON' as const,
+   POSTPONED: 'POSTPONED' as const,
+   DELEGATED: 'DELEGATED' as const,
+   GENERATED: 'GENERATED' as const,
+   SKIPPED: 'SKIPPED' as const,
+   REPORTED: 'REPORTED' as const,
+   EXPIRED: 'EXPIRED' as const
+}
+
+export const enumActivityObjectType = {
+   ACTION: 'ACTION' as const,
+   AGENT: 'AGENT' as const,
+   API_CALL: 'API_CALL' as const,
+   CALCULATION: 'CALCULATION' as const,
+   CHECKLIST: 'CHECKLIST' as const,
+   CLINICAL_NOTE: 'CLINICAL_NOTE' as const,
+   DECISION: 'DECISION' as const,
+   EVALUATED_RULE: 'EVALUATED_RULE' as const,
+   EMR_REPORT: 'EMR_REPORT' as const,
+   FORM: 'FORM' as const,
+   MESSAGE: 'MESSAGE' as const,
+   PATHWAY: 'PATHWAY' as const,
+   PATIENT: 'PATIENT' as const,
+   REMINDER: 'REMINDER' as const,
+   STAKEHOLDER: 'STAKEHOLDER' as const,
+   STEP: 'STEP' as const,
+   USER: 'USER' as const,
+   EMR_REQUEST: 'EMR_REQUEST' as const,
+   TRACK: 'TRACK' as const,
+   TIMER: 'TIMER' as const,
+   PLUGIN: 'PLUGIN' as const,
+   PLUGIN_ACTION: 'PLUGIN_ACTION' as const
+}
+
+export const enumActivityStatus = {
+   ACTIVE: 'ACTIVE' as const,
+   DONE: 'DONE' as const,
+   FAILED: 'FAILED' as const,
+   CANCELED: 'CANCELED' as const,
+   EXPIRED: 'EXPIRED' as const
+}
+
+export const enumActivityResolution = {
+   FAILURE: 'FAILURE' as const,
+   SUCCESS: 'SUCCESS' as const,
+   EXPIRED: 'EXPIRED' as const
+}
+
+export const enumActivityReferenceType = {
+   NAVIGATION: 'NAVIGATION' as const,
+   REMINDER: 'REMINDER' as const,
+   ORCHESTRATION: 'ORCHESTRATION' as const,
+   AGENT: 'AGENT' as const
+}
+
+export const enumFormDisplayMode = {
+   CONVERSATIONAL: 'CONVERSATIONAL' as const,
+   REGULAR: 'REGULAR' as const
+}
+
 export const enumApiCallRequestMethod = {
    GET: 'GET' as const,
    POST: 'POST' as const,
@@ -4884,7 +5835,8 @@ export const enumElementType = {
    TRACK: 'TRACK' as const,
    STEP: 'STEP' as const,
    ACTION: 'ACTION' as const,
-   TRIGGER: 'TRIGGER' as const
+   TRIGGER: 'TRIGGER' as const,
+   AGENT: 'AGENT' as const
 }
 
 export const enumActionType = {
@@ -4929,17 +5881,6 @@ export const enumHostedSessionStatus = {
 export const enumHostedSessionStakeholderType = {
    PATIENT: 'PATIENT' as const,
    STAKEHOLDER: 'STAKEHOLDER' as const
-}
-
-export const enumMessageFormat = {
-   SLATE: 'SLATE' as const,
-   HTML: 'HTML' as const
-}
-
-export const enumMessageAttachmentType = {
-   FILE: 'FILE' as const,
-   VIDEO: 'VIDEO' as const,
-   LINK: 'LINK' as const
 }
 
 export const enumSex = {

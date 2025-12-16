@@ -18,6 +18,8 @@ enum ActivityInputType {
   MESSAGE
   CALCULATION
   EXTENSION
+  DECISION_TABLE
+  CODE_BLOCK
 }
 
 type Form {
@@ -324,6 +326,18 @@ scalar JSON
 type ExtensionActivityInputs implements ActivityInputs {
   type: ActivityInputType!
   extension_fields: JSON
+  componentKey: String!
+  extension_settings: [JSON!]
+}
+
+type DecisionTableActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  decision_table: JSON
+}
+
+type CodeBlockActivityInputs implements ActivityInputs {
+  type: ActivityInputType!
+  code_block: JSON
 }
 
 type DynamicFormActivityOutputs implements ActivityOutputs {
@@ -340,6 +354,11 @@ enum ActivityOutputType {
   DYNAMIC_FORM
   CALCULATION
   EXTENSION
+  DECISION_TABLE
+  CODE_BLOCK
+  TRACK_TRIGGER
+  ENROLLMENT_TRIGGER
+  TIMER
 }
 
 type QuestionResponseOutput {
@@ -371,9 +390,136 @@ type ExtensionActivityOutputs implements ActivityOutputs {
   extension_results: JSON
 }
 
+type DecisionTableActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  decision_table_outputs: JSON
+  matched_rule_ids: [String!]
+  matched_rule_priorities: [Float!]
+}
+
+type CodeBlockActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+
+  """The result value returned by the code block"""
+  result: String
+
+  """Output data points with their labels"""
+  code_block_outputs: JSON
+
+  """Execution metadata"""
+  execution_meta: CodeBlockExecutionMeta
+}
+
+type CodeBlockExecutionMeta {
+  duration_ms: Float
+  execution_id: String
+}
+
+type TrackTriggerActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  satisfied: Boolean!
+  evaluated_rule_id: String!
+  trigger_type: String!
+  triggering_event: TriggeringEvent!
+  target_track_id: String!
+  target_track_name: String
+  scheduled_activation_date: String
+  activation_reference: ActivationReference
+}
+
+type TriggeringEvent {
+  type: String!
+  source_id: String
+}
+
+type ActivationReference {
+  type: String!
+  reference_name: String
+}
+
+type EnrollmentTriggerActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  action_type: String!
+  result: String!
+  status: String!
+  skip_reason: String
+  error_message: String
+  careflow_definition_id: String
+  careflow_definition_name: String
+  careflow_id: String
+  existing_careflow_id: String
+  existing_careflow_title: String
+  track_id: String
+  track_name: String
+  conditions_evaluated: Boolean
+  data_points_set: [EnrollmentTriggerDataPoint!]
+  source_type: String!
+  source_id: String!
+}
+
+type EnrollmentTriggerDataPoint {
+  data_point_definition_id: String!
+  value: String!
+}
+
+type TimerActivityOutputs implements ActivityOutputs {
+  type: ActivityOutputType!
+  timer_type: TimerType!
+  delay_config: TimerDelayConfig
+  reference_data_point: TimerReferenceDataPoint
+  resource_config: TimerResourceConfig
+  awaited_data_point: TimerAwaitedDataPoint
+  timeout_config: TimerTimeoutConfig
+
+  """
+  For DATA_POINT_AWAITED timers: whether completed due to data point collection or timeout
+  """
+  completion_reason: String
+  scheduled_date: String!
+  completion_date: String!
+  completion_type: String!
+  skipped_by: String
+  skip_reason: String
+  activation_activity_id: String
+}
+
+enum TimerType {
+  DELAY
+  EXTENSION_RESOURCE_UPDATED
+  DATA_POINT_REFERENCE
+  DATA_POINT_AWAITED
+}
+
+type TimerDelayConfig {
+  amount: Float!
+  unit: String!
+}
+
+type TimerReferenceDataPoint {
+  definition_id: String!
+  name: String
+  value: String
+}
+
+type TimerResourceConfig {
+  timer_key: String!
+  action_key: String!
+  resource_id: String
+}
+
+type TimerAwaitedDataPoint {
+  definition_id: String!
+  name: String
+}
+
+type TimerTimeoutConfig {
+  amount: Float!
+  unit: String!
+}
+
 type Query {
   scheduledTracksForPathway(pathway_id: String!): ScheduledTracksPayload!
-  patientPathways(patient_id: String!, filters: FilterPatientPathways): PatientPathwaysPayload!
+  patientPathways(patient_id: String, patient_identifier: IdentifierInput, filters: FilterPatientPathways): PatientPathwaysPayload!
   baselineInfo(pathway_id: String!): BaselineInfoPayload!
   myPendingActivities: ActivitiesPayload!
   myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload!
@@ -410,7 +556,7 @@ type Query {
   patients(pagination: PaginationParams, sorting: SortingParams, filters: FilterPatients): PatientsPayload!
   patientByIdentifier(system: String!, value: String!): PatientPayload!
   publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
-  getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
+  getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload! @deprecated(reason: "This query is deprecated. Use 'publishedPathwayDefinitions' instead for better performance.")
   getPublishedCareflowVersions(careflow_definition_id: String): CareflowVersionsPayload!
   scheduledSteps(pathway_id: String!): ScheduledStepsPayload!
   searchPatientsByPatientCode(patient_code: String!): SearchPatientsPayload!
@@ -429,10 +575,9 @@ type Query {
   getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
   pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String, data_point_key: String): DataPointPayload!
-  decisionOutputs(pathway_id: String!, activity_id: String!): DecisionOutputsPayload!
 
   """Generate a signed URL for file upload to GCS"""
-  getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_slug: String!): FileUploadGCSPayload!
+  getSignedUrl(file_name: String!, content_type: String!, expires_in: Float, config_slug: String!, activity_id: String): FileUploadGCSPayload!
   getAgentByThreadId(agent_thread_id: String): OrchestratedAgentPayload!
   formActivityDataPoints(careflow_id: String!, activity_id: String!): FormActivityDataPointsPayload!
 }
@@ -543,8 +688,11 @@ enum DataPointSourceType {
   API_CALL_STATUS
   EXTENSION_WEBHOOK
   EXTENSION_ACTION
+  EXTENSION_ACTION_RESOLUTION
   DATA_POINT
   DECISION
+  CODE
+  LOGIC
   AGENT
   SYSTEM
 }
@@ -562,6 +710,11 @@ type Range {
 type DataPointMetaDataItem {
   value: String!
   key: String!
+}
+
+input IdentifierInput {
+  system: String!
+  value: String!
 }
 
 input FilterPatientPathways {
@@ -697,20 +850,23 @@ enum ActivityObjectType {
   CALCULATION
   CHECKLIST
   CLINICAL_NOTE
-  DECISION
   EVALUATED_RULE
   EMR_REPORT
+  ENROLLMENT_TRIGGER
   FORM
   MESSAGE
+  LOGIC
   PATHWAY
   PATIENT
   REMINDER
   STAKEHOLDER
   STEP
+  TRACK
+  TRACK_TRIGGER
+  TIMER
+  TIMER_COMPLETION
   USER
   EMR_REQUEST
-  TRACK
-  TIMER
   PLUGIN
   PLUGIN_ACTION
 }
@@ -1018,6 +1174,7 @@ type ElementsPayload implements Payload {
 
 type Element {
   id: ID!
+  definition_id: String
   parent_id: ID
   name: String!
   type: ElementType!
@@ -1191,6 +1348,7 @@ type HostedSession {
   user_context: HostedSessionUserContext
   created_at: String!
   expires_at: String!
+  organization_slug: String
 }
 
 enum HostedSessionStatus {
@@ -1406,6 +1564,7 @@ input FilterPathways {
   pathway_definition_id: IdFilter
   status: StringArrayFilter
   patient_id: StringArrayFilter
+  patient_identifier: [IdentifierInput!]
   version: NumberArrayFilter
   release_id: StringArrayFilter
   start_date: DateFilter
@@ -1675,17 +1834,12 @@ type DataPoint {
   activity_id: String
 }
 
-type DecisionOutputsPayload implements Payload {
-  code: String!
-  success: Boolean!
-  outputs: String!
-}
-
 type FileUploadGCSPayload implements Payload {
   code: String!
   success: Boolean!
   upload_url: String!
   file_url: String!
+  required_headers: JSON
 }
 
 type OrchestratedAgentPayload {
@@ -1810,11 +1964,6 @@ input AddIdentifierToPatientInput {
   identifier: IdentifierInput!
 }
 
-input IdentifierInput {
-  system: String!
-  value: String!
-}
-
 type AddTrackPayload implements Payload {
   code: String!
   success: Boolean!
@@ -1910,7 +2059,8 @@ input DeletePathwayInput {
 }
 
 input DeletePatientInput {
-  patient_id: String!
+  patient_id: String
+  patient_identifier: IdentifierInput
 }
 
 type EvaluateFormRulesPayload implements Payload {
@@ -2041,6 +2191,7 @@ type StartHostedActivitySessionPayload implements Payload {
   session_url: String!
   language: String
   user_context: HostedSessionUserContext
+  organization_slug: String
 }
 
 input StartHostedActivitySessionInput {
@@ -2063,6 +2214,7 @@ type StartHostedPathwaySessionFromLinkPayload implements Payload {
   code: String!
   success: Boolean!
   session_url: String!
+  organization_slug: String
 }
 
 input StartHostedPathwaySessionFromLinkInput {
@@ -2082,6 +2234,7 @@ type StartHostedPathwaySessionPayload implements Payload {
   pathway_id: String!
   stakeholder: HostedSessionStakeholder!
   user_context: HostedSessionUserContext
+  organization_slug: String
 }
 
 input StartHostedPathwaySessionInput {
@@ -2147,6 +2300,7 @@ input StartPathwayWithPatientIdentifierInput {
   pathway_definition_id: String!
   data_points: [DataPointInput!]
   release_id: String
+  create_patient: Boolean
 }
 
 input StopPathwayInput {

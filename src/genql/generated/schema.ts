@@ -19,9 +19,9 @@ export interface FormActivityInputs {
     __typename: 'FormActivityInputs'
 }
 
-export type ActivityInputs = (FormActivityInputs | DynamicFormActivityInputs | MessageActivityInputs | CalculationActivityInputs | ExtensionActivityInputs) & { __isUnion?: true }
+export type ActivityInputs = (FormActivityInputs | DynamicFormActivityInputs | MessageActivityInputs | CalculationActivityInputs | ExtensionActivityInputs | DecisionTableActivityInputs | CodeBlockActivityInputs) & { __isUnion?: true }
 
-export type ActivityInputType = 'FORM' | 'DYNAMIC_FORM' | 'MESSAGE' | 'CALCULATION' | 'EXTENSION'
+export type ActivityInputType = 'FORM' | 'DYNAMIC_FORM' | 'MESSAGE' | 'CALCULATION' | 'EXTENSION' | 'DECISION_TABLE' | 'CODE_BLOCK'
 
 export interface Form {
     release_id: Scalars['String']
@@ -276,7 +276,21 @@ export interface CalculationInput {
 export interface ExtensionActivityInputs {
     type: ActivityInputType
     extension_fields: (Scalars['JSON'] | null)
+    componentKey: Scalars['String']
+    extension_settings: (Scalars['JSON'][] | null)
     __typename: 'ExtensionActivityInputs'
+}
+
+export interface DecisionTableActivityInputs {
+    type: ActivityInputType
+    decision_table: (Scalars['JSON'] | null)
+    __typename: 'DecisionTableActivityInputs'
+}
+
+export interface CodeBlockActivityInputs {
+    type: ActivityInputType
+    code_block: (Scalars['JSON'] | null)
+    __typename: 'CodeBlockActivityInputs'
 }
 
 export interface DynamicFormActivityOutputs {
@@ -285,9 +299,9 @@ export interface DynamicFormActivityOutputs {
     __typename: 'DynamicFormActivityOutputs'
 }
 
-export type ActivityOutputs = (DynamicFormActivityOutputs | FormActivityOutputs | CalculationActivityOutputs | ExtensionActivityOutputs) & { __isUnion?: true }
+export type ActivityOutputs = (DynamicFormActivityOutputs | FormActivityOutputs | CalculationActivityOutputs | ExtensionActivityOutputs | DecisionTableActivityOutputs | CodeBlockActivityOutputs | TrackTriggerActivityOutputs | EnrollmentTriggerActivityOutputs | TimerActivityOutputs) & { __isUnion?: true }
 
-export type ActivityOutputType = 'FORM' | 'DYNAMIC_FORM' | 'CALCULATION' | 'EXTENSION'
+export type ActivityOutputType = 'FORM' | 'DYNAMIC_FORM' | 'CALCULATION' | 'EXTENSION' | 'DECISION_TABLE' | 'CODE_BLOCK' | 'TRACK_TRIGGER' | 'ENROLLMENT_TRIGGER' | 'TIMER'
 
 export interface QuestionResponseOutput {
     question_id: Scalars['String']
@@ -321,6 +335,136 @@ export interface ExtensionActivityOutputs {
     type: ActivityOutputType
     extension_results: (Scalars['JSON'] | null)
     __typename: 'ExtensionActivityOutputs'
+}
+
+export interface DecisionTableActivityOutputs {
+    type: ActivityOutputType
+    decision_table_outputs: (Scalars['JSON'] | null)
+    matched_rule_ids: (Scalars['String'][] | null)
+    matched_rule_priorities: (Scalars['Float'][] | null)
+    __typename: 'DecisionTableActivityOutputs'
+}
+
+export interface CodeBlockActivityOutputs {
+    type: ActivityOutputType
+    /** The result value returned by the code block */
+    result: (Scalars['String'] | null)
+    /** Output data points with their labels */
+    code_block_outputs: (Scalars['JSON'] | null)
+    /** Execution metadata */
+    execution_meta: (CodeBlockExecutionMeta | null)
+    __typename: 'CodeBlockActivityOutputs'
+}
+
+export interface CodeBlockExecutionMeta {
+    duration_ms: (Scalars['Float'] | null)
+    execution_id: (Scalars['String'] | null)
+    __typename: 'CodeBlockExecutionMeta'
+}
+
+export interface TrackTriggerActivityOutputs {
+    type: ActivityOutputType
+    satisfied: Scalars['Boolean']
+    evaluated_rule_id: Scalars['String']
+    trigger_type: Scalars['String']
+    triggering_event: TriggeringEvent
+    target_track_id: Scalars['String']
+    target_track_name: (Scalars['String'] | null)
+    scheduled_activation_date: (Scalars['String'] | null)
+    activation_reference: (ActivationReference | null)
+    __typename: 'TrackTriggerActivityOutputs'
+}
+
+export interface TriggeringEvent {
+    type: Scalars['String']
+    source_id: (Scalars['String'] | null)
+    __typename: 'TriggeringEvent'
+}
+
+export interface ActivationReference {
+    type: Scalars['String']
+    reference_name: (Scalars['String'] | null)
+    __typename: 'ActivationReference'
+}
+
+export interface EnrollmentTriggerActivityOutputs {
+    type: ActivityOutputType
+    action_type: Scalars['String']
+    result: Scalars['String']
+    status: Scalars['String']
+    skip_reason: (Scalars['String'] | null)
+    error_message: (Scalars['String'] | null)
+    careflow_definition_id: (Scalars['String'] | null)
+    careflow_definition_name: (Scalars['String'] | null)
+    careflow_id: (Scalars['String'] | null)
+    existing_careflow_id: (Scalars['String'] | null)
+    existing_careflow_title: (Scalars['String'] | null)
+    track_id: (Scalars['String'] | null)
+    track_name: (Scalars['String'] | null)
+    conditions_evaluated: (Scalars['Boolean'] | null)
+    data_points_set: (EnrollmentTriggerDataPoint[] | null)
+    source_type: Scalars['String']
+    source_id: Scalars['String']
+    __typename: 'EnrollmentTriggerActivityOutputs'
+}
+
+export interface EnrollmentTriggerDataPoint {
+    data_point_definition_id: Scalars['String']
+    value: Scalars['String']
+    __typename: 'EnrollmentTriggerDataPoint'
+}
+
+export interface TimerActivityOutputs {
+    type: ActivityOutputType
+    timer_type: TimerType
+    delay_config: (TimerDelayConfig | null)
+    reference_data_point: (TimerReferenceDataPoint | null)
+    resource_config: (TimerResourceConfig | null)
+    awaited_data_point: (TimerAwaitedDataPoint | null)
+    timeout_config: (TimerTimeoutConfig | null)
+    /** For DATA_POINT_AWAITED timers: whether completed due to data point collection or timeout */
+    completion_reason: (Scalars['String'] | null)
+    scheduled_date: Scalars['String']
+    completion_date: Scalars['String']
+    completion_type: Scalars['String']
+    skipped_by: (Scalars['String'] | null)
+    skip_reason: (Scalars['String'] | null)
+    activation_activity_id: (Scalars['String'] | null)
+    __typename: 'TimerActivityOutputs'
+}
+
+export type TimerType = 'DELAY' | 'EXTENSION_RESOURCE_UPDATED' | 'DATA_POINT_REFERENCE' | 'DATA_POINT_AWAITED'
+
+export interface TimerDelayConfig {
+    amount: Scalars['Float']
+    unit: Scalars['String']
+    __typename: 'TimerDelayConfig'
+}
+
+export interface TimerReferenceDataPoint {
+    definition_id: Scalars['String']
+    name: (Scalars['String'] | null)
+    value: (Scalars['String'] | null)
+    __typename: 'TimerReferenceDataPoint'
+}
+
+export interface TimerResourceConfig {
+    timer_key: Scalars['String']
+    action_key: Scalars['String']
+    resource_id: (Scalars['String'] | null)
+    __typename: 'TimerResourceConfig'
+}
+
+export interface TimerAwaitedDataPoint {
+    definition_id: Scalars['String']
+    name: (Scalars['String'] | null)
+    __typename: 'TimerAwaitedDataPoint'
+}
+
+export interface TimerTimeoutConfig {
+    amount: Scalars['Float']
+    unit: Scalars['String']
+    __typename: 'TimerTimeoutConfig'
 }
 
 export interface Query {
@@ -363,6 +507,7 @@ export interface Query {
     patients: PatientsPayload
     patientByIdentifier: PatientPayload
     publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
+    /** @deprecated This query is deprecated. Use 'publishedPathwayDefinitions' instead for better performance. */
     getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload
     getPublishedCareflowVersions: CareflowVersionsPayload
     scheduledSteps: ScheduledStepsPayload
@@ -382,7 +527,6 @@ export interface Query {
     getOrchestrationFactsFromPrompt: OrchestrationFactsPromptPayload
     hostedPagesLink: HostedPagesLinkPayload
     pathwayDataPoints: DataPointPayload
-    decisionOutputs: DecisionOutputsPayload
     /** Generate a signed URL for file upload to GCS */
     getSignedUrl: FileUploadGCSPayload
     getAgentByThreadId: OrchestratedAgentPayload
@@ -397,7 +541,7 @@ export interface ScheduledTracksPayload {
     __typename: 'ScheduledTracksPayload'
 }
 
-export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | TenantPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | DecisionOutputsPayload | FileUploadGCSPayload | FormActivityDataPointsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | EmptyPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | UpsertPatientPayload | IdentityVerificationPayload | CompleteSessionPayload) & { __isUnion?: true }
+export type Payload = (ScheduledTracksPayload | PatientPathwaysPayload | BaselineInfoPayload | ActivityPayload | ActivityTypesPayload | ApiCallPayload | ApiCallsPayload | ActionPayload | CalculationResultsPayload | ChecklistPayload | ClinicalNotePayload | ElementsPayload | EmrReportPayload | ExtensionActivityRecordPayload | FormPayload | FormsPayload | FormResponsePayload | GenerateRetoolEmbedUrlPayload | HostedSessionActivitiesPayload | HostedSessionPayload | MessagePayload | PathwayDataPointDefinitionsPayload | PathwayPayload | PatientPayload | ScheduledStepsPayload | SearchPatientsPayload | StakeholdersPayload | TracksPayload | TenantPayload | WebhookCallPayload | WebhookCallsPayload | OrchestrationFactsPromptPayload | HostedPagesLinkPayload | FileUploadGCSPayload | FormActivityDataPointsPayload | AddActivityMetadataPayload | AddIdentifierToPatientPayload | AddTrackPayload | EmptyPayload | CancelScheduledTracksPayload | CompleteExtensionActivityPayload | CreatePatientPayload | EvaluateFormRulesPayload | MarkMessageAsReadPayload | PatientDemographicsPayload | RetryApiCallPayload | RetryWebhookCallPayload | ScheduleTrackPayload | StartHostedActivitySessionPayload | StartHostedPathwaySessionFromLinkPayload | StartHostedPathwaySessionPayload | StartPathwayPayload | StartPathwayWithPatientIdentifierPayload | StopTrackPayload | SubmitChecklistPayload | SubmitFormResponsePayload | UpdateEmrReportStatusPayload | UpdatePatientPayload | UpdatePatientDemographicsQueryPayload | UpdatePatientLanguagePayload | UpsertPatientPayload | IdentityVerificationPayload | CompleteSessionPayload) & { __isUnion?: true }
 
 export interface ScheduledTrack {
     id: Scalars['ID']
@@ -477,7 +621,7 @@ export interface DataPointDefinition {
     __typename: 'DataPointDefinition'
 }
 
-export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'DATA_POINT' | 'DECISION' | 'AGENT' | 'SYSTEM'
+export type DataPointSourceType = 'PATHWAY' | 'STEP' | 'TRACK' | 'FORM' | 'CALCULATION' | 'PATIENT_PROFILE' | 'PATIENT_IDENTIFIER' | 'API_CALL' | 'API_CALL_STATUS' | 'EXTENSION_WEBHOOK' | 'EXTENSION_ACTION' | 'EXTENSION_ACTION_RESOLUTION' | 'DATA_POINT' | 'DECISION' | 'CODE' | 'LOGIC' | 'AGENT' | 'SYSTEM'
 
 export interface DataPointPossibleValue {
     value: Scalars['String']
@@ -582,7 +726,7 @@ export interface ActivityObject {
     __typename: 'ActivityObject'
 }
 
-export type ActivityObjectType = 'ACTION' | 'AGENT' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'DECISION' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'FORM' | 'MESSAGE' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'USER' | 'EMR_REQUEST' | 'TRACK' | 'TIMER' | 'PLUGIN' | 'PLUGIN_ACTION'
+export type ActivityObjectType = 'ACTION' | 'AGENT' | 'API_CALL' | 'CALCULATION' | 'CHECKLIST' | 'CLINICAL_NOTE' | 'EVALUATED_RULE' | 'EMR_REPORT' | 'ENROLLMENT_TRIGGER' | 'FORM' | 'MESSAGE' | 'LOGIC' | 'PATHWAY' | 'PATIENT' | 'REMINDER' | 'STAKEHOLDER' | 'STEP' | 'TRACK' | 'TRACK_TRIGGER' | 'TIMER' | 'TIMER_COMPLETION' | 'USER' | 'EMR_REQUEST' | 'PLUGIN' | 'PLUGIN_ACTION'
 
 export type ActivityStatus = 'ACTIVE' | 'DONE' | 'FAILED' | 'CANCELED' | 'EXPIRED'
 
@@ -848,6 +992,7 @@ export interface ElementsPayload {
 
 export interface Element {
     id: Scalars['ID']
+    definition_id: (Scalars['String'] | null)
     parent_id: (Scalars['ID'] | null)
     name: Scalars['String']
     type: ElementType
@@ -997,6 +1142,7 @@ export interface HostedSession {
     user_context: (HostedSessionUserContext | null)
     created_at: Scalars['String']
     expires_at: Scalars['String']
+    organization_slug: (Scalars['String'] | null)
     __typename: 'HostedSession'
 }
 
@@ -1447,18 +1593,12 @@ export interface DataPoint {
     __typename: 'DataPoint'
 }
 
-export interface DecisionOutputsPayload {
-    code: Scalars['String']
-    success: Scalars['Boolean']
-    outputs: Scalars['String']
-    __typename: 'DecisionOutputsPayload'
-}
-
 export interface FileUploadGCSPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
     upload_url: Scalars['String']
     file_url: Scalars['String']
+    required_headers: (Scalars['JSON'] | null)
     __typename: 'FileUploadGCSPayload'
 }
 
@@ -1668,6 +1808,7 @@ export interface StartHostedActivitySessionPayload {
     session_url: Scalars['String']
     language: (Scalars['String'] | null)
     user_context: (HostedSessionUserContext | null)
+    organization_slug: (Scalars['String'] | null)
     __typename: 'StartHostedActivitySessionPayload'
 }
 
@@ -1675,6 +1816,7 @@ export interface StartHostedPathwaySessionFromLinkPayload {
     code: Scalars['String']
     success: Scalars['Boolean']
     session_url: Scalars['String']
+    organization_slug: (Scalars['String'] | null)
     __typename: 'StartHostedPathwaySessionFromLinkPayload'
 }
 
@@ -1686,6 +1828,7 @@ export interface StartHostedPathwaySessionPayload {
     pathway_id: Scalars['String']
     stakeholder: HostedSessionStakeholder
     user_context: (HostedSessionUserContext | null)
+    organization_slug: (Scalars['String'] | null)
     __typename: 'StartHostedPathwaySessionPayload'
 }
 
@@ -1819,6 +1962,8 @@ export interface ActivityInputsGenqlSelection{
     on_MessageActivityInputs?: MessageActivityInputsGenqlSelection
     on_CalculationActivityInputs?: CalculationActivityInputsGenqlSelection
     on_ExtensionActivityInputs?: ExtensionActivityInputsGenqlSelection
+    on_DecisionTableActivityInputs?: DecisionTableActivityInputsGenqlSelection
+    on_CodeBlockActivityInputs?: CodeBlockActivityInputsGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2087,6 +2232,22 @@ export interface CalculationInputGenqlSelection{
 export interface ExtensionActivityInputsGenqlSelection{
     type?: boolean | number
     extension_fields?: boolean | number
+    componentKey?: boolean | number
+    extension_settings?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface DecisionTableActivityInputsGenqlSelection{
+    type?: boolean | number
+    decision_table?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CodeBlockActivityInputsGenqlSelection{
+    type?: boolean | number
+    code_block?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2104,6 +2265,11 @@ export interface ActivityOutputsGenqlSelection{
     on_FormActivityOutputs?: FormActivityOutputsGenqlSelection
     on_CalculationActivityOutputs?: CalculationActivityOutputsGenqlSelection
     on_ExtensionActivityOutputs?: ExtensionActivityOutputsGenqlSelection
+    on_DecisionTableActivityOutputs?: DecisionTableActivityOutputsGenqlSelection
+    on_CodeBlockActivityOutputs?: CodeBlockActivityOutputsGenqlSelection
+    on_TrackTriggerActivityOutputs?: TrackTriggerActivityOutputsGenqlSelection
+    on_EnrollmentTriggerActivityOutputs?: EnrollmentTriggerActivityOutputsGenqlSelection
+    on_TimerActivityOutputs?: TimerActivityOutputsGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2147,9 +2313,151 @@ export interface ExtensionActivityOutputsGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface DecisionTableActivityOutputsGenqlSelection{
+    type?: boolean | number
+    decision_table_outputs?: boolean | number
+    matched_rule_ids?: boolean | number
+    matched_rule_priorities?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CodeBlockActivityOutputsGenqlSelection{
+    type?: boolean | number
+    /** The result value returned by the code block */
+    result?: boolean | number
+    /** Output data points with their labels */
+    code_block_outputs?: boolean | number
+    /** Execution metadata */
+    execution_meta?: CodeBlockExecutionMetaGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CodeBlockExecutionMetaGenqlSelection{
+    duration_ms?: boolean | number
+    execution_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TrackTriggerActivityOutputsGenqlSelection{
+    type?: boolean | number
+    satisfied?: boolean | number
+    evaluated_rule_id?: boolean | number
+    trigger_type?: boolean | number
+    triggering_event?: TriggeringEventGenqlSelection
+    target_track_id?: boolean | number
+    target_track_name?: boolean | number
+    scheduled_activation_date?: boolean | number
+    activation_reference?: ActivationReferenceGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TriggeringEventGenqlSelection{
+    type?: boolean | number
+    source_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ActivationReferenceGenqlSelection{
+    type?: boolean | number
+    reference_name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface EnrollmentTriggerActivityOutputsGenqlSelection{
+    type?: boolean | number
+    action_type?: boolean | number
+    result?: boolean | number
+    status?: boolean | number
+    skip_reason?: boolean | number
+    error_message?: boolean | number
+    careflow_definition_id?: boolean | number
+    careflow_definition_name?: boolean | number
+    careflow_id?: boolean | number
+    existing_careflow_id?: boolean | number
+    existing_careflow_title?: boolean | number
+    track_id?: boolean | number
+    track_name?: boolean | number
+    conditions_evaluated?: boolean | number
+    data_points_set?: EnrollmentTriggerDataPointGenqlSelection
+    source_type?: boolean | number
+    source_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface EnrollmentTriggerDataPointGenqlSelection{
+    data_point_definition_id?: boolean | number
+    value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerActivityOutputsGenqlSelection{
+    type?: boolean | number
+    timer_type?: boolean | number
+    delay_config?: TimerDelayConfigGenqlSelection
+    reference_data_point?: TimerReferenceDataPointGenqlSelection
+    resource_config?: TimerResourceConfigGenqlSelection
+    awaited_data_point?: TimerAwaitedDataPointGenqlSelection
+    timeout_config?: TimerTimeoutConfigGenqlSelection
+    /** For DATA_POINT_AWAITED timers: whether completed due to data point collection or timeout */
+    completion_reason?: boolean | number
+    scheduled_date?: boolean | number
+    completion_date?: boolean | number
+    completion_type?: boolean | number
+    skipped_by?: boolean | number
+    skip_reason?: boolean | number
+    activation_activity_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerDelayConfigGenqlSelection{
+    amount?: boolean | number
+    unit?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerReferenceDataPointGenqlSelection{
+    definition_id?: boolean | number
+    name?: boolean | number
+    value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerResourceConfigGenqlSelection{
+    timer_key?: boolean | number
+    action_key?: boolean | number
+    resource_id?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerAwaitedDataPointGenqlSelection{
+    definition_id?: boolean | number
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface TimerTimeoutConfigGenqlSelection{
+    amount?: boolean | number
+    unit?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface QueryGenqlSelection{
     scheduledTracksForPathway?: (ScheduledTracksPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
-    patientPathways?: (PatientPathwaysPayloadGenqlSelection & { __args: {patient_id: Scalars['String'], filters?: (FilterPatientPathways | null)} })
+    patientPathways?: (PatientPathwaysPayloadGenqlSelection & { __args?: {patient_id?: (Scalars['String'] | null), patient_identifier?: (IdentifierInput | null), filters?: (FilterPatientPathways | null)} })
     baselineInfo?: (BaselineInfoPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
     myPendingActivities?: ActivitiesPayloadGenqlSelection
     myActivities?: (ActivitiesPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], track_id?: (Scalars['String'] | null)} })
@@ -2187,6 +2495,7 @@ export interface QueryGenqlSelection{
     patients?: (PatientsPayloadGenqlSelection & { __args?: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), filters?: (FilterPatients | null)} })
     patientByIdentifier?: (PatientPayloadGenqlSelection & { __args: {system: Scalars['String'], value: Scalars['String']} })
     publishedPathwayDefinitions?: PublishedPathwayDefinitionsPayloadGenqlSelection
+    /** @deprecated This query is deprecated. Use 'publishedPathwayDefinitions' instead for better performance. */
     getStatusForPublishedPathwayDefinitions?: PublishedPathwayDefinitionsPayloadGenqlSelection
     getPublishedCareflowVersions?: (CareflowVersionsPayloadGenqlSelection & { __args?: {careflow_definition_id?: (Scalars['String'] | null)} })
     scheduledSteps?: (ScheduledStepsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String']} })
@@ -2206,9 +2515,8 @@ export interface QueryGenqlSelection{
     getOrchestrationFactsFromPrompt?: (OrchestrationFactsPromptPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], prompt: Scalars['String']} })
     hostedPagesLink?: (HostedPagesLinkPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], stakeholder_id: Scalars['String']} })
     pathwayDataPoints?: (DataPointPayloadGenqlSelection & { __args: {pagination?: (PaginationParams | null), sorting?: (SortingParams | null), pathway_id: Scalars['String'], activity_id?: (Scalars['String'] | null), data_point_definition_id?: (Scalars['String'] | null), data_point_key?: (Scalars['String'] | null)} })
-    decisionOutputs?: (DecisionOutputsPayloadGenqlSelection & { __args: {pathway_id: Scalars['String'], activity_id: Scalars['String']} })
     /** Generate a signed URL for file upload to GCS */
-    getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_slug: Scalars['String']} })
+    getSignedUrl?: (FileUploadGCSPayloadGenqlSelection & { __args: {file_name: Scalars['String'], content_type: Scalars['String'], expires_in?: (Scalars['Float'] | null), config_slug: Scalars['String'], activity_id?: (Scalars['String'] | null)} })
     getAgentByThreadId?: (OrchestratedAgentPayloadGenqlSelection & { __args?: {agent_thread_id?: (Scalars['String'] | null)} })
     formActivityDataPoints?: (FormActivityDataPointsPayloadGenqlSelection & { __args: {careflow_id: Scalars['String'], activity_id: Scalars['String']} })
     __typename?: boolean | number
@@ -2259,7 +2567,6 @@ export interface PayloadGenqlSelection{
     on_WebhookCallsPayload?: WebhookCallsPayloadGenqlSelection
     on_OrchestrationFactsPromptPayload?: OrchestrationFactsPromptPayloadGenqlSelection
     on_HostedPagesLinkPayload?: HostedPagesLinkPayloadGenqlSelection
-    on_DecisionOutputsPayload?: DecisionOutputsPayloadGenqlSelection
     on_FileUploadGCSPayload?: FileUploadGCSPayloadGenqlSelection
     on_FormActivityDataPointsPayload?: FormActivityDataPointsPayloadGenqlSelection
     on_AddActivityMetadataPayload?: AddActivityMetadataPayloadGenqlSelection
@@ -2396,6 +2703,8 @@ export interface DataPointMetaDataItemGenqlSelection{
     __typename?: boolean | number
     __scalar?: boolean | number
 }
+
+export interface IdentifierInput {system: Scalars['String'],value: Scalars['String']}
 
 export interface FilterPatientPathways {status: StringArrayFilter}
 
@@ -2798,6 +3107,7 @@ export interface ElementsPayloadGenqlSelection{
 
 export interface ElementGenqlSelection{
     id?: boolean | number
+    definition_id?: boolean | number
     parent_id?: boolean | number
     name?: boolean | number
     type?: boolean | number
@@ -2958,6 +3268,7 @@ export interface HostedSessionGenqlSelection{
     user_context?: HostedSessionUserContextGenqlSelection
     created_at?: boolean | number
     expires_at?: boolean | number
+    organization_slug?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3167,7 +3478,7 @@ export interface PathwaySummaryGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface FilterPathways {pathway_definition_id?: (IdFilter | null),status?: (StringArrayFilter | null),patient_id?: (StringArrayFilter | null),version?: (NumberArrayFilter | null),release_id?: (StringArrayFilter | null),start_date?: (DateFilter | null)}
+export interface FilterPathways {pathway_definition_id?: (IdFilter | null),status?: (StringArrayFilter | null),patient_id?: (StringArrayFilter | null),patient_identifier?: (IdentifierInput[] | null),version?: (NumberArrayFilter | null),release_id?: (StringArrayFilter | null),start_date?: (DateFilter | null)}
 
 export interface IdFilter {eq?: (Scalars['String'] | null)}
 
@@ -3467,19 +3778,12 @@ export interface DataPointGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface DecisionOutputsPayloadGenqlSelection{
-    code?: boolean | number
-    success?: boolean | number
-    outputs?: boolean | number
-    __typename?: boolean | number
-    __scalar?: boolean | number
-}
-
 export interface FileUploadGCSPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
     upload_url?: boolean | number
     file_url?: boolean | number
+    required_headers?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3611,8 +3915,6 @@ export interface AddIdentifierToPatientPayloadGenqlSelection{
 
 export interface AddIdentifierToPatientInput {patient_id: Scalars['String'],identifier: IdentifierInput}
 
-export interface IdentifierInput {system: Scalars['String'],value: Scalars['String']}
-
 export interface AddTrackPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
@@ -3677,7 +3979,7 @@ export interface AddressInput {street?: (Scalars['String'] | null),city?: (Scala
 
 export interface DeletePathwayInput {pathway_id: Scalars['String']}
 
-export interface DeletePatientInput {patient_id: Scalars['String']}
+export interface DeletePatientInput {patient_id?: (Scalars['String'] | null),patient_identifier?: (IdentifierInput | null)}
 
 export interface EvaluateFormRulesPayloadGenqlSelection{
     code?: boolean | number
@@ -3779,6 +4081,7 @@ export interface StartHostedActivitySessionPayloadGenqlSelection{
     session_url?: boolean | number
     language?: boolean | number
     user_context?: HostedSessionUserContextGenqlSelection
+    organization_slug?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3793,6 +4096,7 @@ export interface StartHostedPathwaySessionFromLinkPayloadGenqlSelection{
     code?: boolean | number
     success?: boolean | number
     session_url?: boolean | number
+    organization_slug?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3809,6 +4113,7 @@ export interface StartHostedPathwaySessionPayloadGenqlSelection{
     pathway_id?: boolean | number
     stakeholder?: HostedSessionStakeholderGenqlSelection
     user_context?: HostedSessionUserContextGenqlSelection
+    organization_slug?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -3848,7 +4153,7 @@ export interface StartPathwayWithPatientIdentifierPayloadGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface StartPathwayWithPatientIdentifierInput {patient_identifier: IdentifierInput,pathway_definition_id: Scalars['String'],data_points?: (DataPointInput[] | null),release_id?: (Scalars['String'] | null)}
+export interface StartPathwayWithPatientIdentifierInput {patient_identifier: IdentifierInput,pathway_definition_id: Scalars['String'],data_points?: (DataPointInput[] | null),release_id?: (Scalars['String'] | null),create_patient?: (Scalars['Boolean'] | null)}
 
 export interface StopPathwayInput {pathway_id: Scalars['String'],reason?: (Scalars['String'] | null)}
 
@@ -4026,7 +4331,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const ActivityInputs_possibleTypes: string[] = ['FormActivityInputs','DynamicFormActivityInputs','MessageActivityInputs','CalculationActivityInputs','ExtensionActivityInputs']
+    const ActivityInputs_possibleTypes: string[] = ['FormActivityInputs','DynamicFormActivityInputs','MessageActivityInputs','CalculationActivityInputs','ExtensionActivityInputs','DecisionTableActivityInputs','CodeBlockActivityInputs']
     export const isActivityInputs = (obj?: { __typename?: any } | null): obj is ActivityInputs => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isActivityInputs"')
       return ActivityInputs_possibleTypes.includes(obj.__typename)
@@ -4274,6 +4579,22 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const DecisionTableActivityInputs_possibleTypes: string[] = ['DecisionTableActivityInputs']
+    export const isDecisionTableActivityInputs = (obj?: { __typename?: any } | null): obj is DecisionTableActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDecisionTableActivityInputs"')
+      return DecisionTableActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CodeBlockActivityInputs_possibleTypes: string[] = ['CodeBlockActivityInputs']
+    export const isCodeBlockActivityInputs = (obj?: { __typename?: any } | null): obj is CodeBlockActivityInputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCodeBlockActivityInputs"')
+      return CodeBlockActivityInputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const DynamicFormActivityOutputs_possibleTypes: string[] = ['DynamicFormActivityOutputs']
     export const isDynamicFormActivityOutputs = (obj?: { __typename?: any } | null): obj is DynamicFormActivityOutputs => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isDynamicFormActivityOutputs"')
@@ -4282,7 +4603,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const ActivityOutputs_possibleTypes: string[] = ['DynamicFormActivityOutputs','FormActivityOutputs','CalculationActivityOutputs','ExtensionActivityOutputs']
+    const ActivityOutputs_possibleTypes: string[] = ['DynamicFormActivityOutputs','FormActivityOutputs','CalculationActivityOutputs','ExtensionActivityOutputs','DecisionTableActivityOutputs','CodeBlockActivityOutputs','TrackTriggerActivityOutputs','EnrollmentTriggerActivityOutputs','TimerActivityOutputs']
     export const isActivityOutputs = (obj?: { __typename?: any } | null): obj is ActivityOutputs => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isActivityOutputs"')
       return ActivityOutputs_possibleTypes.includes(obj.__typename)
@@ -4330,6 +4651,118 @@ export interface SubscriptionGenqlSelection{
     
 
 
+    const DecisionTableActivityOutputs_possibleTypes: string[] = ['DecisionTableActivityOutputs']
+    export const isDecisionTableActivityOutputs = (obj?: { __typename?: any } | null): obj is DecisionTableActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDecisionTableActivityOutputs"')
+      return DecisionTableActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CodeBlockActivityOutputs_possibleTypes: string[] = ['CodeBlockActivityOutputs']
+    export const isCodeBlockActivityOutputs = (obj?: { __typename?: any } | null): obj is CodeBlockActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCodeBlockActivityOutputs"')
+      return CodeBlockActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CodeBlockExecutionMeta_possibleTypes: string[] = ['CodeBlockExecutionMeta']
+    export const isCodeBlockExecutionMeta = (obj?: { __typename?: any } | null): obj is CodeBlockExecutionMeta => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCodeBlockExecutionMeta"')
+      return CodeBlockExecutionMeta_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TrackTriggerActivityOutputs_possibleTypes: string[] = ['TrackTriggerActivityOutputs']
+    export const isTrackTriggerActivityOutputs = (obj?: { __typename?: any } | null): obj is TrackTriggerActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTrackTriggerActivityOutputs"')
+      return TrackTriggerActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TriggeringEvent_possibleTypes: string[] = ['TriggeringEvent']
+    export const isTriggeringEvent = (obj?: { __typename?: any } | null): obj is TriggeringEvent => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTriggeringEvent"')
+      return TriggeringEvent_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ActivationReference_possibleTypes: string[] = ['ActivationReference']
+    export const isActivationReference = (obj?: { __typename?: any } | null): obj is ActivationReference => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isActivationReference"')
+      return ActivationReference_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const EnrollmentTriggerActivityOutputs_possibleTypes: string[] = ['EnrollmentTriggerActivityOutputs']
+    export const isEnrollmentTriggerActivityOutputs = (obj?: { __typename?: any } | null): obj is EnrollmentTriggerActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isEnrollmentTriggerActivityOutputs"')
+      return EnrollmentTriggerActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const EnrollmentTriggerDataPoint_possibleTypes: string[] = ['EnrollmentTriggerDataPoint']
+    export const isEnrollmentTriggerDataPoint = (obj?: { __typename?: any } | null): obj is EnrollmentTriggerDataPoint => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isEnrollmentTriggerDataPoint"')
+      return EnrollmentTriggerDataPoint_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerActivityOutputs_possibleTypes: string[] = ['TimerActivityOutputs']
+    export const isTimerActivityOutputs = (obj?: { __typename?: any } | null): obj is TimerActivityOutputs => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerActivityOutputs"')
+      return TimerActivityOutputs_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerDelayConfig_possibleTypes: string[] = ['TimerDelayConfig']
+    export const isTimerDelayConfig = (obj?: { __typename?: any } | null): obj is TimerDelayConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerDelayConfig"')
+      return TimerDelayConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerReferenceDataPoint_possibleTypes: string[] = ['TimerReferenceDataPoint']
+    export const isTimerReferenceDataPoint = (obj?: { __typename?: any } | null): obj is TimerReferenceDataPoint => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerReferenceDataPoint"')
+      return TimerReferenceDataPoint_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerResourceConfig_possibleTypes: string[] = ['TimerResourceConfig']
+    export const isTimerResourceConfig = (obj?: { __typename?: any } | null): obj is TimerResourceConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerResourceConfig"')
+      return TimerResourceConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerAwaitedDataPoint_possibleTypes: string[] = ['TimerAwaitedDataPoint']
+    export const isTimerAwaitedDataPoint = (obj?: { __typename?: any } | null): obj is TimerAwaitedDataPoint => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerAwaitedDataPoint"')
+      return TimerAwaitedDataPoint_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TimerTimeoutConfig_possibleTypes: string[] = ['TimerTimeoutConfig']
+    export const isTimerTimeoutConfig = (obj?: { __typename?: any } | null): obj is TimerTimeoutConfig => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTimerTimeoutConfig"')
+      return TimerTimeoutConfig_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Query_possibleTypes: string[] = ['Query']
     export const isQuery = (obj?: { __typename?: any } | null): obj is Query => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isQuery"')
@@ -4346,7 +4779,7 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','TenantPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','DecisionOutputsPayload','FileUploadGCSPayload','FormActivityDataPointsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','EmptyPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','UpsertPatientPayload','IdentityVerificationPayload','CompleteSessionPayload']
+    const Payload_possibleTypes: string[] = ['ScheduledTracksPayload','PatientPathwaysPayload','BaselineInfoPayload','ActivityPayload','ActivityTypesPayload','ApiCallPayload','ApiCallsPayload','ActionPayload','CalculationResultsPayload','ChecklistPayload','ClinicalNotePayload','ElementsPayload','EmrReportPayload','ExtensionActivityRecordPayload','FormPayload','FormsPayload','FormResponsePayload','GenerateRetoolEmbedUrlPayload','HostedSessionActivitiesPayload','HostedSessionPayload','MessagePayload','PathwayDataPointDefinitionsPayload','PathwayPayload','PatientPayload','ScheduledStepsPayload','SearchPatientsPayload','StakeholdersPayload','TracksPayload','TenantPayload','WebhookCallPayload','WebhookCallsPayload','OrchestrationFactsPromptPayload','HostedPagesLinkPayload','FileUploadGCSPayload','FormActivityDataPointsPayload','AddActivityMetadataPayload','AddIdentifierToPatientPayload','AddTrackPayload','EmptyPayload','CancelScheduledTracksPayload','CompleteExtensionActivityPayload','CreatePatientPayload','EvaluateFormRulesPayload','MarkMessageAsReadPayload','PatientDemographicsPayload','RetryApiCallPayload','RetryWebhookCallPayload','ScheduleTrackPayload','StartHostedActivitySessionPayload','StartHostedPathwaySessionFromLinkPayload','StartHostedPathwaySessionPayload','StartPathwayPayload','StartPathwayWithPatientIdentifierPayload','StopTrackPayload','SubmitChecklistPayload','SubmitFormResponsePayload','UpdateEmrReportStatusPayload','UpdatePatientPayload','UpdatePatientDemographicsQueryPayload','UpdatePatientLanguagePayload','UpsertPatientPayload','IdentityVerificationPayload','CompleteSessionPayload']
     export const isPayload = (obj?: { __typename?: any } | null): obj is Payload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isPayload"')
       return Payload_possibleTypes.includes(obj.__typename)
@@ -5274,14 +5707,6 @@ export interface SubscriptionGenqlSelection{
     
 
 
-    const DecisionOutputsPayload_possibleTypes: string[] = ['DecisionOutputsPayload']
-    export const isDecisionOutputsPayload = (obj?: { __typename?: any } | null): obj is DecisionOutputsPayload => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isDecisionOutputsPayload"')
-      return DecisionOutputsPayload_possibleTypes.includes(obj.__typename)
-    }
-    
-
-
     const FileUploadGCSPayload_possibleTypes: string[] = ['FileUploadGCSPayload']
     export const isFileUploadGCSPayload = (obj?: { __typename?: any } | null): obj is FileUploadGCSPayload => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isFileUploadGCSPayload"')
@@ -5598,7 +6023,9 @@ export const enumActivityInputType = {
    DYNAMIC_FORM: 'DYNAMIC_FORM' as const,
    MESSAGE: 'MESSAGE' as const,
    CALCULATION: 'CALCULATION' as const,
-   EXTENSION: 'EXTENSION' as const
+   EXTENSION: 'EXTENSION' as const,
+   DECISION_TABLE: 'DECISION_TABLE' as const,
+   CODE_BLOCK: 'CODE_BLOCK' as const
 }
 
 export const enumDataPointValueType = {
@@ -5698,7 +6125,19 @@ export const enumActivityOutputType = {
    FORM: 'FORM' as const,
    DYNAMIC_FORM: 'DYNAMIC_FORM' as const,
    CALCULATION: 'CALCULATION' as const,
-   EXTENSION: 'EXTENSION' as const
+   EXTENSION: 'EXTENSION' as const,
+   DECISION_TABLE: 'DECISION_TABLE' as const,
+   CODE_BLOCK: 'CODE_BLOCK' as const,
+   TRACK_TRIGGER: 'TRACK_TRIGGER' as const,
+   ENROLLMENT_TRIGGER: 'ENROLLMENT_TRIGGER' as const,
+   TIMER: 'TIMER' as const
+}
+
+export const enumTimerType = {
+   DELAY: 'DELAY' as const,
+   EXTENSION_RESOURCE_UPDATED: 'EXTENSION_RESOURCE_UPDATED' as const,
+   DATA_POINT_REFERENCE: 'DATA_POINT_REFERENCE' as const,
+   DATA_POINT_AWAITED: 'DATA_POINT_AWAITED' as const
 }
 
 export const enumPathwayStatus = {
@@ -5721,8 +6160,11 @@ export const enumDataPointSourceType = {
    API_CALL_STATUS: 'API_CALL_STATUS' as const,
    EXTENSION_WEBHOOK: 'EXTENSION_WEBHOOK' as const,
    EXTENSION_ACTION: 'EXTENSION_ACTION' as const,
+   EXTENSION_ACTION_RESOLUTION: 'EXTENSION_ACTION_RESOLUTION' as const,
    DATA_POINT: 'DATA_POINT' as const,
    DECISION: 'DECISION' as const,
+   CODE: 'CODE' as const,
+   LOGIC: 'LOGIC' as const,
    AGENT: 'AGENT' as const,
    SYSTEM: 'SYSTEM' as const
 }
@@ -5769,20 +6211,23 @@ export const enumActivityObjectType = {
    CALCULATION: 'CALCULATION' as const,
    CHECKLIST: 'CHECKLIST' as const,
    CLINICAL_NOTE: 'CLINICAL_NOTE' as const,
-   DECISION: 'DECISION' as const,
    EVALUATED_RULE: 'EVALUATED_RULE' as const,
    EMR_REPORT: 'EMR_REPORT' as const,
+   ENROLLMENT_TRIGGER: 'ENROLLMENT_TRIGGER' as const,
    FORM: 'FORM' as const,
    MESSAGE: 'MESSAGE' as const,
+   LOGIC: 'LOGIC' as const,
    PATHWAY: 'PATHWAY' as const,
    PATIENT: 'PATIENT' as const,
    REMINDER: 'REMINDER' as const,
    STAKEHOLDER: 'STAKEHOLDER' as const,
    STEP: 'STEP' as const,
+   TRACK: 'TRACK' as const,
+   TRACK_TRIGGER: 'TRACK_TRIGGER' as const,
+   TIMER: 'TIMER' as const,
+   TIMER_COMPLETION: 'TIMER_COMPLETION' as const,
    USER: 'USER' as const,
    EMR_REQUEST: 'EMR_REQUEST' as const,
-   TRACK: 'TRACK' as const,
-   TIMER: 'TIMER' as const,
    PLUGIN: 'PLUGIN' as const,
    PLUGIN_ACTION: 'PLUGIN_ACTION' as const
 }

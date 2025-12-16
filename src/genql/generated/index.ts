@@ -35,7 +35,7 @@ export interface Client {
 
 export const createClient = function (options?: ClientOptions): Client {
   return createClientOriginal({
-    url: 'https://api.awellhealth.com/orchestration/m2m/graphql',
+    url: 'https://api.sandbox.awellhealth.com/orchestration/m2m/graphql',
 
     ...options,
     queryRoot: typeMap.Query!,

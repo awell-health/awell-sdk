@@ -45,4 +45,22 @@ describe('getQuestionDisplayText', () => {
 
     expect(result).toBe('fresh title')
   })
+
+  it('escapes slate HTML found in title when title_html is null', () => {
+    const result = getQuestionDisplayText({
+      title: '<p class="slate-p">Hello, world!</p>',
+      title_html: null,
+    })
+
+    expect(result).toBe('Hello, world!')
+  })
+
+  it('does not over-escape plain-text titles with apostrophes', () => {
+    const result = getQuestionDisplayText({
+      title: "It's a plain title",
+      title_html: null,
+    })
+
+    expect(result).toBe("It's a plain title")
+  })
 })

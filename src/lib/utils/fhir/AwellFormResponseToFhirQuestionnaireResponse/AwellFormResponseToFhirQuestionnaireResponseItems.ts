@@ -9,7 +9,7 @@ import {
   type QuestionnaireResponseItemAnswer as FhirQuestionnaireResponseItemAnswer,
 } from '@medplum/fhirtypes'
 import { isNil } from 'lodash'
-import { slateToEscapedJsString } from '../../awell'
+import { getQuestionDisplayText } from '../../awell'
 
 const getQuestionLabel = (
   awellFormDefinition: Form,
@@ -25,7 +25,7 @@ const getQuestionLabel = (
     )
   }
 
-  return itemDefinition.title
+  return getQuestionDisplayText(itemDefinition)
 }
 
 const getMultipleSelectFhirAnswers = (
@@ -141,7 +141,7 @@ export const AwellFormResponseToFhirQuestionnaireResponseItems = (opts: {
   const descriptionQuestionsAsFhirItems = descriptionQuestions.map((item) => {
     return {
       linkId: item.id,
-      text: slateToEscapedJsString(item.title),
+      text: getQuestionDisplayText(item),
     } satisfies FhirQuestionnaireResponseItem
   })
 

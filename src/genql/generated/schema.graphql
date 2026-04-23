@@ -38,7 +38,12 @@ type Question {
   key: String!
   id: ID!
   definition_id: String!
-  title: String!
+  title: String
+
+  """
+  The HTML version of the question title. Applicable for description questions.
+  """
+  title_html: String
   dataPointValueType: DataPointValueType
   options: [Option!]
   questionType: QuestionType
@@ -378,7 +383,7 @@ type CalculationActivityOutputs implements ActivityOutputs {
 
 type SingleCalculationResult {
   subresult_id: String!
-  value: String!
+  value: String
   value_type: DataPointValueType
   unit: String
   status: String
@@ -517,16 +522,63 @@ type TimerTimeoutConfig {
   unit: String!
 }
 
+type DelayTimerConfig implements TimerConfigInterface {
+  type: String!
+  description: String!
+  value: Int!
+  unit: String!
+}
+
+interface TimerConfigInterface {
+  type: String!
+  description: String!
+}
+
+type DataPointReferenceTimerConfig implements TimerConfigInterface {
+  type: String!
+  description: String!
+  data_point_definition_id: String!
+  data_point_key: String!
+  offset: Int
+  offsetDirection: String
+  offset_unit: String
+  hour: String
+  period: String
+  usePatientTimezone: Boolean
+}
+
+type ExtensionResourceUpdatedTimerConfig implements TimerConfigInterface {
+  type: String!
+  description: String!
+  extension_key: String!
+  timer_key: String!
+  action_key: String!
+  action_definition_id: String!
+}
+
+type DataPointAwaitedTimerConfig implements TimerConfigInterface {
+  type: String!
+  description: String!
+  data_point_definition_id: String!
+  data_point_key: String!
+  timeout_value: Int!
+  timeout_unit: String!
+}
+
 type Query {
   scheduledTracksForPathway(pathway_id: String!): ScheduledTracksPayload!
   patientPathways(patient_id: String, patient_identifier: IdentifierInput, filters: FilterPatientPathways): PatientPathwaysPayload!
   baselineInfo(pathway_id: String!): BaselineInfoPayload!
+  baselineInfoLog(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, data_point_definition_id: String, data_point_key: String): BaselineInfoLogPayload!
   myPendingActivities: ActivitiesPayload!
   myActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload!
-  pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload!
-  careflowActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: FilterCareflowActivitiesParams): ActivitiesPayload!
+  pathwayActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, track_id: String): ActivitiesPayload! @deprecated(reason: "Use careflowActivities instead. This will be removed on June 1st 2026.")
+  careflowActivities(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: FilterCareflowActivitiesParams, skip_enrichment: Boolean): ActivitiesPayload!
+  careflowTracks(careflow_id: String!, statuses: [String!]): CareflowTracksPayload!
   activity(id: String!): ActivityPayload!
-  activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload!
+  activities(pagination: PaginationParams, sorting: SortingParams, filters: FilterActivitiesParams): ActivitiesPayload! @deprecated(reason: "Use activitiesByPatient or activitiesByCareflowDefinition instead. This will be removed on June 1st 2026.")
+  activitiesByPatient(pagination: PaginationParams, sorting: SortingParams, patient_id: String!, filters: FilterActivitiesByPatientFilters): ActivitiesPayload!
+  activitiesByCareflowDefinition(pagination: PaginationParams, sorting: SortingParams, careflow_definition_id: String!, filters: FilterActivitiesByCareflowDefinitionFilters): ActivitiesPayload!
   pathwayStepActivities(pathway_id: String!, step_id: String!): ActivitiesPayload!
   careflowActivityTypes(careflow_id: String!): ActivityTypesPayload!
   agent(id: ID!): WorkerAgentConfigPayload!
@@ -538,6 +590,7 @@ type Query {
   clinicalNote(id: String!): ClinicalNotePayload!
   pathwayElements(pathway_id: String!, track_id: String): ElementsPayload!
   emrReport(id: String!): EmrReportPayload!
+  evaluatedRule(id: String!, release_id: String!): EvaluatedRulePayload!
   extensionActivityRecord(id: String!): ExtensionActivityRecordPayload!
   form(pathway_id: String, id: String!): FormPayload!
   forms(pathway_definition_id: String!, release_id: String): FormsPayload!
@@ -549,16 +602,19 @@ type Query {
   pathwayFacts(pagination: PaginationParams, sorting: SortingParams, filters: PathwayFactsFilters!): OrchestrationFactsPayload!
   pathwayDataPointDefinitions(pathway_definition_id: String, release_id: String!, filters: FilterPathwayDataPointDefinitionsParams): PathwayDataPointDefinitionsPayload!
   pathway(id: String!): PathwayPayload!
-  myPathways: PathwaysPayload! @deprecated(reason: "Use the `pathways` query instead.")
+  myPathways: PathwaysPayload! @deprecated(reason: "Use the `pathways` query instead. This query will be removed in May 1st 2026.")
   pathways(pagination: PaginationParams, sorting: SortingParams, filters: FilterPathways): PathwaysPayload!
   patientDemographicsQueryConfiguration: PatientDemographicsQueryConfigurationPayload!
   patient(id: String!): PatientPayload!
   patients(pagination: PaginationParams, sorting: SortingParams, filters: FilterPatients): PatientsPayload!
   patientByIdentifier(system: String!, value: String!): PatientPayload!
   publishedPathwayDefinitions: PublishedPathwayDefinitionsPayload!
-  getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload! @deprecated(reason: "This query is deprecated. Use 'publishedPathwayDefinitions' instead for better performance.")
+  getStatusForPublishedPathwayDefinitions: PublishedPathwayDefinitionsPayload! @deprecated(reason: "This query is deprecated. Use 'publishedPathwayDefinitions' instead for better performance. This query will be removed in May 1st 2026.")
   getPublishedCareflowVersions(careflow_definition_id: String): CareflowVersionsPayload!
   scheduledSteps(pathway_id: String!): ScheduledStepsPayload!
+  scheduledDestinations(pathway_id: String!): ScheduledDestinationsPayload!
+  careflowTimers(status: String, careflow_id: String!): CareflowTimersPayload!
+  activityTimer(careflow_id: String!, activity_id: String!): ActivityTimerPayload!
   searchPatientsByPatientCode(patient_code: String!): SearchPatientsPayload!
   searchPatientsByNationalRegistryNumber(national_registry_number: String!): SearchPatientsPayload!
   filterStakeholders(pathway_definition_ids: [String!], release_ids: [String!], stakeholder_definition_ids: [String!]): StakeholdersPayload!
@@ -566,12 +622,13 @@ type Query {
   stakeholdersByReleaseIds(release_ids: [String!]!): StakeholdersPayload!
   stakeholdersByDefinitionIds(stakeholder_definition_ids: [String!]!): StakeholdersPayload!
   adHocTracksByPathway(pathway_id: String!): TracksPayload!
+  tracksByPathway(pathway_id: String!): TracksPayload!
   adHocTracksByRelease(release_id: String!): TracksPayload!
   tenant: TenantPayload!
   webhookCall(webhook_call_id: String!): WebhookCallPayload!
-  webhookCalls(pathway_id: String!): WebhookCallsPayload!
-  webhookCallsForTenant: WebhookCallsPayload!
-  webhookCallsForPathwayDefinition(pathway_definition_id: String!): WebhookCallsPayload!
+  webhookCalls(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, filters: WebhookCallFiltersInput): WebhookCallsPayload!
+  webhookCallsForTenant(pagination: PaginationParams, sorting: SortingParams, filters: WebhookCallFiltersInput): WebhookCallsPayload!
+  webhookCallsForPathwayDefinition(pagination: PaginationParams, sorting: SortingParams, pathway_definition_id: String!, filters: WebhookCallFiltersInput): WebhookCallsPayload!
   getOrchestrationFactsFromPrompt(pathway_id: String!, prompt: String!): OrchestrationFactsPromptPayload!
   hostedPagesLink(pathway_id: String!, stakeholder_id: String!): HostedPagesLinkPayload!
   pathwayDataPoints(pagination: PaginationParams, sorting: SortingParams, pathway_id: String!, activity_id: String, data_point_definition_id: String, data_point_key: String): DataPointPayload!
@@ -731,13 +788,12 @@ type BaselineInfoPayload implements Payload {
   baselineDataPoints: [BaselineDataPoint!]!
 }
 
-type ActivitiesPayload implements PaginationAndSortingPayload {
+type BaselineInfoLogPayload implements PaginationAndSortingPayload {
   code: String!
   success: Boolean!
   pagination: PaginationOutput
   sorting: SortingOutput
-  activities: [Activity!]!
-  metadata: ActivityMetadata
+  dataPoints: [DataPoint!]!
 }
 
 interface PaginationAndSortingPayload {
@@ -756,6 +812,36 @@ type PaginationOutput {
 type SortingOutput {
   field: String!
   direction: String!
+}
+
+type DataPoint {
+  id: ID!
+  key: String
+  data_set_id: String!
+  serialized_value: String
+  data_point_definition_id: String!
+  date: String!
+  valueType: DataPointValueType!
+  activity_id: String
+}
+
+input PaginationParams {
+  offset: Int!
+  count: Int!
+}
+
+input SortingParams {
+  field: String!
+  direction: String!
+}
+
+type ActivitiesPayload implements PaginationAndSortingPayload {
+  code: String!
+  success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
+  activities: [Activity!]!
+  metadata: ActivityMetadata
 }
 
 type Activity {
@@ -786,6 +872,11 @@ type Activity {
   icon_url: String
   action_component: ActionComponent
   metadata: JSON
+
+  """
+  When set, the activity is configured to expire at this time (ISO string). Only present when already persisted on the activity.
+  """
+  expires_at: String
 
   """
   Form display mode can either be conversational (1 question at a time) or regular (all questions at once). Only used in hosted pages for now.
@@ -946,16 +1037,6 @@ type ActivityMetadata {
   stakeholders: [ActivityObject!]
 }
 
-input PaginationParams {
-  offset: Int!
-  count: Int!
-}
-
-input SortingParams {
-  field: String!
-  direction: String!
-}
-
 input FilterCareflowActivitiesParams {
   action: [String!]
   activity_status: [String!]
@@ -964,11 +1045,32 @@ input FilterCareflowActivitiesParams {
   hide_system_activities: Boolean
   date_range: DateRangeInput
   reference_id: String
+  track_id: String
 }
 
 input DateRangeInput {
   from: SafeDate!
   to: SafeDate!
+}
+
+type CareflowTracksPayload implements Payload {
+  code: String!
+  success: Boolean!
+  tracks: [CareflowTrack!]!
+}
+
+type CareflowTrack {
+  id: String!
+  definition_id: String!
+  title: String!
+  status: String!
+  start_date: String!
+  end_date: String
+  started_by_user_id: String
+  started_by_user_name: String
+  stopped_by_user_id: String
+  stopped_by_user_name: String
+  stop_reason: String
 }
 
 type ActivityPayload implements Payload {
@@ -986,10 +1088,31 @@ input FilterActivitiesParams {
   stakeholders: StringArrayFilter
   pathway_status: StringArrayFilter
   reference_id: TextFilterEquals
+  exclude_system_activities: Boolean
 }
 
 input TextFilterEquals {
   eq: String
+}
+
+input FilterActivitiesByPatientFilters {
+  activity_status: StringArrayFilter
+  activity_type: StringArrayFilter
+  action: StringArrayFilter
+  stakeholders: StringArrayFilter
+  careflow_status: StringArrayFilter
+  careflow_definition_id: StringArrayFilter
+  careflow_ids: StringArrayFilter
+  exclude_system_activities: Boolean
+}
+
+input FilterActivitiesByCareflowDefinitionFilters {
+  activity_status: StringArrayFilter
+  activity_type: StringArrayFilter
+  action: StringArrayFilter
+  stakeholders: StringArrayFilter
+  careflow_status: StringArrayFilter
+  exclude_system_activities: Boolean
 }
 
 type ActivityTypesPayload implements Payload {
@@ -1240,6 +1363,31 @@ type EmrReportMetadataField {
   value: String
 }
 
+type EvaluatedRulePayload implements Payload {
+  code: String!
+  success: Boolean!
+  evaluatedRule: EvaluatedRule
+}
+
+type EvaluatedRule {
+  satisfied: Boolean!
+  conditions: [EvaluatedRuleCondition!]!
+}
+
+type EvaluatedRuleCondition {
+  id: String!
+  satisfied: Boolean!
+  reference: EvaluatedRuleReference
+  operator: ConditionOperator
+  operand: Operand
+}
+
+type EvaluatedRuleReference {
+  data_point_definition_id: String!
+  qualified_key: String
+  value: String
+}
+
 type ExtensionActivityRecordPayload implements Payload {
   code: String!
   success: Boolean!
@@ -1349,6 +1497,7 @@ type HostedSession {
   created_at: String!
   expires_at: String!
   organization_slug: String
+  tracking: SessionTracking
 }
 
 enum HostedSessionStatus {
@@ -1371,6 +1520,15 @@ enum HostedSessionStakeholderType {
 type HostedSessionUserContext {
   stytch_member_id: String
   stytch_member_email: String
+}
+
+type SessionTracking {
+  utm_source: String
+  utm_medium: String
+  utm_campaign: String
+  utm_term: String
+  utm_content: String
+  custom: JSON
 }
 
 type BrandingSettings {
@@ -1459,6 +1617,7 @@ type Pathway {
   id: ID!
   patient_id: String!
   version: Float
+  upgrades: [PathwayUpgrade!]
   title: String!
   start_date: SafeDate
   stop_date: SafeDate
@@ -1476,6 +1635,17 @@ type Pathway {
   tracks: [Track!]!
   created: AuditTrail
   patient: User!
+}
+
+type PathwayUpgrade {
+  from: PathwayUpgradeVersion!
+  to: PathwayUpgradeVersion!
+  upgrade_date: String!
+}
+
+type PathwayUpgradeVersion {
+  release_id: String!
+  revision: Float!
 }
 
 type Track {
@@ -1685,6 +1855,55 @@ type ScheduledStepsPayload implements Payload {
   steps: [Element!]!
 }
 
+type ScheduledDestinationsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  destinations: [ScheduledDestination!]!
+}
+
+type ScheduledDestination {
+  node: ScheduledDestinationNode!
+  date: String!
+}
+
+type ScheduledDestinationNode {
+  id: ID!
+  name: String!
+  definition_type: String!
+  definition_id: String!
+  track_definition_id: String
+  date: String
+}
+
+type CareflowTimersPayload implements Payload {
+  code: String!
+  success: Boolean!
+  timers: [CareflowTimer!]!
+}
+
+type CareflowTimer {
+  id: ID!
+  activity_id: String!
+  type: String!
+  name: String
+  status: String!
+  careflow_id: String!
+  scheduled_date: String
+  readable_explanation: String
+  job_id: String
+  resource_id: String
+  completion_reason: String
+  config: TimerConfigInterface!
+  created_at: String
+  updated_at: String
+}
+
+type ActivityTimerPayload implements Payload {
+  code: String!
+  success: Boolean!
+  timer: CareflowTimer
+}
+
 type SearchPatientsPayload implements Payload {
   code: String!
   success: Boolean!
@@ -1786,10 +2005,45 @@ type ApiPathwayContext {
   patient_id: String
 }
 
-type WebhookCallsPayload implements Payload {
+type WebhookCallsPayload implements PaginationAndSortingPayload {
   code: String!
   success: Boolean!
+  pagination: PaginationOutput
+  sorting: SortingOutput
   webhook_calls: [WebhookCall!]!
+}
+
+input WebhookCallFiltersInput {
+  event_type: [WebhookCallEventType!]
+  status: [String!]
+  response_codes: [Int!]
+  webhook_name: String
+}
+
+enum WebhookCallEventType {
+  FORM_SUBMITTED
+  ACTIVITY_CREATED
+  ACTIVITY_UPDATED
+  ACTIVITY_COMPLETED
+  ACTIVITY_DELETED
+  ACTIVITY_EXPIRED
+  ACTIVITY_FAILED
+  DATA_POINT_COLLECTED
+  REMINDER_CREATED
+  PATHWAY_STARTED
+  PATHWAY_COMPLETED
+  PATHWAY_STOPPED
+  PATHWAY_DELETED
+  TRACK_STARTED
+  TRACK_STOPPED
+  TRACK_COMPLETED
+  SESSION_STARTED
+  SESSION_EXPIRED
+  SESSION_COMPLETED
+  PATIENT_CREATED
+  PATIENT_UPDATED
+  PATIENT_DELETED
+  CLINICAL_NOTE_CREATED
 }
 
 type OrchestrationFactsPromptPayload implements Payload {
@@ -1821,17 +2075,6 @@ type DataPointPayload implements PaginationAndSortingPayload {
   pagination: PaginationOutput
   sorting: SortingOutput
   dataPoints: [DataPoint!]!
-}
-
-type DataPoint {
-  id: ID!
-  key: String
-  data_set_id: String!
-  serialized_value: String
-  data_point_definition_id: String!
-  date: String!
-  valueType: DataPointValueType!
-  activity_id: String
 }
 
 type FileUploadGCSPayload implements Payload {
@@ -1899,9 +2142,15 @@ type Mutation {
   evaluateFormRules(input: EvaluateFormRulesInput!): EvaluateFormRulesPayload!
   expireTimer(input: ExpireTimerInput!): EmptyPayload!
   markMessageAsRead(input: MarkMessageAsReadInput!): MarkMessageAsReadPayload!
+  mergePatients(input: MergePatientsInput!): MergePatientsPayload!
 
   """Retrieve patient demographics from an external system"""
   requestPatientDemographics(input: PatientDemographicsInput!): PatientDemographicsPayload!
+
+  """
+  Retry failed activities by their IDs. Limited to 1000 activities per call.
+  """
+  retryActivities(input: RetryActivitiesInput!): RetryActivitiesPayload!
   retryActivity(input: RetryActivityInput!): EmptyPayload!
   retryAllApiCalls(input: RetryAllApiCallsInput!): EmptyPayload!
   retryAllFailedApiCalls(input: RetryAllFailedApiCallsInput!): EmptyPayload!
@@ -1972,6 +2221,7 @@ type AddTrackPayload implements Payload {
 input AddTrackInput {
   pathway_id: String!
   track_id: String!
+  allow_any_track_definition: Boolean
 }
 
 type EmptyPayload implements Payload {
@@ -2100,6 +2350,19 @@ input MarkMessageAsReadInput {
   activity_id: String!
 }
 
+type MergePatientsPayload implements Payload {
+  code: String!
+  success: Boolean!
+  transferred_careflow_ids: [String!]!
+  transferred_count: Int!
+  deleted_patient_id: String!
+}
+
+input MergePatientsInput {
+  patient_id_to_keep: String!
+  patient_id_to_delete: String!
+}
+
 type PatientDemographicsPayload implements Payload {
   code: String!
   success: Boolean!
@@ -2111,6 +2374,22 @@ type PatientDemographicsPayload implements Payload {
 
 input PatientDemographicsInput {
   patient_identifier: String!
+}
+
+type RetryActivitiesPayload {
+  code: String!
+  success: Boolean!
+  result: RetryActivitiesResultType
+}
+
+type RetryActivitiesResultType {
+  succeeded: Int!
+  failed: Int!
+  skipped: Int!
+}
+
+input RetryActivitiesInput {
+  activity_ids: [String!]!
 }
 
 input RetryActivityInput {
@@ -2192,6 +2471,7 @@ type StartHostedActivitySessionPayload implements Payload {
   language: String
   user_context: HostedSessionUserContext
   organization_slug: String
+  tracking: SessionTracking
 }
 
 input StartHostedActivitySessionInput {
@@ -2203,6 +2483,9 @@ input StartHostedActivitySessionInput {
   """ISO 639-1 shortcode"""
   language: String
   user_context: HostedSessionUserContextInput
+
+  """UTM tracking parameters for analytics"""
+  tracking: TrackingInput
 }
 
 input HostedSessionUserContextInput {
@@ -2210,20 +2493,47 @@ input HostedSessionUserContextInput {
   stytch_member_email: String
 }
 
+input TrackingInput {
+  """Identifies which site sent the traffic"""
+  utm_source: String
+
+  """Identifies what type of link was used (e.g., email, cpc)"""
+  utm_medium: String
+
+  """Identifies a specific product promotion or strategic campaign"""
+  utm_campaign: String
+
+  """Identifies search terms"""
+  utm_term: String
+
+  """Identifies what specifically was clicked to bring the user to the site"""
+  utm_content: String
+
+  """Custom key-value pairs for additional tracking parameters"""
+  custom: JSON
+}
+
 type StartHostedPathwaySessionFromLinkPayload implements Payload {
   code: String!
   success: Boolean!
   session_url: String!
   organization_slug: String
+  tracking: SessionTracking
 }
 
 input StartHostedPathwaySessionFromLinkInput {
   id: String!
   patient_identifier: IdentifierInput
+
+  """UTM tracking parameters for analytics"""
+  tracking: TrackingInput
 }
 
 input StartHostedActivitySessionViaHostedPagesLinkInput {
   hosted_pages_link_id: String!
+
+  """UTM tracking parameters for analytics"""
+  tracking: TrackingInput
 }
 
 type StartHostedPathwaySessionPayload implements Payload {
@@ -2235,6 +2545,7 @@ type StartHostedPathwaySessionPayload implements Payload {
   stakeholder: HostedSessionStakeholder!
   user_context: HostedSessionUserContext
   organization_slug: String
+  tracking: SessionTracking
 }
 
 input StartHostedPathwaySessionInput {
@@ -2266,6 +2577,9 @@ input StartHostedPathwaySessionInput {
   """
   stakeholder_definition_id: String
   user_context: HostedSessionUserContextInput
+
+  """UTM tracking parameters for analytics"""
+  tracking: TrackingInput
 }
 
 input DataPointInput {
@@ -2317,6 +2631,7 @@ type StopTrackPayload implements Payload {
 input StopTrackInput {
   pathway_id: String!
   track_id: String!
+  reason: String
 }
 
 type SubmitChecklistPayload implements Payload {

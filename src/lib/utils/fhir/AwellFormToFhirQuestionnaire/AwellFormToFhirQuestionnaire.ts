@@ -10,7 +10,7 @@ import {
   type QuestionnaireItemAnswerOption as FhirQuestionnaireItemAnswerOption,
 } from '@medplum/fhirtypes'
 import { kebabCase, pickBy } from 'lodash'
-import { slateToEscapedJsString } from '../../awell'
+import { getQuestionDisplayText } from '../../awell'
 
 const getQuestionnaireItemType = (
   question: Question,
@@ -84,7 +84,7 @@ const getFormItems = (formQuestions: Question[]): FhirQuestionnaireItem[] => {
       linkId: q.id,
       text:
         q.userQuestionType === enumUserQuestionType.DESCRIPTION
-          ? slateToEscapedJsString(q.title ?? '')
+          ? getQuestionDisplayText(q)
           : (q.title ?? ''),
       type: getQuestionnaireItemType(q).type,
       repeats:

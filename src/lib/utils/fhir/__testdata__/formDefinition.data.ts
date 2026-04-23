@@ -19,9 +19,9 @@ export const formDefinitionMock: Form = {
     {
       id: 'MUha7ldV6gJL',
       definition_id: 'rUfECkXAtCxe',
-      title:
+      title: null,
+      title_html:
         '<p class="slate-p">This is a description question. It&#x27;s doesn&#x27;t collect any data but just shows some text to the user.</p>',
-      title_html: null,
       key: 'typePChildrenTextThisIsADescriptionQuestionItsDoesntCollectAnyDataButJustShowsSomeTextToTheUser',
       dataPointValueType: null,
       questionType: enumQuestionType.NO_INPUT,
@@ -308,8 +308,8 @@ export const formDefinitionMock: Form = {
     {
       id: 'anotherDescriptionItemId',
       definition_id: 'anotherDescriptionItemDefinitionId',
-      title: '<p class="slate-p">Another description content</p>',
-      title_html: null,
+      title: null,
+      title_html: '<p class="slate-p">Another description content</p>',
       key: 'anotherDescription',
       dataPointValueType: null,
       questionType: enumQuestionType.NO_INPUT,

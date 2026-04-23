@@ -25,7 +25,7 @@ const getQuestionLabel = (
     )
   }
 
-  return itemDefinition.title
+  return itemDefinition.title ?? ''
 }
 
 const getMultipleSelectFhirAnswers = (
@@ -141,7 +141,7 @@ export const AwellFormResponseToFhirQuestionnaireResponseItems = (opts: {
   const descriptionQuestionsAsFhirItems = descriptionQuestions.map((item) => {
     return {
       linkId: item.id,
-      text: slateToEscapedJsString(item.title),
+      text: slateToEscapedJsString(item.title ?? ''),
     } satisfies FhirQuestionnaireResponseItem
   })
 

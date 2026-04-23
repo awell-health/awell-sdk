@@ -84,8 +84,8 @@ const getFormItems = (formQuestions: Question[]): FhirQuestionnaireItem[] => {
       linkId: q.id,
       text:
         q.userQuestionType === enumUserQuestionType.DESCRIPTION
-          ? slateToEscapedJsString(q.title)
-          : q.title,
+          ? slateToEscapedJsString(q.title ?? '')
+          : (q.title ?? ''),
       type: getQuestionnaireItemType(q).type,
       repeats:
         q.userQuestionType === enumUserQuestionType.MULTIPLE_SELECT

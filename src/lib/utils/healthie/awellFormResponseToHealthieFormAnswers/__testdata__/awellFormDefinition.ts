@@ -24,6 +24,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'single_select_number',
@@ -62,6 +63,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'single_select_string',
@@ -100,6 +102,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'multi_select_number',
@@ -138,6 +141,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'multi_select_string',
@@ -176,6 +180,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'yes_no',
@@ -190,6 +195,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'slider',
@@ -204,6 +210,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'date',
@@ -218,6 +225,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'email',
@@ -232,6 +240,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'number',
@@ -246,6 +255,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'short_text',
@@ -260,6 +270,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'long_text',
@@ -274,6 +285,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
     {
       id: 'phone',
@@ -288,6 +300,7 @@ export const awellFormDefinition: Form = {
       __typename: 'Question',
       questionConfig: null,
       rule: null,
+      title_html: null,
     },
   ],
   __typename: 'Form',

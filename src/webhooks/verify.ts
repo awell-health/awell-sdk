@@ -1,4 +1,4 @@
-import { createVerify } from 'crypto'
+import { createVerify } from 'node:crypto'
 
 /**
  * Verify that the incoming webhook has been sent by Awell and has not been tampered with.

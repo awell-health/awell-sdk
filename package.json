@@ -21,14 +21,13 @@
     "!**/__mocks__/**"
   ],
   "dependencies": {
-    "@genql/cli": "^6.3.3",
     "@medplum/fhirtypes": "^3.1.8",
-    "crypto": "^1.0.1",
     "date-fns": "^4.1.0",
-    "jsdom": "^26.0.0",
+    "jsdom": "^26.1.0",
     "lodash": "4.18.1"
   },
   "devDependencies": {
+    "@genql/cli": "^6.3.3",
     "@types/jest": "^29.5.13",
     "@types/jsdom": "^21.1.7",
     "@types/lodash": "^4.17.1",
@@ -51,13 +50,10 @@
   "resolutions": {
     "lodash": "4.18.1",
     "@genql/cli/undici": ">=5",
-    "form-data": "4.0.4",
     "braces": "3.0.3",
     "qs": "6.14.2",
     "@fastify/busboy": "3.2.0",
     "picomatch": "2.3.2",
-    "minimatch": "3.1.4",
-    "brace-expansion": "1.1.13",
     "micromatch": "4.0.8"
   }
 }

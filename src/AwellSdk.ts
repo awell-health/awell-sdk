@@ -1,5 +1,11 @@
 import { isNil } from 'lodash'
 import { type Client, createClient } from './genql/generated'
+import { createAwellFetcher, type ResponseInfo } from './idempotency/fetcher'
+import {
+  assertValidIdempotencyKey,
+  formatIdempotencyKey,
+  IDEMPOTENCY_KEY_HEADER,
+} from './idempotency/key'
 import { getApiUrl } from './lib'
 import { type Environment } from './types/Environment'
 import { verify } from './webhooks/verify'
@@ -60,15 +66,47 @@ export class AwellSdk {
       )
     }
 
-    const orchestrationClient = createClient({
-      // Defining the apiUrl takes precedence over setting the environment
-      url: this.apiUrl ?? getApiUrl(this.environment),
-      headers: {
-        apikey: this.apiKey,
-      },
-    })
+    this.orchestration = this.createOrchestrationClient()
+  }
 
-    this.orchestration = orchestrationClient
+  /**
+   * An orchestration client whose every request carries the given `Idempotency-Key`, so a retry of
+   * a mutation that already completed returns the original response instead of running again. Use
+   * one key per logical request: a retry reuses it, a new request gets a new one. Format and
+   * semantics: https://docs.awellhealth.com/api-reference/guides/idempotency
+   *
+   * @param key 1 to 255 printable ASCII characters, no whitespace (a UUID, for example). Quoted for
+   *   the wire here; pass it bare. Throws on an invalid key before any request is made.
+   * @param options.onResponse called with the HTTP status and whether the API served a stored
+   *   (replayed) response, since a replay is otherwise indistinguishable from a fresh execution.
+   *
+   * @example
+   * const client = sdk.withIdempotencyKey(`${eventId}:complete`)
+   * await client.mutation({ completeExtensionActivity: { __args: { input }, success: true } })
+   */
+  public withIdempotencyKey(
+    key: string,
+    options: { onResponse?: (info: ResponseInfo) => void } = {},
+  ): Client {
+    assertValidIdempotencyKey(key)
+    return this.createOrchestrationClient(
+      { [IDEMPOTENCY_KEY_HEADER]: formatIdempotencyKey(key) },
+      options.onResponse,
+    )
+  }
+
+  private createOrchestrationClient(
+    extraHeaders: Record<string, string> = {},
+    onResponse?: (info: ResponseInfo) => void,
+  ): Client {
+    return createClient({
+      fetcher: createAwellFetcher({
+        // Defining the apiUrl takes precedence over setting the environment
+        url: this.apiUrl ?? getApiUrl(this.environment),
+        headers: { apikey: this.apiKey, ...extraHeaders },
+        onResponse,
+      }),
+    })
   }
 
   /**

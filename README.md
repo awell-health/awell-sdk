@@ -90,6 +90,41 @@ Types can be imported as follows:
 import { type Pathway, type Form } from '@awell-health/awell-sdk'
 ```
 
+### Idempotent requests
+
+A mutation retried after a timeout may run twice. Send an `Idempotency-Key` and the Orchestration API
+returns the original response instead: `sdk.withIdempotencyKey(key)` gives you a client whose every
+request carries that key. Use one key per logical request, and reuse it only to retry that request.
+
+```javascript
+const client = sdk.withIdempotencyKey(`${event.id}:start`)
+const result = await client.mutation({
+  startPathway: {
+    __args: { input: { pathway_definition_id, patient_id } },
+    pathway_id: true,
+  },
+})
+```
+
+Refusals arrive as an `AwellApiError` with the HTTP `status` and the API's `code`:
+
+```javascript
+import { AwellApiError } from '@awell-health/awell-sdk'
+
+try {
+  await client.mutation({ ... })
+} catch (err) {
+  if (err instanceof AwellApiError && err.code === 'IDEMPOTENCY_KEY_IN_FLIGHT') {
+    // the first attempt is still running: retry shortly
+  }
+  throw err
+}
+```
+
+`AwellApiError` is thrown for any response carrying GraphQL errors, on any HTTP status, and extends the
+generated client's `GenqlError`. Format, expiry and error semantics:
+https://docs.awellhealth.com/api-reference/guides/idempotency
+
 ### Webhooks
 
 ```javascript

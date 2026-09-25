@@ -10,39 +10,23 @@ export interface ResponseInfo {
   replayed: boolean
 }
 
-export type FetchLike = (
-  url: string,
-  init: { method: string; headers: Record<string, string>; body: string },
-) => Promise<{
-  ok: boolean
-  status: number
-  statusText: string
-  headers: { get: (name: string) => string | null }
-  text: () => Promise<string>
-}>
-
 /**
- * The HTTP layer under the generated client.
- *
- * The generated fetcher throws a plain `Error` on any non-2xx status, which loses the GraphQL
- * `errors` (and their `extensions.code`) the API put in the body — every idempotency refusal (400,
- * 409, 422) arrives that way. This one reads the body on any status and throws {@link AwellApiError}
- * when it carries errors, so callers can branch on `code` and `status`.
+ * The HTTP layer under the generated client. Its default fetcher throws a plain `Error` on any
+ * non-2xx status, before reading the body — which is where the API puts the GraphQL `errors` (and
+ * their `extensions.code`) for every idempotency refusal. This one reads the body on any status and
+ * throws {@link AwellApiError} when it carries errors, so callers can branch on `code` and `status`.
  */
 export const createAwellFetcher = ({
   url,
   headers,
-  fetch: fetchImpl,
   onResponse,
 }: {
   url: string
   headers: Record<string, string>
-  fetch?: FetchLike
   onResponse?: (info: ResponseInfo) => void
 }): BaseFetcher => {
   return async (operation) => {
-    const doFetch = fetchImpl ?? resolveGlobalFetch()
-    const res = await doFetch(url, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...headers },
       body: JSON.stringify(operation),
@@ -51,56 +35,37 @@ export const createAwellFetcher = ({
     onResponse?.({ status: res.status, replayed })
 
     const text = await res.text()
-    const json: unknown = parseJson(text)
-    if (json === undefined || json === null || typeof json !== 'object') {
-      throw new AwellApiError({
-        status: res.status,
-        errors: [],
-        replayed,
-        message: `${res.status} ${res.statusText}: ${text.slice(0, 500)}`,
-      })
-    }
+    const body = parseJson(text)
     // Batched operations come back as an array; the generated client inspects each item itself.
-    if (Array.isArray(json)) return json as ExecutionResult[]
-    const result = json as ExecutionResult & { errors?: unknown }
-    const errors = errorsOf(result)
-    if (errors.length > 0) {
+    if (Array.isArray(body)) return body as ExecutionResult[]
+    const errors = Array.isArray(body?.errors)
+      ? (body.errors as GraphqlErrorLike[])
+      : []
+    if (errors.length > 0 || !res.ok || body === undefined) {
       throw new AwellApiError({
         status: res.status,
         errors,
-        data: result.data,
+        data: body?.data,
         replayed,
+        message:
+          errors.length > 0
+            ? undefined
+            : `${res.status} ${res.statusText}: ${text.slice(0, 500)}`,
       })
     }
-    if (!res.ok) {
-      throw new AwellApiError({
-        status: res.status,
-        errors: [],
-        replayed,
-        message: `${res.status} ${res.statusText}: ${text.slice(0, 500)}`,
-      })
-    }
-    return result
+    return body as ExecutionResult
   }
 }
 
-const parseJson = (text: string): unknown => {
-  if (text === '') return undefined
+const parseJson = (
+  text: string,
+): { errors?: unknown; data?: unknown } | undefined => {
   try {
-    return JSON.parse(text)
+    const parsed: unknown = JSON.parse(text)
+    return parsed !== null && typeof parsed === 'object'
+      ? (parsed as { errors?: unknown; data?: unknown })
+      : undefined
   } catch {
     return undefined
   }
-}
-
-const errorsOf = (json: { errors?: unknown }): GraphqlErrorLike[] =>
-  Array.isArray(json.errors) ? (json.errors as GraphqlErrorLike[]) : []
-
-const resolveGlobalFetch = (): FetchLike => {
-  if (typeof fetch === 'undefined') {
-    throw new Error(
-      'Global `fetch` is not available in this runtime; use Node 18 or newer.',
-    )
-  }
-  return fetch as unknown as FetchLike
 }

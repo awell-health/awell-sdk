@@ -1,30 +1,45 @@
 import { AwellApiError } from './AwellApiError'
-import { createAwellFetcher, type FetchLike } from './fetcher'
+import { createAwellFetcher } from './fetcher'
 
 const response = (
   status: number,
   body: unknown,
   headers: Record<string, string> = {},
-): Awaited<ReturnType<FetchLike>> => ({
-  ok: status >= 200 && status < 300,
-  status,
-  statusText: String(status),
-  headers: { get: (name: string) => headers[name.toLowerCase()] ?? null },
-  text: async () => (typeof body === 'string' ? body : JSON.stringify(body)),
-})
+): Response =>
+  new Response(typeof body === 'string' ? body : JSON.stringify(body), {
+    status,
+    statusText: String(status),
+    headers,
+  })
 
 const operation = { query: 'mutation { x }', variables: {} }
 
+const fetchMock = jest.fn()
+const originalFetch = globalThis.fetch
+beforeAll(() => {
+  globalThis.fetch = fetchMock as unknown as typeof fetch
+})
+afterAll(() => {
+  globalThis.fetch = originalFetch
+})
+beforeEach(() => {
+  fetchMock.mockReset()
+})
+
+const fetcher = (
+  onResponse?: jest.Mock,
+): ReturnType<typeof createAwellFetcher> =>
+  createAwellFetcher({
+    url: 'https://api.example/graphql',
+    headers: { apikey: 'k', 'idempotency-key': '"key-1"' },
+    onResponse,
+  })
+
 describe('createAwellFetcher', () => {
   test('sends a POST with the API key, the JSON content type, and the operation as body', async () => {
-    const fetch = jest.fn(async () => response(200, { data: { x: 1 } }))
-    const fetcher = createAwellFetcher({
-      url: 'https://api.example/graphql',
-      headers: { apikey: 'k', 'idempotency-key': '"key-1"' },
-      fetch,
-    })
-    await expect(fetcher(operation)).resolves.toEqual({ data: { x: 1 } })
-    expect(fetch).toHaveBeenCalledWith('https://api.example/graphql', {
+    fetchMock.mockResolvedValue(response(200, { data: { x: 1 } }))
+    await expect(fetcher()(operation)).resolves.toEqual({ data: { x: 1 } })
+    expect(fetchMock).toHaveBeenCalledWith('https://api.example/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,12 +63,8 @@ describe('createAwellFetcher', () => {
         },
       },
     ]
-    const fetcher = createAwellFetcher({
-      url: 'u',
-      headers: {},
-      fetch: async () => response(409, { errors, data: null }),
-    })
-    const err = await fetcher(operation).catch((e: unknown) => e)
+    fetchMock.mockResolvedValue(response(409, { errors, data: null }))
+    const err = await fetcher()(operation).catch((e: unknown) => e)
     expect(err).toBeInstanceOf(AwellApiError)
     const apiError = err as AwellApiError
     expect(apiError.status).toBe(409)
@@ -68,16 +79,13 @@ describe('createAwellFetcher', () => {
   })
 
   test('a 200 with GraphQL errors still throws, as the generated client did', async () => {
-    const fetcher = createAwellFetcher({
-      url: 'u',
-      headers: {},
-      fetch: async () =>
-        response(200, {
-          errors: [{ message: 'Not found', extensions: { code: 'NOT_FOUND' } }],
-          data: null,
-        }),
-    })
-    await expect(fetcher(operation)).rejects.toMatchObject({
+    fetchMock.mockResolvedValue(
+      response(200, {
+        errors: [{ message: 'Not found', extensions: { code: 'NOT_FOUND' } }],
+        data: null,
+      }),
+    )
+    await expect(fetcher()(operation)).rejects.toMatchObject({
       name: 'AwellApiError',
       status: 200,
       code: 'NOT_FOUND',
@@ -85,46 +93,44 @@ describe('createAwellFetcher', () => {
   })
 
   test('a non-JSON failure keeps the status and the body text', async () => {
-    const fetcher = createAwellFetcher({
-      url: 'u',
-      headers: {},
-      fetch: async () => response(502, 'Bad Gateway'),
-    })
-    await expect(fetcher(operation)).rejects.toMatchObject({
+    fetchMock.mockResolvedValue(response(502, 'Bad Gateway'))
+    await expect(fetcher()(operation)).rejects.toMatchObject({
       name: 'AwellApiError',
       status: 502,
       message: '502 502: Bad Gateway',
     })
   })
 
-  test('reports the status and the Idempotency-Replayed header through onResponse', async () => {
-    const onResponse = jest.fn()
-    const fetcher = createAwellFetcher({
-      url: 'u',
-      headers: {},
-      fetch: async () =>
-        response(200, { data: { x: 1 } }, { 'idempotency-replayed': 'true' }),
-      onResponse,
+  test('a non-2xx JSON body without GraphQL errors is still an AwellApiError with the status', async () => {
+    fetchMock.mockResolvedValue(response(401, { message: 'Unauthorized' }))
+    await expect(fetcher()(operation)).rejects.toMatchObject({
+      name: 'AwellApiError',
+      status: 401,
+      message: '401 401: {"message":"Unauthorized"}',
     })
-    await fetcher(operation)
+  })
+
+  test('reports the status and the Idempotency-Replayed header through onResponse', async () => {
+    fetchMock.mockResolvedValue(
+      response(200, { data: { x: 1 } }, { 'idempotency-replayed': 'true' }),
+    )
+    const onResponse = jest.fn()
+    await fetcher(onResponse)(operation)
     expect(onResponse).toHaveBeenCalledWith({ status: 200, replayed: true })
   })
 
   test('marks an error thrown for a replayed response', async () => {
-    const fetcher = createAwellFetcher({
-      url: 'u',
-      headers: {},
-      fetch: async () =>
-        response(
-          200,
-          {
-            errors: [
-              { message: 'stored failure', extensions: { code: 'NOT_FOUND' } },
-            ],
-          },
-          { 'idempotency-replayed': 'true' },
-        ),
-    })
-    await expect(fetcher(operation)).rejects.toMatchObject({ replayed: true })
+    fetchMock.mockResolvedValue(
+      response(
+        200,
+        {
+          errors: [
+            { message: 'stored failure', extensions: { code: 'NOT_FOUND' } },
+          ],
+        },
+        { 'idempotency-replayed': 'true' },
+      ),
+    )
+    await expect(fetcher()(operation)).rejects.toMatchObject({ replayed: true })
   })
 })

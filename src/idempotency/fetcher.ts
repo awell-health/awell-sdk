@@ -47,15 +47,16 @@ export const createAwellFetcher = ({
         errors,
         data: body?.data,
         replayed,
-        message:
-          errors.length > 0
-            ? undefined
-            : `${res.status} ${res.statusText}: ${text.slice(0, 500)}`,
+        message: errors.length > 0 ? undefined : httpFailureMessage(res, text),
       })
     }
     return body as ExecutionResult
   }
 }
+
+// HTTP/2 carries no reason phrase, so `statusText` can be empty; the status number always leads.
+const httpFailureMessage = (res: Response, body: string): string =>
+  `HTTP ${res.status}${res.statusText === '' ? '' : ` ${res.statusText}`}: ${body.slice(0, 500)}`
 
 const parseJson = (
   text: string,

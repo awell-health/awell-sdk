@@ -1,14 +1,21 @@
 import { AwellApiError } from './AwellApiError'
 import { createAwellFetcher } from './fetcher'
 
+const REASON: Record<number, string> = {
+  200: 'OK',
+  401: 'Unauthorized',
+  409: 'Conflict',
+  502: 'Bad Gateway',
+}
 const response = (
   status: number,
   body: unknown,
   headers: Record<string, string> = {},
+  statusText: string = REASON[status] ?? '',
 ): Response =>
   new Response(typeof body === 'string' ? body : JSON.stringify(body), {
     status,
-    statusText: String(status),
+    statusText,
     headers,
   })
 
@@ -93,11 +100,11 @@ describe('createAwellFetcher', () => {
   })
 
   test('a non-JSON failure keeps the status and the body text', async () => {
-    fetchMock.mockResolvedValue(response(502, 'Bad Gateway'))
+    fetchMock.mockResolvedValue(response(502, 'upstream down'))
     await expect(fetcher()(operation)).rejects.toMatchObject({
       name: 'AwellApiError',
       status: 502,
-      message: '502 502: Bad Gateway',
+      message: 'HTTP 502 Bad Gateway: upstream down',
     })
   })
 
@@ -106,7 +113,15 @@ describe('createAwellFetcher', () => {
     await expect(fetcher()(operation)).rejects.toMatchObject({
       name: 'AwellApiError',
       status: 401,
-      message: '401 401: {"message":"Unauthorized"}',
+      message: 'HTTP 401 Unauthorized: {"message":"Unauthorized"}',
+    })
+  })
+
+  test('without a reason phrase (HTTP/2) the message still leads with the status', async () => {
+    fetchMock.mockResolvedValue(response(503, 'try later', {}, ''))
+    await expect(fetcher()(operation)).rejects.toMatchObject({
+      status: 503,
+      message: 'HTTP 503: try later',
     })
   })
 

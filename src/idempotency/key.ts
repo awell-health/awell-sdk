@@ -1,3 +1,11 @@
+/*
+ * The header names, the key rule and the quoting below mirror `@awell-health/extensions-core`
+ * (`src/idempotency/types.ts`), which is the authority on them: it also owns the parser the
+ * Orchestration API uses. This package cannot depend on extensions-core (it is extensions-core's
+ * peer, and the customer-facing client), so the three are repeated here. Change them there first;
+ * a drift surfaces as a 400 on every keyed SDK call, since the API enforces the rule.
+ */
+
 /**
  * The request header a caller sets to ask the Orchestration API for replay protection, per the IETF
  * HTTPAPI draft `Idempotency-Key`. Lower-case, the way header maps hold it.
